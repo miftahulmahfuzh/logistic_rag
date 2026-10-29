@@ -93,6 +93,25 @@ with retrieved context 89% at baseline. The core set's one failure (q14) is an i
 Both eval sets have been reviewed by the author. Cost uses z.ai pay-as-you-go list prices; the real account is a
 flat subscription.
 
+## Iteration 2: what improved, what did not, and the generality guard
+
+The loop: baseline, measure, find the weakest part, fix, measure again (`eval/ITERATIONS.md` has predictions written
+before the run and the verdict on each).
+
+| change | effect |
+|---|---|
+| A. Merged-table duplicate fixed (ingestion) | corpus 28 to 27 chunks; the table no longer competes with a flattened copy of itself; h04 now answered correctly |
+| B. UK/US spelling and stemming in BM25 | helps some questions (q07, q08, h10), hurts others (h04, h05, h12); net slightly negative on rank, flagged for decision |
+| C. Default k 5 to 8 | the main driver: hard-set judge 83% to 94% (compared with A+B at k=5), at +21-28% cost |
+
+Net: hard set judge-correct 89% to 94%, core unchanged at 95%, h01 and q14 still fail by design.
+
+**Overfitting guard.** The pipeline must work on a second, unseen document without code changes, so each fix is a
+generic mechanism (a merged table's blocks are consumed on every page it spans; a language-level tokenizer), never a
+rule keyed to this report. `tests/test_generality.py` fails if document-specific literals enter `src/`, the eval
+questions are frozen and were not edited to improve a score, and an unseen-document check is part of the next iteration.
+The 38 questions all come from one report, so gains here are evidence for the mechanism, not proof of transfer.
+
 ## Known limitations
 
 - Page-level gold labels overstate retrieval for tables (a prose chunk on the same page counts as a hit).
