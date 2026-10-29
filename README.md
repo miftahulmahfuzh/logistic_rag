@@ -83,7 +83,7 @@ before any improvement work so the "baseline, measure, fix, measure again" loop 
 The hard set is retrieval-limited, not generation-limited: with the gold pages handed to the generator it scores 100%,
 with retrieved context 89%. The core set's one failure (q14) is an image-transcription error. See
 `eval/failure_analysis.md` and `eval/failure_analysis_hard.md` for every failure, its stage and the evidence.
-Both eval sets are marked DRAFT pending author review. Cost uses z.ai pay-as-you-go list prices; the real account is a
+Both eval sets have been reviewed by the author. Cost uses z.ai pay-as-you-go list prices; the real account is a
 flat subscription.
 
 ## Known limitations

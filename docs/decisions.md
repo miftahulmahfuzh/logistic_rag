@@ -15,3 +15,4 @@ One line per decision, dated.
 - 2026-10-29: `kirana eval` now refuses to run when more than one document is ingested without `--doc`. A first hard/core re-run silently included a 4-page subset document (from the generality demo) in the corpus and polluted the metrics; those runs were discarded and the subset cache removed before the committed results were produced.
 - 2026-10-29: Token prices added to `config.py` from docs.z.ai/guides/overview/pricing (glm-5.3 $1.4 in / $4.4 out per M tokens; glm-4.6v $0.3 / $0.9). The author pays a flat subscription, so dollar figures are list-price equivalents.
 - 2026-10-29: Known ingestion defect left unfixed on purpose so the baseline stays as measured: the continuation page of a merged table also emits a flattened prose chunk (see `eval/failure_analysis_hard.md`). First item of the improvement list.
+- 2026-10-29: Author reviewed both eval sets (questions.yaml, questions_hard.yaml); status changed from DRAFT to REVIEWED.

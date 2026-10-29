@@ -1,4 +1,4 @@
-# DRAFT: needs author review. HARD set, written BEFORE any improvement work, to test what the core set cannot:
+# REVIEWED by the author (2026-10-29). HARD set, written BEFORE any improvement work, to test what the core set cannot:
 # paraphrase and synonyms (no shared keywords with the text), US/UK spelling, conceptual wording, near-duplicate
 # rows, evidence spread over several chunks, calculations, and near-miss unanswerable questions.
 # Same schema as questions.yaml (see its header). Answers were checked against the PDF text layer and page images.

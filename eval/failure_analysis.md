@@ -5,7 +5,7 @@ See also `failure_analysis_hard.md` / `RESULTS_HARD.md` for the harder 18-questi
 Honest headline first: the baseline scores high (k=5: 95% status, 100% facts, 95% judge, 100% hit@5, 100% citations
 verified). With 20 questions on a 13-page document, **this test set is probably too easy** to separate good from bad
 retrieval: 100% of questions reach hit@3. One question fails outright, and the more informative signal is in the
-weaker numbers below the headline. The eval set is still marked DRAFT pending author review.
+weaker numbers below the headline. Both eval sets have since been reviewed by the author.
 
 ### q14 (diagram, `baseline` k=5): wrong refusal. Failing stage: **ingestion (VLM transcription)**
 
