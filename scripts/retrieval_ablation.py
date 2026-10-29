@@ -13,10 +13,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from kirana_rag import config  # noqa: E402
-from kirana_rag.eval import metrics, runner  # noqa: E402
-from kirana_rag.ingest.pipeline import list_doc_ids  # noqa: E402
-from kirana_rag.retrieve import Index, load_index  # noqa: E402
+from kirana_rag import config
+from kirana_rag.eval import metrics, runner
+from kirana_rag.ingest.pipeline import list_doc_ids
+from kirana_rag.retrieve import Index, load_index
 
 SETS = {
     "core": ("questions.yaml", "kirana"),

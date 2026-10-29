@@ -11,7 +11,7 @@ import pymupdf
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tests.pdfmaker import draw_table  # noqa: E402
+from tests.pdfmaker import draw_table
 
 COMPANY = "Northmere Wind and Solar plc"
 BODY, HEAD = 10, 16
