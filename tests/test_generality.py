@@ -6,6 +6,16 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 # Case-sensitive literals that would mean the code was fitted to one report. The package and
 # command name `kirana` (lower case) is the product name, not document content.
 FORBIDDEN = ["Kirana", "Table 2", "THB", "Hat Yai", "Shah Alam", "Figure 3", "Schedule C"]
+FORBIDDEN += [
+    "Northmere",
+    "Dunmere",
+    "Brannock",
+    "Fenwick",
+    "Westerleigh",
+    "Greyfell",
+    "Appendix B",
+    "GWh",
+]
 
 
 def test_src_has_no_document_specific_literals():

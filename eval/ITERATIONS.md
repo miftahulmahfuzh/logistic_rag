@@ -120,3 +120,29 @@ iteration 3 eval was run**. Questions in `questions.yaml` and `questions_hard.ya
 - Cost per question is unchanged or slightly lower; index build adds a one-time model download and a few seconds of embedding.
 - Holdout: hybrid is not worse than BM25-only on holdout retrieval-only metrics. If it is, the iteration is reported as overfit.
 - Risk: dense retrieval may promote vaguely related chunks over exact-number matches (e.g. "1.71x"). Watch number-heavy questions.
+
+## Step B: normalisation ablation (retrieval only, no LLM, BM25)
+
+Chunk-level, over the full ranking (so a gold chunk is always ranked), `scripts/retrieval_ablation.py`. `none` is iteration 2 change A
+alone, `full` is A+B as shipped in iteration 2, `spelling` is the UK/US pass without Snowball. n = questions with gold chunks.
+
+| normalise | set | n | mean first-gold rank | hit@1 | recall@5 |
+|---|---|---|---|---|---|
+| none | core | 17 | 1.47 | 71% | 96% |
+| none | hard | 15 | 2.00 | 40% | 90% |
+| none | holdout | 11 | 1.55 | 73% | 95% |
+| spelling | core | 17 | 1.47 | 71% | 96% |
+| spelling | hard | 15 | 2.20 | 40% | 83% |
+| spelling | holdout | 11 | 1.55 | 73% | 95% |
+| full | core | 17 | 1.41 | 82% | 94% |
+| full | hard | 15 | 2.47 | 47% | 73% |
+| full | holdout | 11 | 1.82 | 73% | 86% |
+
+Kirana core+hard combined mean rank (32 questions): none 1.72, spelling 1.81, full 1.91 (the 1.72 and 1.91 match the iteration 2 analysis).
+
+**Decision, by the pre-registered rule:** Snowball (`full`) worsens the mean first-gold rank on Kirana (1.81 to 1.91) and on the holdout
+(1.55 to 1.82), so it is dropped; the default is `spelling`. Note that `none` is slightly better than `spelling` on Kirana hard (2.00 vs
+2.20) and identical on the holdout; the rule says keep the spelling pass, so I kept it, but the UK/US pass has not earned itself on
+these two documents (it matters only when the query and the text use different spellings, which no question here tests beyond h05).
+Full Snowball does buy hit@1 on core (71% to 82%), which is the part of iteration 2 that looked like a gain. The switch
+`KIRANA_NORMALISE` stays because it is one line and keeps the ablation reproducible.

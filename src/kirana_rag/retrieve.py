@@ -1,5 +1,6 @@
 """BM25 retrieval over chunk header+text. Index is rebuilt in memory on every run."""
 
+import os
 import re
 import sys
 from dataclasses import dataclass
@@ -33,16 +34,20 @@ _STEMMER = snowballstemmer.stemmer("english")
 
 
 def _normalise(token: str) -> str:
-    """UK -> US spelling, then English Snowball stem. Tokens with a digit are left alone."""
-    if any(ch.isdigit() for ch in token):
+    """UK -> US spelling, then (mode full only) English Snowball stem. Tokens with a digit are left alone.
+
+    KIRANA_NORMALISE=none|spelling|full (default spelling) exists for the ablation in eval/ITERATIONS.md.
+    """
+    mode = os.environ.get("KIRANA_NORMALISE", "spelling")
+    if mode == "none" or any(ch.isdigit() for ch in token):
         return token
     token = UK_TO_US.get(token, _ISATION.sub(r"ization\1", token))
-    return _STEMMER.stemWord(token)
+    return token if mode == "spelling" else _STEMMER.stemWord(token)
 
 
 def tokenize(text: str) -> list[str]:
     """Lowercase, `8,420` -> `8420`, alphanumeric tokens (decimals kept whole), stopwords out,
-    then UK->US spelling and Snowball stemming (not for tokens with digits).
+    then UK->US spelling (and Snowball stemming in the `full` ablation mode); never for tokens with digits.
 
     Used for both the index and the query, so they always agree.
     """

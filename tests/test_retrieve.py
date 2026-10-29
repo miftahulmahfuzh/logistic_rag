@@ -18,9 +18,21 @@ def test_tokenizer_lowercases_drops_stopwords_keeps_decimals():
     assert tokenize("What is the OTD in November: 89.7%?") == ["otd", *tokenize("november"), "89.7"]
 
 
-def test_spelling_and_plural_variants_collapse():
-    assert tokenize("utilisation") == tokenize("utilization") == tokenize("utilisations")
+def test_uk_and_us_spelling_collapse():
+    assert tokenize("utilisation") == tokenize("utilization") == ["utilization"]
+    assert tokenize("Labour tonne") == ["labor", "ton"]
+
+
+def test_default_mode_does_not_stem():
+    assert tokenize("trucks") == ["trucks"]
+
+
+def test_full_mode_stems_and_none_mode_keeps_spelling(monkeypatch):
+    monkeypatch.setenv("KIRANA_NORMALISE", "full")
     assert tokenize("trucks") == tokenize("truck")
+    assert tokenize("utilisations") == tokenize("utilization")
+    monkeypatch.setenv("KIRANA_NORMALISE", "none")
+    assert tokenize("utilisation") == ["utilisation"]
 
 
 def test_numbers_are_not_stemmed():

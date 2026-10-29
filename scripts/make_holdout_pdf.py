@@ -182,6 +182,10 @@ def build(path: Path) -> None:
 
 
 if __name__ == "__main__":
-    out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "Northmere_Wind_Solar_Annual_Report_2025.pdf"
+    out = (
+        Path(sys.argv[1])
+        if len(sys.argv) > 1
+        else ROOT / "Northmere_Wind_Solar_Annual_Report_2025.pdf"
+    )
     build(out)
     print(out)
