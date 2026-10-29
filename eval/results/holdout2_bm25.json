@@ -1,0 +1,4866 @@
+{
+  "tag": "holdout2_bm25",
+  "suite": "holdout2",
+  "finished_at": "2026-10-29T09:57:18+00:00",
+  "k": 8,
+  "retriever": "bm25",
+  "oracle": true,
+  "doc_ids": [
+    "halbrook-health-group-annual-report-2025-f861d195"
+  ],
+  "n_chunks": 68,
+  "models": {
+    "text": "glm-5.3",
+    "vision": "glm-4.6v"
+  },
+  "tokens": {
+    "in": 57561,
+    "out": 4434,
+    "note": "tokens of calls not served from the response cache in this process"
+  },
+  "records": [
+    {
+      "id": "v01",
+      "type": "prose",
+      "question": "What was the group's income in 2025, and by what percentage did it grow?",
+      "expected_answer": "1,284.6 million pounds, up 6.9%",
+      "gold_pages": [
+        4,
+        9
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "1284.6",
+        "6.9"
+      ],
+      "gold_chunks": [
+        "p4-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": false
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0,
+          "8": 0.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p19-x2",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 5.2015
+          },
+          {
+            "chunk_id": "p22-x1",
+            "pages": [
+              22
+            ],
+            "type": "text",
+            "score": 4.6573
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 4.5509
+          },
+          {
+            "chunk_id": "p29-t1",
+            "pages": [
+              29
+            ],
+            "type": "table",
+            "score": 4.5187
+          },
+          {
+            "chunk_id": "p28-x1",
+            "pages": [
+              28
+            ],
+            "type": "text",
+            "score": 4.3664
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 4.3371
+          },
+          {
+            "chunk_id": "p19-x3",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 4.059
+          },
+          {
+            "chunk_id": "p29-x1",
+            "pages": [
+              29
+            ],
+            "type": "text",
+            "score": 3.9509
+          }
+        ],
+        "first_gold_rank": 3,
+        "mrr": 0.3333333333333333,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Income in 2025 was 1,284.6 million pounds (GBP million, per Table 1 and Table 9). It grew by 6.9%, which is consistent with the figures: (1,284.6 - 1,201.3) / 1,201.3 x 100 = 83.3 / 1,201.3 x 100 = 6.94%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "| Income | 1,201.3 | 1,284.6 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Income grew by 6.9%, driven by higher volumes of planned care and a 4.2% uplift in the national tariff.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p29-t1",
+            "page": 29,
+            "quote": "| 2025 | 1,284.6 | 23.4 | 96.4 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1699,
+        "tokens_out": 253,
+        "llm_ms": 3605.171817005612,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: income of 1,284.6 million pounds, up 6.9%.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Income in 2025 was 1,284.6 million pounds, up from 1,201.3 million in 2024, an increase of 6.9%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "Income rose to 1,284.6 million pounds, an increase of 6.9% on the 1,201.3 million recorded in 2024",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "| Income | 1,201.3 | 1,284.6 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Income grew by 6.9%, driven by higher volumes of planned care and a 4.2% uplift in the national tariff.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1237,
+        "tokens_out": 199,
+        "llm_ms": 0.22167598945088685,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: income of 1,284.6 million pounds, up 6.9%.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-x2",
+        "p9-t1",
+        "p9-x1"
+      ]
+    },
+    {
+      "id": "v02",
+      "type": "table",
+      "question": "What was the operating surplus in 2024?",
+      "expected_answer": "18.9 million pounds",
+      "gold_pages": [
+        4,
+        9,
+        29
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "18.9"
+      ],
+      "gold_chunks": [
+        "p9-t1",
+        "p4-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 7.1464
+          },
+          {
+            "chunk_id": "p29-t1",
+            "pages": [
+              29
+            ],
+            "type": "table",
+            "score": 6.4752
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.8877
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 4.7867
+          },
+          {
+            "chunk_id": "p29-x1",
+            "pages": [
+              29
+            ],
+            "type": "text",
+            "score": 4.499
+          },
+          {
+            "chunk_id": "p22-t1",
+            "pages": [
+              22
+            ],
+            "type": "table",
+            "score": 3.4862
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 2.6229
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 2.5552
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The operating surplus in 2024 was GBP 18.9 million.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "| Operating surplus | 18.9 | 23.4 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "operating surplus of 23.4 million pounds against 18.9 million pounds the year before",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1989,
+        "tokens_out": 107,
+        "llm_ms": 2427.2283680038527,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference answer of 18.9 million pounds.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The operating surplus in 2024 was 18.9 million pounds.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "| Operating surplus | 18.9 | 23.4 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "an operating surplus of 23.4 million pounds against 18.9 million pounds the year before",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1504,
+        "tokens_out": 107,
+        "llm_ms": 0.1068130077328533,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-x2",
+        "p9-t1",
+        "p9-x1",
+        "p29-t1",
+        "p29-x1"
+      ]
+    },
+    {
+      "id": "v03",
+      "type": "multihop",
+      "question": "By how much did cash at the year end increase between 2024 and 2025?",
+      "expected_answer": "22.4 million pounds (120.3 to 142.7)",
+      "gold_pages": [
+        9,
+        28
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "22.4"
+      ],
+      "gold_chunks": [
+        "p9-t1",
+        "p28-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p28-t1",
+            "pages": [
+              28
+            ],
+            "type": "table",
+            "score": 11.4726
+          },
+          {
+            "chunk_id": "p20-x3",
+            "pages": [
+              20
+            ],
+            "type": "text",
+            "score": 7.6158
+          },
+          {
+            "chunk_id": "p8-x1",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 7.1635
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 7.0452
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 6.351
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 4.8926
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.8034
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 4.632
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Cash at the year end increased by 22.4 million pounds, from 120.3 million in 2024 to 142.7 million in 2025 (142.7 − 120.3 = 22.4).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p28-t1",
+            "page": 28,
+            "quote": "Net increase in cash | 22.4 | Cash at start of year | 120.3 | Cash at end of year | 142.7",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Cash at the year end stood at 142.7 million pounds, an increase of 22.4 million pounds.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1892,
+        "tokens_out": 164,
+        "llm_ms": 3034.9795339861885,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: increase of 22.4 million pounds from 120.3 to 142.7.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Cash at the year end increased by 22.4 million pounds (from 120.3 to 142.7 million pounds). Calculation: 142.7 − 120.3 = 22.4 GBP million (figures from the financial summary table).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Cash at the year end stood at 142.7 million pounds, an increase of 22.4 million pounds.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "| Cash and cash equivalents | 120.3 | 142.7 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p28-t1",
+            "page": 28,
+            "quote": "| Cash at start of year | 120.3 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1021,
+        "tokens_out": 184,
+        "llm_ms": 0.27334800688549876,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: increase of 22.4 million pounds from 120.3 to 142.7.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p9-t1",
+        "p9-x1",
+        "p28-t1",
+        "p28-x1"
+      ]
+    },
+    {
+      "id": "v04",
+      "type": "synonym",
+      "question": "By how much did spending on temporary staff fall?",
+      "expected_answer": "By 22.4%, from 78.9 to 61.2 million pounds (17.7 million)",
+      "gold_pages": [
+        4,
+        9
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "17.7",
+          "22.4"
+        ]
+      ],
+      "gold_chunks": [
+        "p4-x1",
+        "p9-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 0.5,
+          "8": 0.5
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 5.5564
+          },
+          {
+            "chunk_id": "p27-x3",
+            "pages": [
+              27
+            ],
+            "type": "text",
+            "score": 4.2052
+          },
+          {
+            "chunk_id": "p18-x1",
+            "pages": [
+              18
+            ],
+            "type": "text",
+            "score": 3.588
+          },
+          {
+            "chunk_id": "p23-x1",
+            "pages": [
+              23
+            ],
+            "type": "text",
+            "score": 3.4152
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 3.174
+          },
+          {
+            "chunk_id": "p19-x3",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 2.8938
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 2.0786
+          },
+          {
+            "chunk_id": "p8-x2",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 1.8361
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Spending on agency (temporary) staff fell by 22.4% to 61.2 million pounds, down from 78.9 million pounds.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "Spending on agency staff fell by 22.4% to 61.2 million pounds",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Agency spend fell to 61.2 million pounds from 78.9 million pounds.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1812,
+        "tokens_out": 128,
+        "llm_ms": 1896.934301010333,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference facts (22.4% fall from 78.9 to 61.2 million pounds).",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Agency spending on temporary staff fell by 22.4%, from 78.9 million pounds in 2024 to 61.2 million pounds in 2025 — a decrease of 17.7 million pounds (78.9 − 61.2 = 17.7).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "Spending on agency staff fell by 22.4% to 61.2 million pounds",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Agency spend fell to 61.2 million pounds from 78.9 million pounds.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1228,
+        "tokens_out": 156,
+        "llm_ms": 0.21873600780963898,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: 22.4% fall from 78.9 to 61.2 million pounds, a 17.7 million decrease.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-x2",
+        "p9-t1",
+        "p9-x1"
+      ]
+    },
+    {
+      "id": "v05",
+      "type": "synonym",
+      "question": "How full were the beds at Alderbank General Hospital on average in 2025?",
+      "expected_answer": "91.3%",
+      "gold_pages": [
+        3,
+        12
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "91.3"
+      ],
+      "gold_chunks": [
+        "p3-x3",
+        "p12-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 8.4092
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 8.0885
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 7.9188
+          },
+          {
+            "chunk_id": "p22-x1",
+            "pages": [
+              22
+            ],
+            "type": "text",
+            "score": 6.7986
+          },
+          {
+            "chunk_id": "p5-x2",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 5.6846
+          },
+          {
+            "chunk_id": "p23-x1",
+            "pages": [
+              23
+            ],
+            "type": "text",
+            "score": 5.6658
+          },
+          {
+            "chunk_id": "p15-t1",
+            "pages": [
+              15
+            ],
+            "type": "table",
+            "score": 5.6037
+          },
+          {
+            "chunk_id": "p13-t1",
+            "pages": [
+              13,
+              14
+            ],
+            "type": "table",
+            "score": 4.6412
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Bed occupancy at Alderbank General Hospital averaged 91.3% in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-x3",
+            "page": 3,
+            "quote": "Bed occupancy at Alderbank General Hospital averaged 91.3% in 2025.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p12-x1",
+            "page": 12,
+            "quote": "Bed occupancy at Alderbank General Hospital averaged 91.3% in 2025.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2795,
+        "tokens_out": 116,
+        "llm_ms": 1668.329623003956,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference value of 91.3%.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Bed occupancy at Alderbank General Hospital averaged 91.3% in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p12-x1",
+            "page": 12,
+            "quote": "Bed occupancy at Alderbank General Hospital averaged 91.3% in 2025.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1468,
+        "tokens_out": 76,
+        "llm_ms": 0.1339470036327839,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference value of 91.3%.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p3-x1",
+        "p3-x2",
+        "p3-x3",
+        "p12-t1",
+        "p12-x1"
+      ]
+    },
+    {
+      "id": "v06",
+      "type": "table",
+      "question": "How many first outpatient attendances were there at Quillfield?",
+      "expected_answer": "44.0 thousand",
+      "gold_pages": [
+        12
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "44.0",
+          "44 thousand",
+          "44,000"
+        ]
+      ],
+      "gold_chunks": [
+        "p12-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 8.5653
+          },
+          {
+            "chunk_id": "p12-t1",
+            "pages": [
+              12
+            ],
+            "type": "table",
+            "score": 8.4611
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 4.2234
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 4.133
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 3.9335
+          },
+          {
+            "chunk_id": "p15-x1",
+            "pages": [
+              15
+            ],
+            "type": "text",
+            "score": 3.7943
+          },
+          {
+            "chunk_id": "p4-x2",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 3.0241
+          },
+          {
+            "chunk_id": "p13-t1",
+            "pages": [
+              13,
+              14
+            ],
+            "type": "table",
+            "score": 2.5426
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "44,000 first outpatient attendances (44.0 thousand).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p12-t1",
+            "page": 12,
+            "quote": "| Quillfield | 6.3 | 9.7 | 44.0 | 83.1 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2554,
+        "tokens_out": 76,
+        "llm_ms": 2674.565608991543,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference value of 44.0 thousand.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "There were 44.0 thousand first outpatient attendances at Quillfield in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p12-t1",
+            "page": 12,
+            "quote": "| Quillfield | 6.3 | 9.7 | 44.0 | 83.1 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 894,
+        "tokens_out": 82,
+        "llm_ms": 0.19770700600929558,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: 44.0 thousand first outpatient attendances.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p12-t1",
+        "p12-x1"
+      ]
+    },
+    {
+      "id": "v07",
+      "type": "table",
+      "question": "How many beds does Ward 4C have?",
+      "expected_answer": "23",
+      "gold_pages": [
+        14
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "23"
+      ],
+      "gold_chunks": [
+        "p13-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-t1",
+            "pages": [
+              13,
+              14
+            ],
+            "type": "table",
+            "score": 6.5879
+          },
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 6.2442
+          },
+          {
+            "chunk_id": "p15-t1",
+            "pages": [
+              15
+            ],
+            "type": "table",
+            "score": 5.2159
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 3.1553
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 3.0392
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 2.6203
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 2.4311
+          },
+          {
+            "chunk_id": "p8-x3",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 2.2249
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Ward 4C (Alderbank, Maternity) has 23 beds.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-t1",
+            "page": 13,
+            "quote": "| Ward 4C | Alderbank | Maternity | 23 | 72.4 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2747,
+        "tokens_out": 76,
+        "llm_ms": 2325.7401610026136,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states Ward 4C has 23 beds, matching the reference.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Ward 4C (Alderbank, Maternity) has 23 beds.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-t1",
+            "page": 13,
+            "quote": "| Ward 4C | Alderbank | Maternity | 23 | 72.4 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1102,
+        "tokens_out": 76,
+        "llm_ms": 0.13641599798575044,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states Ward 4C has 23 beds, matching the reference.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p13-t1"
+      ]
+    },
+    {
+      "id": "v08",
+      "type": "table",
+      "question": "What was the average occupancy of Ward 7E in 2025?",
+      "expected_answer": "97.2%",
+      "gold_pages": [
+        15
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "97.2"
+      ],
+      "gold_chunks": [
+        "p15-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 9.9719
+          },
+          {
+            "chunk_id": "p15-t1",
+            "pages": [
+              15
+            ],
+            "type": "table",
+            "score": 8.9043
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 7.8723
+          },
+          {
+            "chunk_id": "p16-x1",
+            "pages": [
+              16
+            ],
+            "type": "text",
+            "score": 7.7272
+          },
+          {
+            "chunk_id": "p8-x3",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 5.54
+          },
+          {
+            "chunk_id": "p15-x1",
+            "pages": [
+              15
+            ],
+            "type": "text",
+            "score": 5.2691
+          },
+          {
+            "chunk_id": "p13-t1",
+            "pages": [
+              13,
+              14
+            ],
+            "type": "table",
+            "score": 5.2614
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 4.1094
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Ward 7E (Alderbank, Stroke) had an average occupancy of 97.2% in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p15-t1",
+            "page": 15,
+            "quote": "| Ward 7E | Alderbank | Stroke | 35 | 97.2 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2456,
+        "tokens_out": 84,
+        "llm_ms": 4606.26156302169,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference occupancy figure of 97.2% and adds correct context.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Ward 7E (Alderbank, Stroke) had an average occupancy of 97.2% in 2025, per the ward register table on page 15.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p15-t1",
+            "page": 15,
+            "quote": "| Ward 7E | Alderbank | Stroke | 35 | 97.2 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 789,
+        "tokens_out": 98,
+        "llm_ms": 0.15318900113925338,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states the same fact, 97.2%, matching the reference.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p15-t1",
+        "p15-x1"
+      ]
+    },
+    {
+      "id": "v09",
+      "type": "table",
+      "question": "Which ward had the highest average occupancy in 2025?",
+      "expected_answer": "Ward 6E (Quillfield, maternity) at 98.0%",
+      "gold_pages": [
+        13,
+        14,
+        15
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "6e",
+        "98.0"
+      ],
+      "gold_chunks": [
+        "p15-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 6,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 9.9719
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 7.8723
+          },
+          {
+            "chunk_id": "p16-x1",
+            "pages": [
+              16
+            ],
+            "type": "text",
+            "score": 7.7272
+          },
+          {
+            "chunk_id": "p17-x1",
+            "pages": [
+              17
+            ],
+            "type": "text",
+            "score": 7.6826
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 6.9493
+          },
+          {
+            "chunk_id": "p15-t1",
+            "pages": [
+              15
+            ],
+            "type": "table",
+            "score": 5.9583
+          },
+          {
+            "chunk_id": "p8-x3",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 5.54
+          },
+          {
+            "chunk_id": "p15-x1",
+            "pages": [
+              15
+            ],
+            "type": "text",
+            "score": 5.2691
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Ward 6E at Quillfield (Maternity) had the highest average occupancy in 2025 at 98.0%, per the ward register table on page 15.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p15-t1",
+            "page": 15,
+            "quote": "| Ward 6E | Quillfield | Maternity | 20 | 98.0 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1594,
+        "tokens_out": 107,
+        "llm_ms": 2611.471253010677,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: Ward 6E (Quillfield, maternity) at 98.0%.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Ward 6E (Quillfield, Maternity) had the highest average occupancy in 2025 at 98.0%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p15-t1",
+            "page": 15,
+            "quote": "| Ward 6E | Quillfield | Maternity | 20 | 98.0 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1658,
+        "tokens_out": 97,
+        "llm_ms": 0.12177799362689257,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p13-x1",
+        "p13-t1",
+        "p15-t1",
+        "p15-x1"
+      ]
+    },
+    {
+      "id": "v10",
+      "type": "table",
+      "question": "How many patients were waiting for orthopaedic treatment on 31 December 2025?",
+      "expected_answer": "11.3 thousand",
+      "gold_pages": [
+        17
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "11.3",
+          "11,300"
+        ]
+      ],
+      "gold_chunks": [
+        "p17-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p17-t1",
+            "pages": [
+              17
+            ],
+            "type": "table",
+            "score": 13.6885
+          },
+          {
+            "chunk_id": "p17-x1",
+            "pages": [
+              17
+            ],
+            "type": "text",
+            "score": 13.2752
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 10.3006
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 8.7163
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 7.1928
+          },
+          {
+            "chunk_id": "p7-x2",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 7.033
+          },
+          {
+            "chunk_id": "p11-f1",
+            "pages": [
+              11
+            ],
+            "type": "figure",
+            "score": 6.119
+          },
+          {
+            "chunk_id": "p23-x1",
+            "pages": [
+              23
+            ],
+            "type": "text",
+            "score": 5.9373
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "11.3 thousand patients were waiting for orthopaedic treatment on 31 December 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p17-t1",
+            "page": 17,
+            "quote": "| Orthopaedics | 11.3 | 14.2 | 58 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1905,
+        "tokens_out": 75,
+        "llm_ms": 1731.976824987214,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference value of 11.3 thousand.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "11.3 thousand patients were waiting for orthopaedic treatment on 31 December 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p17-t1",
+            "page": 17,
+            "quote": "| Orthopaedics | 11.3 | 14.2 | 58 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 681,
+        "tokens_out": 75,
+        "llm_ms": 0.33812300534918904,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference value of 11.3 thousand.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p17-t1",
+        "p17-x1"
+      ]
+    },
+    {
+      "id": "v11",
+      "type": "table",
+      "question": "What was the revenue of Halbrook Rehabilitation GmbH in 2025, in thousand euro?",
+      "expected_answer": "48,213.5 thousand euro (printed 48.213,5)",
+      "gold_pages": [
+        22
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "48.213,5",
+          "48213,5",
+          "48213.5",
+          "48 213,5"
+        ]
+      ],
+      "gold_chunks": [
+        "p22-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p22-x1",
+            "pages": [
+              22
+            ],
+            "type": "text",
+            "score": 16.0387
+          },
+          {
+            "chunk_id": "p22-t1",
+            "pages": [
+              22
+            ],
+            "type": "table",
+            "score": 15.2277
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 8.76
+          },
+          {
+            "chunk_id": "p8-x4",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 8.1906
+          },
+          {
+            "chunk_id": "p5-x4",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 5.1493
+          },
+          {
+            "chunk_id": "p27-x1",
+            "pages": [
+              27
+            ],
+            "type": "text",
+            "score": 5.139
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 4.3329
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 4.2735
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "48,213.5 thousand euro (48.213,5 in the subsidiary's continental formatting, where a comma marks the decimal).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p22-t1",
+            "page": 22,
+            "quote": "| Revenue | 45.870,1 | 48.213,5 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p22-x1",
+            "page": 22,
+            "quote": "a full stop separates thousands and a comma marks the decimal",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1546,
+        "tokens_out": 115,
+        "llm_ms": 2204.911615990568,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer gives the same figure of 48,213.5 thousand euro as the reference, just with additional formatting detail.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "48,213.5 thousand euro (written as 48.213,5 in the subsidiary's continental format, where the full stop separates thousands and the comma marks the decimal).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p22-t1",
+            "page": 22,
+            "quote": "| Revenue | 45.870,1 | 48.213,5 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p22-x1",
+            "page": 22,
+            "quote": "a full stop separates thousands and a comma marks the decimal",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 670,
+        "tokens_out": 125,
+        "llm_ms": 0.29118297970853746,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states the same figure as the reference, 48,213.5 thousand euro.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p22-x1",
+        "p22-t1"
+      ]
+    },
+    {
+      "id": "v12",
+      "type": "prose",
+      "question": "Why did capital expenditure rise in 2025?",
+      "expected_answer": "Larger projects: the Pennine theatre complex, the emergency department rebuild at St Wystan's and the MRI replacement at Alderbank",
+      "gold_pages": [
+        4,
+        18
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "theatre",
+          "emergency department",
+          "mri"
+        ]
+      ],
+      "gold_chunks": [
+        "p4-x2"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 6,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p29-t1",
+            "pages": [
+              29
+            ],
+            "type": "table",
+            "score": 5.5194
+          },
+          {
+            "chunk_id": "p28-t1",
+            "pages": [
+              28
+            ],
+            "type": "table",
+            "score": 5.4775
+          },
+          {
+            "chunk_id": "p20-x1",
+            "pages": [
+              20
+            ],
+            "type": "text",
+            "score": 5.4191
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 5.2932
+          },
+          {
+            "chunk_id": "p29-x1",
+            "pages": [
+              29
+            ],
+            "type": "text",
+            "score": 4.8999
+          },
+          {
+            "chunk_id": "p4-x2",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.3545
+          },
+          {
+            "chunk_id": "p21-x3",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 3.6627
+          },
+          {
+            "chunk_id": "p28-x1",
+            "pages": [
+              28
+            ],
+            "type": "text",
+            "score": 3.2577
+          }
+        ],
+        "first_gold_rank": 6,
+        "mrr": 0.16666666666666666,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The report does not give a single explicit cause, but it identifies specific large projects in 2025 — chiefly the new theatre complex at Pennine Orthopaedic Centre, which opened on schedule in the autumn — and notes capital expenditure had been held back during the pandemic and has been increasing since 2022.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x2",
+            "page": 4,
+            "quote": "Capital expenditure reached 96.4 million pounds, up from 71.0 million pounds in 2024. The largest projects were the new theatre complex at Pennine Orthopaedic Centre",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p29-x1",
+            "page": 29,
+            "quote": "Capital expenditure was held back during the pandemic and has been increasing since 2022.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1336,
+        "tokens_out": 201,
+        "llm_ms": 2885.5038020119537,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "partial",
+        "judge_reason": "It mentions the Pennine theatre complex but omits the emergency department rebuild at St Wystan's and the MRI replacement at Alderbank.",
+        "disagree": true
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The document does not state an explicit causal reason, but it shows capital expenditure rose to 96.4 million pounds (from 71.0 million in 2024) because spending went to major projects, chiefly the new theatre complex at Pennine Orthopaedic Centre (31.5m spent in 2025, now complete), the rebuilding of the emergency department at St Wystan's Hospital (24.7m), and the replacement MRI scanners at Alderbank General Hospital (9.8m, complete), plus progress on other schemes in the capital programme.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x2",
+            "page": 4,
+            "quote": "Capital expenditure reached 96.4 million pounds, up from 71.0 million pounds in 2024. The largest projects were",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p18-t1",
+            "page": 18,
+            "quote": "| Theatre complex | Pennine Orthopaedic | 2023 | 2025 | 62.0 | 30.5 | 31.5 | 0.0 | Complete |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p18-x1",
+            "page": 18,
+            "quote": "Spending on the programme in 2025 totalled 96.4 million pounds.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1194,
+        "tokens_out": 321,
+        "llm_ms": 0.214964005863294,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer identifies the same three major projects (Pennine theatre complex, St Wystan's emergency department rebuild, Alderbank MRI replacement) as the cause.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-x2",
+        "p18-t1",
+        "p18-x1"
+      ]
+    },
+    {
+      "id": "v13",
+      "type": "multihop",
+      "question": "How many beds do the two largest hospitals have between them?",
+      "expected_answer": "1,042 (612 at Alderbank General and 430 at St Wystan's)",
+      "gold_pages": [
+        3,
+        12
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "1042"
+      ],
+      "gold_chunks": [
+        "p3-x3"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 3,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 7.535
+          },
+          {
+            "chunk_id": "p16-x1",
+            "pages": [
+              16
+            ],
+            "type": "text",
+            "score": 5.6964
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 5.4936
+          },
+          {
+            "chunk_id": "p21-x5",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 5.0365
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 4.5686
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.5169
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 4.3373
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 4.2517
+          }
+        ],
+        "first_gold_rank": 3,
+        "mrr": 0.3333333333333333,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The two largest hospitals are Alderbank General Hospital (612 beds) and St Wystan's Hospital (430 beds). Together they have 612 + 430 = 1,042 beds.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-x3",
+            "page": 3,
+            "quote": "Alderbank General Hospital is an acute teaching hospital with 612 beds.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p3-x3",
+            "page": 3,
+            "quote": "St Wystan's Hospital is an acute district hospital with 430 beds.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1865,
+        "tokens_out": 142,
+        "llm_ms": 2305.613871983951,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: 612 + 430 = 1,042 beds.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The two largest hospitals are Alderbank General Hospital (612 beds) and St Wystan's Hospital (430 beds). 612 + 430 = 1,042 beds between them.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-x3",
+            "page": 3,
+            "quote": "Alderbank General Hospital is an acute teaching hospital with 612 beds.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p3-x3",
+            "page": 3,
+            "quote": "St Wystan's Hospital is an acute district hospital with 430 beds.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p3-x3",
+            "page": 3,
+            "quote": "Its largest single site is Alderbank General Hospital",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1462,
+        "tokens_out": 172,
+        "llm_ms": 0.26809400878846645,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: 1,042 beds total (612 at Alderbank General and 430 at St Wystan's).",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p3-x1",
+        "p3-x2",
+        "p3-x3",
+        "p12-t1",
+        "p12-x1"
+      ]
+    },
+    {
+      "id": "v14",
+      "type": "synonym",
+      "question": "How many completely avoidable serious patient-safety incidents were reported in 2025?",
+      "expected_answer": "Two (never events), one fewer than in 2024",
+      "gold_pages": [
+        4,
+        6
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "two",
+          "2"
+        ]
+      ],
+      "gold_chunks": [
+        "p4-x1",
+        "p6-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 0.5,
+          "8": 0.5
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 12.0355
+          },
+          {
+            "chunk_id": "p6-x2",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 9.7101
+          },
+          {
+            "chunk_id": "p6-x4",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 8.6877
+          },
+          {
+            "chunk_id": "p23-x1",
+            "pages": [
+              23
+            ],
+            "type": "text",
+            "score": 6.7335
+          },
+          {
+            "chunk_id": "p3-x2",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 5.4807
+          },
+          {
+            "chunk_id": "p21-x1",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 4.4462
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 4.1094
+          },
+          {
+            "chunk_id": "p15-x1",
+            "pages": [
+              15
+            ],
+            "type": "text",
+            "score": 3.6645
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Two. The group reported two never events in 2025 (never events are serious incidents that are wholly preventable), compared with three in 2024.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-x1",
+            "page": 6,
+            "quote": "In 2025 the group reported two never events, compared with three in 2024.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p6-x1",
+            "page": 6,
+            "quote": "A never event is a serious incident that is wholly preventable.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1484,
+        "tokens_out": 123,
+        "llm_ms": 3110.291426011827,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: two never events in 2025, one fewer than the three in 2024.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Two. These are the 'never events', defined as serious incidents that are wholly preventable.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "We recorded two never events in 2025, one fewer than in 2024",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p6-x1",
+            "page": 6,
+            "quote": "A never event is a serious incident that is wholly preventable.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1297,
+        "tokens_out": 120,
+        "llm_ms": 0.11643898324109614,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states two avoidable serious incidents (never events) in 2025, matching the reference count.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-x2",
+        "p6-x1",
+        "p6-x2",
+        "p6-x3",
+        "p6-x4",
+        "p6-x5"
+      ]
+    },
+    {
+      "id": "v15",
+      "type": "prose",
+      "question": "Does the figure of 17,940 colleagues include the staff of the German clinic?",
+      "expected_answer": "No: headcount excludes Halbrook Rehabilitation GmbH, which employs a further 612 people",
+      "gold_pages": [
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "excludes",
+          "does not include",
+          "not include",
+          "no"
+        ],
+        "612"
+      ],
+      "gold_chunks": [
+        "p8-x4"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": false
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0,
+          "8": 0.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p19-x3",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 8.4976
+          },
+          {
+            "chunk_id": "p8-x1",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 8.1501
+          },
+          {
+            "chunk_id": "p10-f1",
+            "pages": [
+              10
+            ],
+            "type": "figure",
+            "score": 6.0184
+          },
+          {
+            "chunk_id": "p11-f1",
+            "pages": [
+              11
+            ],
+            "type": "figure",
+            "score": 5.9951
+          },
+          {
+            "chunk_id": "p22-x1",
+            "pages": [
+              22
+            ],
+            "type": "text",
+            "score": 3.9174
+          },
+          {
+            "chunk_id": "p23-x1",
+            "pages": [
+              23
+            ],
+            "type": "text",
+            "score": 3.7977
+          },
+          {
+            "chunk_id": "p8-x2",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 3.6819
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 3.6634
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "No. The overseas subsidiary section states that the German clinic's headcount is shown separately from the group's figures, so the 17,940 colleagues (and the total of 17,940 in Note 3, covering UK staff categories) does not include Halbrook Rehabilitation GmbH's staff.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p22-x1",
+            "page": 22,
+            "quote": "The subsidiary is included in the group's income, but its headcount is shown separately.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p8-x1",
+            "page": 8,
+            "quote": "At the end of 2025 the group employed 17,940 colleagues¹, an increase of 4.1% on the previous year.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1594,
+        "tokens_out": 169,
+        "llm_ms": 2432.455791014945,
+        "status_correct": true,
+        "facts_correct": false,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "partial",
+        "judge_reason": "The answer correctly says the 17,940 excludes the German clinic (Halbrook Rehabilitation GmbH) but omits the specific figure of 612 additional employees.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "No. The 17,940 headcount excludes Halbrook Rehabilitation GmbH, which employs a further 612 people in Germany.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p8-x1",
+            "page": 8,
+            "quote": "At the end of 2025 the group employed 17,940 colleagues¹, an increase of 4.1% on the previous year.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p8-x4",
+            "page": 8,
+            "quote": "Headcount excludes Halbrook Rehabilitation GmbH, which employs a further 612 people in Germany.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 812,
+        "tokens_out": 136,
+        "llm_ms": 0.12349701137281954,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: headcount excludes Halbrook Rehabilitation GmbH with a further 612 employees.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p8-x1",
+        "p8-x2",
+        "p8-x3",
+        "p8-x4"
+      ]
+    },
+    {
+      "id": "v16",
+      "type": "prose",
+      "question": "What kind of people make up most of Pennine Orthopaedic Centre's emergency admissions?",
+      "expected_answer": "People who become unwell after an operation",
+      "gold_pages": [
+        10
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "unwell after an operation",
+          "become unwell",
+          "after an operation"
+        ]
+      ],
+      "gold_chunks": [
+        "p10-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 18.6457
+          },
+          {
+            "chunk_id": "p10-f1",
+            "pages": [
+              10
+            ],
+            "type": "figure",
+            "score": 11.6971
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 8.8863
+          },
+          {
+            "chunk_id": "p4-x2",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 8.7138
+          },
+          {
+            "chunk_id": "p5-x4",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 7.766
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 7.7597
+          },
+          {
+            "chunk_id": "p7-x2",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 7.6756
+          },
+          {
+            "chunk_id": "p5-x2",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 7.301
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Most of Pennine Orthopaedic Centre's emergency admissions are people who become unwell after an operation.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p10-x1",
+            "page": 10,
+            "quote": "most of its emergency admissions are people who become unwell after an operation.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1841,
+        "tokens_out": 74,
+        "llm_ms": 1457.8856800217181,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Most of Pennine Orthopaedic Centre's emergency admissions are people who become unwell after an operation.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p10-x1",
+            "page": 10,
+            "quote": "most of its emergency admissions are people who become unwell after an operation",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 613,
+        "tokens_out": 73,
+        "llm_ms": 0.06216001929715276,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p10-x1",
+        "p10-f1"
+      ]
+    },
+    {
+      "id": "v17",
+      "type": "prose",
+      "question": "Over how many years is medical equipment depreciated?",
+      "expected_answer": "5 to 10 years, depending on its expected useful life",
+      "gold_pages": [
+        19
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "5",
+        "10"
+      ],
+      "gold_chunks": [
+        "p19-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p19-x1",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 19.8295
+          },
+          {
+            "chunk_id": "p21-x5",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 8.3741
+          },
+          {
+            "chunk_id": "p20-t1",
+            "pages": [
+              20
+            ],
+            "type": "table",
+            "score": 4.0221
+          },
+          {
+            "chunk_id": "p20-x1",
+            "pages": [
+              20
+            ],
+            "type": "text",
+            "score": 3.1429
+          },
+          {
+            "chunk_id": "p17-t1",
+            "pages": [
+              17
+            ],
+            "type": "table",
+            "score": 3.0847
+          },
+          {
+            "chunk_id": "p18-x1",
+            "pages": [
+              18
+            ],
+            "type": "text",
+            "score": 2.9964
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 2.8421
+          },
+          {
+            "chunk_id": "p29-x1",
+            "pages": [
+              29
+            ],
+            "type": "text",
+            "score": 2.6293
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Medical and other equipment is depreciated over 5 to 10 years according to its expected useful life.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p19-x1",
+            "page": 19,
+            "quote": "Medical and other equipment is depreciated over 5 to 10 years according to its expected useful life.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1530,
+        "tokens_out": 80,
+        "llm_ms": 3408.6003600095864,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference exactly: 5 to 10 years based on expected useful life.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Medical and other equipment is depreciated over 5 to 10 years according to its expected useful life.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p19-x1",
+            "page": 19,
+            "quote": "Medical and other equipment is depreciated over 5 to 10 years according to its expected useful life.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 850,
+        "tokens_out": 80,
+        "llm_ms": 0.1505879918113351,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference exactly: 5 to 10 years based on expected useful life.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p19-x1",
+        "p19-x2",
+        "p19-x3"
+      ]
+    },
+    {
+      "id": "v18",
+      "type": "chart",
+      "question": "Which hospital had the most emergency admissions in 2025, and how many?",
+      "expected_answer": "Alderbank General Hospital, 48.2 thousand",
+      "gold_pages": [
+        10
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "alderbank",
+        "48.2"
+      ],
+      "gold_chunks": [
+        "p10-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 12.2485
+          },
+          {
+            "chunk_id": "p10-f1",
+            "pages": [
+              10
+            ],
+            "type": "figure",
+            "score": 11.9084
+          },
+          {
+            "chunk_id": "p5-x2",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 8.5253
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 5.0111
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 4.492
+          },
+          {
+            "chunk_id": "p17-x1",
+            "pages": [
+              17
+            ],
+            "type": "text",
+            "score": 4.4913
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 4.266
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.0935
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Alderbank had the most emergency admissions in 2025, with 48.2 thousand (from Figure 1, a scan of the chart).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p10-f1",
+            "page": 10,
+            "quote": "| Alderbank    | 48.2                   |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1327,
+        "tokens_out": 81,
+        "llm_ms": 2702.719305001665,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches reference: Alderbank General Hospital with 48.2 thousand emergency admissions.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Alderbank had the most emergency admissions in 2025, with 48.2 thousand. (Source: Figure 1, a chart/transcript of a figure.)",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p10-f1",
+            "page": 10,
+            "quote": "| Alderbank    | 48.2                   |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 611,
+        "tokens_out": 85,
+        "llm_ms": 0.182716001290828,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: Alderbank (General) Hospital with 48.2 thousand emergency admissions.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p10-x1",
+        "p10-f1"
+      ]
+    },
+    {
+      "id": "v19",
+      "type": "chart",
+      "question": "What was the median wait for elective treatment at the end of the second quarter of 2025?",
+      "expected_answer": "13.5 weeks",
+      "gold_pages": [
+        11
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "13.5"
+      ],
+      "gold_chunks": [
+        "p11-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p11-f1",
+            "pages": [
+              11
+            ],
+            "type": "figure",
+            "score": 22.6768
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 17.1641
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 12.7843
+          },
+          {
+            "chunk_id": "p17-t1",
+            "pages": [
+              17
+            ],
+            "type": "table",
+            "score": 8.2735
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 8.0599
+          },
+          {
+            "chunk_id": "p17-x1",
+            "pages": [
+              17
+            ],
+            "type": "text",
+            "score": 7.061
+          },
+          {
+            "chunk_id": "p24-x2",
+            "pages": [
+              24
+            ],
+            "type": "text",
+            "score": 6.3797
+          },
+          {
+            "chunk_id": "p24-x1",
+            "pages": [
+              24
+            ],
+            "type": "text",
+            "score": 5.7972
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "13.5 weeks",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-f1",
+            "page": 11,
+            "quote": "| Q2      | 13.5               |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1812,
+        "tokens_out": 53,
+        "llm_ms": 2493.0436559952796,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "13.5 weeks",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-f1",
+            "page": 11,
+            "quote": "| Q2      | 13.5               |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 589,
+        "tokens_out": 53,
+        "llm_ms": 0.10498898336663842,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p11-x1",
+        "p11-f1"
+      ]
+    },
+    {
+      "id": "v20",
+      "type": "scan",
+      "question": "How many board meetings did Prof. Anselm Okoro attend in 2025?",
+      "expected_answer": "9 of 12",
+      "gold_pages": [
+        25
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "9"
+      ],
+      "gold_chunks": [
+        "p25-s1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p25-s1",
+            "pages": [
+              25
+            ],
+            "type": "scan",
+            "score": 17.2664
+          },
+          {
+            "chunk_id": "p4-x2",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 11.8352
+          },
+          {
+            "chunk_id": "p21-x2",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 11.3538
+          },
+          {
+            "chunk_id": "p24-x1",
+            "pages": [
+              24
+            ],
+            "type": "text",
+            "score": 3.8895
+          },
+          {
+            "chunk_id": "p6-x4",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 3.6812
+          },
+          {
+            "chunk_id": "p24-x2",
+            "pages": [
+              24
+            ],
+            "type": "text",
+            "score": 3.5491
+          },
+          {
+            "chunk_id": "p21-x3",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 3.5119
+          },
+          {
+            "chunk_id": "p24-x3",
+            "pages": [
+              24
+            ],
+            "type": "text",
+            "score": 3.0191
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Prof. Anselm Okoro attended 9 of the 12 board meetings in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p25-s1",
+            "page": 25,
+            "quote": "Prof. Anselm Okoro | Non-executive director | 9",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1527,
+        "tokens_out": 74,
+        "llm_ms": 2132.8474459878635,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly: 9 of 12 meetings.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Prof. Anselm Okoro attended 9 board meetings in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p25-s1",
+            "page": 25,
+            "quote": "Prof. Anselm Okoro | Non-executive director | 9",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 560,
+        "tokens_out": 70,
+        "llm_ms": 0.10458097676746547,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states Prof. Okoro attended 9 board meetings; the total of 12 is extra context not required by the question.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p25-s1"
+      ]
+    },
+    {
+      "id": "v21",
+      "type": "conflict",
+      "question": "What was the median wait for elective treatment at the end of December 2025?",
+      "expected_answer": "The Chief executive's report says 11.2 weeks; Table 5 and Figure 2 give 11.6 weeks. The document does not say which is authoritative",
+      "gold_pages": [
+        5,
+        11,
+        17
+      ],
+      "expected_status": "conflict",
+      "must_contain": [
+        "11.2",
+        "11.6"
+      ],
+      "gold_chunks": [
+        "p5-x1",
+        "p17-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.5,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p11-f1",
+            "pages": [
+              11
+            ],
+            "type": "figure",
+            "score": 18.2427
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 15.3257
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 13.6446
+          },
+          {
+            "chunk_id": "p17-x1",
+            "pages": [
+              17
+            ],
+            "type": "text",
+            "score": 11.5063
+          },
+          {
+            "chunk_id": "p17-t1",
+            "pages": [
+              17
+            ],
+            "type": "table",
+            "score": 11.3581
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 5.0194
+          },
+          {
+            "chunk_id": "p23-x1",
+            "pages": [
+              23
+            ],
+            "type": "text",
+            "score": 3.9871
+          },
+          {
+            "chunk_id": "p19-x3",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 3.8061
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "conflict",
+        "answer": "The excerpts disagree. The chief executive's report (page 5) states the median wait 'fell to 11.2 weeks at the end of December'. However, Figure 2 (page 11) shows a Q4 median wait of 11.6 weeks, and the waiting-list-by-specialty text and table on page 17 also state a median of 11.6 weeks (data as of 31 December). No errata or correction marks either figure as authoritative.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-x1",
+            "page": 5,
+            "quote": "The median wait for elective treatment fell to 11.2 weeks at the end of December",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p11-f1",
+            "page": 11,
+            "quote": "| Q4      | 11.6               |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p17-x1",
+            "page": 17,
+            "quote": "The median wait across all specialties was 11.6 weeks",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p17-t1",
+            "page": 17,
+            "quote": "| All specialties | 41.5 | 11.6 | 46 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1863,
+        "tokens_out": 292,
+        "llm_ms": 4684.915038000327,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer correctly identifies the 11.2 vs 11.6 week discrepancy and that the document does not indicate which is authoritative.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "conflict",
+        "answer": "The excerpts disagree. The chief executive's report (page 5) states the median wait fell to 11.2 weeks at the end of December, while Table 5 and the figure on page 11/17 show 11.6 weeks. The document does not mark either version as authoritative. Note the figure and table are internally consistent (Q4/31 December = 11.6 weeks), and the table source is stated as the patient administration system on 31 December.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-x1",
+            "page": 5,
+            "quote": "The median wait for elective treatment fell to 11.2 weeks at the end of December",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p17-t1",
+            "page": 17,
+            "quote": "| All specialties | 41.5 | 11.6 | 46 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p11-f1",
+            "page": 11,
+            "quote": "| Q4 | 11.6 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p17-x1",
+            "page": 17,
+            "quote": "The median wait across all specialties was 11.6 weeks",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1150,
+        "tokens_out": 272,
+        "llm_ms": 0.24552099057473242,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: 11.2 weeks in the chief executive's report, 11.6 weeks in Table 5/Figure 2, with no indication of which is authoritative.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p5-x1",
+        "p5-x2",
+        "p5-x3",
+        "p5-x4",
+        "p11-x1",
+        "p11-f1",
+        "p17-t1",
+        "p17-x1"
+      ]
+    },
+    {
+      "id": "v22",
+      "type": "unanswerable",
+      "question": "What is the forecast operating surplus for 2026?",
+      "expected_answer": "Not given; the outlook gives income growth of 5% to 6% and capital expenditure of about 110 million pounds",
+      "gold_pages": [
+        26
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 5.963
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 5.492
+          },
+          {
+            "chunk_id": "p29-t1",
+            "pages": [
+              29
+            ],
+            "type": "table",
+            "score": 4.7437
+          },
+          {
+            "chunk_id": "p29-x1",
+            "pages": [
+              29
+            ],
+            "type": "text",
+            "score": 4.499
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 3.4155
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 3.1291
+          },
+          {
+            "chunk_id": "p21-x3",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 2.5789
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 2.2625
+          }
+        ],
+        "first_gold_rank": 6,
+        "mrr": 0.16666666666666666,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state a forecast operating surplus for 2026. The Outlook for 2026 section gives expected income growth of 5% to 6% and capital expenditure of about 110 million pounds, but no operating surplus forecast.",
+        "error": "",
+        "citations": [],
+        "tokens_in": 1916,
+        "tokens_out": 68,
+        "llm_ms": 1699.3399769999087,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": false,
+        "citations_verified": null,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states no operating surplus forecast is given and accurately cites the income growth and capex figures.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "refused",
+        "answer": "The excerpts do not state a forecast operating surplus for 2026. The Outlook for 2026 mentions income growth and capital expenditure, but no operating surplus figure is provided.",
+        "error": "",
+        "citations": [],
+        "tokens_in": 628,
+        "tokens_out": 54,
+        "llm_ms": 0.09923198376782238,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": false,
+        "citations_verified": null,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states that no forecast operating surplus for 2026 is given, matching the reference.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p26-x1"
+      ]
+    },
+    {
+      "id": "v23",
+      "type": "unanswerable",
+      "question": "How much agency spend did Alderbank General Hospital incur in 2025?",
+      "expected_answer": "Not given; only the group total of 61.2 million pounds is reported",
+      "gold_pages": [
+        9
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p18-t1",
+            "pages": [
+              18
+            ],
+            "type": "table",
+            "score": 6.8561
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 6.4532
+          },
+          {
+            "chunk_id": "p5-x2",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 6.2443
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 5.8918
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 5.0493
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 4.7635
+          },
+          {
+            "chunk_id": "p19-x3",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 4.7006
+          },
+          {
+            "chunk_id": "p21-x3",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 4.451
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts report agency spend only at group level (61.2 million pounds in 2025, down from 78.9 million in 2024); no breakdown of agency spend by hospital, including Alderbank General Hospital, is provided.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Agency spend fell to 61.2 million pounds from 78.9 million pounds.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "Agency spend | 78.9 | 61.2",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2193,
+        "tokens_out": 140,
+        "llm_ms": 2877.9499890224542,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states that hospital-level agency spend is not given and only the group total of 61.2 million pounds is reported, matching the reference.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "refused",
+        "answer": "The excerpts only report group-level agency spend (61.2 million pounds in 2025); no site-level breakdown for Alderbank General Hospital is provided.",
+        "error": "",
+        "citations": [],
+        "tokens_in": 785,
+        "tokens_out": 51,
+        "llm_ms": 0.10026601376011968,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": false,
+        "citations_verified": null,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states that site-level Alderbank data is not given and matches the group total of 61.2 million pounds.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p9-t1",
+        "p9-x1"
+      ]
+    },
+    {
+      "id": "v24",
+      "type": "unanswerable",
+      "question": "How many patients died in the group's hospitals in 2025?",
+      "expected_answer": "Not given; the report gives a standardized mortality ratio of 0.97 but no count of deaths",
+      "gold_pages": [
+        6
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p6-x3",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 8.3773
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 6.0757
+          },
+          {
+            "chunk_id": "p7-x2",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 5.6494
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 4.8069
+          },
+          {
+            "chunk_id": "p6-x5",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 4.7515
+          },
+          {
+            "chunk_id": "p5-x3",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 4.6363
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 4.5375
+          },
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 4.4935
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state the number of patients who died. It only gives the hospital standardized mortality ratio (0.97 in 2025, 1.02 in 2024), which indicates fewer deaths than expected, but no absolute death count is provided.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-x3",
+            "page": 6,
+            "quote": "The hospital standardized mortality ratio for the group was 0.97, which means that fewer patients died than would be expected",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1429,
+        "tokens_out": 126,
+        "llm_ms": 3493.9126210229006,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer correctly states no death count is given and cites the standardized mortality ratio of 0.97, matching the reference.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "refused",
+        "answer": "The excerpts do not state the number of patients who died. They give only the standardized mortality ratio (0.97 in 2025, down from 1.02 in 2024), which indicates deaths relative to expected deaths, not an absolute count.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-x3",
+            "page": 6,
+            "quote": "The hospital standardized mortality ratio for the group was 0.97, which means that fewer patients died than would be expected",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 845,
+        "tokens_out": 115,
+        "llm_ms": 0.18724999972619116,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states the death count is not given and cites the standardized mortality ratio of 0.97, matching the reference.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p6-x1",
+        "p6-x2",
+        "p6-x3",
+        "p6-x4",
+        "p6-x5"
+      ]
+    },
+    {
+      "id": "v25",
+      "type": "unanswerable",
+      "question": "What was the bed occupancy at Brackenmoor Mental Health Unit in 2024?",
+      "expected_answer": "Not given; only the 2025 figure (89.2%) is reported for each hospital",
+      "gold_pages": [
+        12
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 14.4849
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 11.9971
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 10.5886
+          },
+          {
+            "chunk_id": "p18-x1",
+            "pages": [
+              18
+            ],
+            "type": "text",
+            "score": 8.6123
+          },
+          {
+            "chunk_id": "p13-x1",
+            "pages": [
+              13
+            ],
+            "type": "text",
+            "score": 8.3037
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 7.4584
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 7.3202
+          },
+          {
+            "chunk_id": "p16-x1",
+            "pages": [
+              16
+            ],
+            "type": "text",
+            "score": 5.3766
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts only state Brackenmoor's bed occupancy for 2025 (89.2%); no 2024 figure for Brackenmoor is provided. Table 4 gives occupancy by ward type for 2023–2025 but excludes mental health wards.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-x1",
+            "page": 3,
+            "quote": "Bed occupancy at Brackenmoor Mental Health Unit averaged 89.2% in 2025.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p16-t1",
+            "page": 16,
+            "quote": "Table 4: Average bed occupancy and length of stay by type of ward",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2028,
+        "tokens_out": 154,
+        "llm_ms": 2639.787476975471,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer correctly states the 2024 Brackenmoor figure is not given and only the 2025 figure (89.2%) is reported.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "refused",
+        "answer": "The excerpts only state bed occupancy figures for 2025; no 2024 occupancy data is provided for Brackenmoor Mental Health Unit or any other hospital.",
+        "error": "",
+        "citations": [],
+        "tokens_in": 899,
+        "tokens_out": 52,
+        "llm_ms": 0.1708510098978877,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": false,
+        "citations_verified": null,
+        "judge": "correct",
+        "judge_reason": "Both answers state that 2024 occupancy data is not provided; only the 2025 figure is reported.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p12-t1",
+        "p12-x1"
+      ]
+    },
+    {
+      "id": "v26",
+      "type": "unanswerable",
+      "question": "What was the funding deficit of the pension scheme at the latest actuarial valuation?",
+      "expected_answer": "Not given; the report refers to Appendix D, which is not included",
+      "gold_pages": [
+        21,
+        26,
+        30
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p21-x1",
+            "pages": [
+              21
+            ],
+            "type": "text",
+            "score": 21.0853
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 7.9599
+          },
+          {
+            "chunk_id": "p27-x3",
+            "pages": [
+              27
+            ],
+            "type": "text",
+            "score": 3.236
+          },
+          {
+            "chunk_id": "p30-x1",
+            "pages": [
+              30
+            ],
+            "type": "text",
+            "score": 2.9414
+          },
+          {
+            "chunk_id": "p19-x3",
+            "pages": [
+              19
+            ],
+            "type": "text",
+            "score": 2.4026
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p2-t1",
+            "pages": [
+              2
+            ],
+            "type": "table",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state the funding deficit of the pension scheme. It says the actuarial valuation and funding position are reported in Appendix D, but Appendix D is published separately and is not included in these excerpts.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p21-x1",
+            "page": 21,
+            "quote": "The actuarial valuation of the scheme, including the funding position, is reported in Appendix D.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p30-x1",
+            "page": 30,
+            "quote": "Appendix D is published separately with the group's pension disclosures.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1928,
+        "tokens_out": 280,
+        "llm_ms": 4856.433875975199,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states the deficit is not given because it is in Appendix D, which is not included.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "refused",
+        "answer": "The excerpts do not state the funding deficit. They say the actuarial valuation and funding position are reported in Appendix D, which is published separately and not included here.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p21-x1",
+            "page": 21,
+            "quote": "The actuarial valuation of the scheme, including the funding position, is reported in Appendix D.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p30-x1",
+            "page": 30,
+            "quote": "Appendix D is published separately with the group's pension disclosures.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1248,
+        "tokens_out": 127,
+        "llm_ms": 0.14666302013210952,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states that the deficit is not given because the information is in Appendix D, which is not included.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p21-x1",
+        "p21-x2",
+        "p21-x3",
+        "p21-x4",
+        "p21-x5",
+        "p26-x1",
+        "p30-x1"
+      ]
+    },
+    {
+      "id": "v27",
+      "type": "false_premise",
+      "question": "In which year did the group open its second clinic in Germany?",
+      "expected_answer": "It has not: the group has one clinic in Germany and no plans to open a second",
+      "gold_pages": [
+        22,
+        26
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "one clinic",
+          "single",
+          "only one",
+          "no plans",
+          "does not plan",
+          "do not plan",
+          "not plan",
+          "has not",
+          "not opened",
+          "no second"
+        ]
+      ],
+      "gold_chunks": [
+        "p22-x1",
+        "p26-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p22-x1",
+            "pages": [
+              22
+            ],
+            "type": "text",
+            "score": 14.999
+          },
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 11.3186
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 7.2082
+          },
+          {
+            "chunk_id": "p8-x4",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 4.3989
+          },
+          {
+            "chunk_id": "p4-x2",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.3806
+          },
+          {
+            "chunk_id": "p5-x2",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 3.9551
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 3.1195
+          },
+          {
+            "chunk_id": "p8-x1",
+            "pages": [
+              8
+            ],
+            "type": "text",
+            "score": 2.1842
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The question rests on a false premise: the group never opened a second clinic in Germany. It runs only one rehabilitation clinic in Germany, Halbrook Rehabilitation GmbH, and states it has no plans to open a second one.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p22-x1",
+            "page": 22,
+            "quote": "The group has no plans to open a second clinic in Germany or elsewhere outside the United Kingdom.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p3-x1",
+            "page": 3,
+            "quote": "It runs six hospitals with a combined 1,616 beds and one rehabilitation clinic in Germany, Halbrook Rehabilitation GmbH.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p26-x1",
+            "page": 26,
+            "quote": "We do not plan to open a second clinic in Germany. Our focus abroad is on raising the occupancy of the existing one.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1487,
+        "tokens_out": 205,
+        "llm_ms": 3343.5086160025094,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both answers state the group has only one clinic in Germany and no plans for a second.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "There is no second clinic in Germany. The document states the group has no plans to open one and does not plan to open one; the existing clinic's focus is raising occupancy. The question rests on a false premise.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p22-x1",
+            "page": 22,
+            "quote": "The group has no plans to open a second clinic in Germany or elsewhere outside the United Kingdom.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p26-x1",
+            "page": 26,
+            "quote": "We do not plan to open a second clinic in Germany. Our focus abroad is on raising the occupancy of the existing one.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 964,
+        "tokens_out": 147,
+        "llm_ms": 0.141577998874709,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both answers state no second clinic exists and there are no plans to open one.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p22-x1",
+        "p22-t1",
+        "p26-x1"
+      ]
+    },
+    {
+      "id": "v28",
+      "type": "false_premise",
+      "question": "Why did the maternity unit at Quillfield close in 2025?",
+      "expected_answer": "It did not close: it remained open throughout 2025 and there are no plans to close it",
+      "gold_pages": [
+        26
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "remained open",
+          "did not close",
+          "not close",
+          "no plans to close",
+          "still open",
+          "open throughout"
+        ]
+      ],
+      "gold_chunks": [
+        "p26-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p26-x1",
+            "pages": [
+              26
+            ],
+            "type": "text",
+            "score": 10.204
+          },
+          {
+            "chunk_id": "p13-t1",
+            "pages": [
+              13,
+              14
+            ],
+            "type": "table",
+            "score": 6.0281
+          },
+          {
+            "chunk_id": "p16-t1",
+            "pages": [
+              16
+            ],
+            "type": "table",
+            "score": 6.0162
+          },
+          {
+            "chunk_id": "p15-t1",
+            "pages": [
+              15
+            ],
+            "type": "table",
+            "score": 5.5184
+          },
+          {
+            "chunk_id": "p3-x3",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 5.4631
+          },
+          {
+            "chunk_id": "p18-t1",
+            "pages": [
+              18
+            ],
+            "type": "table",
+            "score": 4.8369
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 4.4724
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 3.987
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The question rests on a false premise: the maternity unit at Quillfield did not close. The report states it remained open throughout 2025 and there are no plans to close it.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p26-x1",
+            "page": 26,
+            "quote": "The maternity unit at Quillfield remained open throughout 2025 and there are no plans to close it.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 3198,
+        "tokens_out": 98,
+        "llm_ms": 1851.471062982455,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states the unit did not close and remained open throughout 2025 with no plans to close.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The maternity unit at Quillfield did not close in 2025; the report states it \"remained open throughout 2025 and there are no plans to close it.\"",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p26-x1",
+            "page": 26,
+            "quote": "The maternity unit at Quillfield remained open throughout 2025 and there are no plans to close it.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 376,
+        "tokens_out": 104,
+        "llm_ms": 0.10763201862573624,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: the unit did not close and remained open with no closure plans.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p26-x1"
+      ]
+    }
+  ]
+}
