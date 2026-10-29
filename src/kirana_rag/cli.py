@@ -149,7 +149,8 @@ def ask(
 def eval_cmd(
     tag: str = typer.Option("baseline", help="Run tag; writes eval/results/<tag>.json."),
     suite: str = typer.Option(
-        "core", help="Question set: core (questions.yaml) or hard (questions_hard.yaml)."
+        "core",
+        help="Question set: core (questions.yaml), hard (questions_hard.yaml) or holdout (questions_holdout.yaml).",
     ),
     questions: Path = typer.Option(None, help="Questions file (default eval/questions.yaml)."),
     doc: str = typer.Option(
