@@ -138,14 +138,32 @@ What did not: answer-level judge scores are flat (94% hard in both: a fixed h01 
 (q07's table lost the rank Snowball gave it, which the stemmer rule accepted), cost rose 2-4% on Kirana instead of staying flat, and the holdout
 (10 chunks) cannot show answer-level gains because k=8 returns most of the document. Single runs, 51 questions, one author: directional only.
 
+## Holdout v2: a larger, less Kirana-like document
+
+Plan `HOLDOUT_V2_PLAN.md`; rule, predictions (committed before any run) and every number in `eval/ITERATIONS.md`. A third generated report
+(`scripts/make_holdout2_pdf.py`, a regional hospital group, 30 pages, **68 chunks**): two-column pages, footnotes, a three-page table, merged header
+cells, an unruled table, two charts, a scan, a landscape page, mixed UK/US spelling and `1.234,5` numbers. 28 questions frozen before the document was ingested;
+no code in `src/` changed, and no ingestion weakness was fixed (they are in `eval/failure_analysis_holdout2.md`).
+
+| mean first-gold-chunk rank (retrieval only) | Kirana (32) | holdout v1 (11) | holdout v2 (23) |
+|---|---|---|---|
+| BM25, spelling | 1.81 | 1.55 | 3.57 |
+| hybrid, spelling (default) | 1.41 | 1.45 | 2.70 |
+| hybrid, Snowball (`KIRANA_NORMALISE=full`) | 1.41 | 1.36 | 2.39 |
+
+Answers on holdout v2 (k=8): 89% judge-correct with hybrid, 93% BM25-only, 100% with oracle context. Hybrid beats BM25 on all three documents; by the
+pre-registered rule Snowball under hybrid **passes** (tie on Kirana, better on both holdouts) but each gain is one question, and the rule also says the UK/US spelling
+pass earns nothing. The default is unchanged; the switch is the author's call. Predictions were right on ingestion pitfalls (column interleave, split table, footnote)
+and wrong on how much they would hurt (the unruled table and every chart and scan value were read correctly) and on Snowball and hybrid-vs-BM25 at answer level.
+
 ## Known limitations
 
 - Page-level gold labels overstate retrieval for tables (a prose chunk on the same page counts as a hit).
 - **Vision output is non-deterministic and unverified.** The same image can be transcribed differently across runs at temperature 0 (seen on a diagram edge and a chart title). Facts that live only in images (9 of 20 core questions) inherit that risk, so the eval numbers describe one ingest run. The response cache makes reruns repeatable, not reliable.
 - Snowball stemming was dropped in iteration 3 (it lowered the first-gold rank on both documents); `KIRANA_NORMALISE=full` brings it back for comparison.
 - The dense model is small and English-only; it can promote vaguely related chunks over exact-number matches (q07 lost a rank or two).
-- The holdout is one synthetic document of 10 chunks written by the same author as the code: a weak test of generality, not proof.
-- Reading order is top-to-bottom, left-to-right; multi-column layouts would interleave.
+- The two holdouts are synthetic documents (10 and 68 chunks) written by the same author as the code: a weak test of generality, not proof.
+- Reading order is top-to-bottom, left-to-right; **multi-column pages come out interleaved** (seen on holdout v2: sentences cut in two, section labels drifting). Footnotes are glued to the neighbouring prose chunk (v15 failed because of it), a table over three pages merges only two, a table of contents becomes a table chunk.
 - BM25 has UK/US spelling normalisation only; meaning-based matches come from the small dense model (h01 now works, but it is not a reranker).
 - Arithmetic is done by the model (one rounding slip observed).
 - Only text-layer tables are parsed as tables; a table inside an image is a vision transcript.
@@ -155,7 +173,7 @@ What did not: answer-level judge scores are flat (94% hard in both: a fixed h01 
 
 Verify image transcripts with a second pass (q14, vision non-determinism); a calculator tool for arithmetic (q03); table-aware retrieval (whole table or
 none) with a short natural-language description per table chunk; a refusal threshold only if retrieval scores separate answerable from unanswerable;
-a larger eval set across several real documents so deltas are not limited by 51 questions on a few reports; cross-encoder reranking;
+a larger eval set across several real documents so deltas are not limited by 79 questions on a few reports; a second pass on ingestion (reading order for columns, footnotes, tables over three pages); cross-encoder reranking;
 per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
 
 ## How AI tools are used
@@ -168,4 +186,4 @@ At runtime the system calls GLM-5.3 (answers, judging) and GLM-4.6V (image trans
 
 `src/kirana_rag/` (`ingest/`, `retrieve.py`, `embed.py`, `answer.py`, `prompts.py`, `llm.py`, `cli.py`, `eval/`), `eval/` (questions, results,
 analysis), `docs/` (ingestion notes, decisions), `scripts/make_subset_pdf.py` (builds a 4-page subset PDF: ingest it and ask
-questions with no code changes), `scripts/make_holdout_pdf.py` (the holdout report), `scripts/retrieval_ablation.py` (retrieval-only metrics), `tests/` (pytest, LLM mocked).
+questions with no code changes), `scripts/make_holdout_pdf.py` and `scripts/make_holdout2_pdf.py` (the holdout reports), `scripts/resolve_gold_chunks.py` (gold chunk ids from `gold_text`), `scripts/retrieval_ablation.py` (retrieval-only metrics and the decision rule), `tests/` (pytest, LLM mocked).

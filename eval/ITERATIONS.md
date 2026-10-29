@@ -374,8 +374,8 @@ and judge strictness). v15 is partial in both (footnote glued to a training para
 - The larger, structurally different document did not break the pipeline: answers are as good as on Kirana. Ingestion damage is real (interleaved columns, a footnote
   attached to the wrong paragraph, a table split over two chunks) but the answers survive it because chunks still contain the facts and k=8 over 68 chunks covers about 12% of the document.
   The plan's expectation that ingestion failures would dominate was too pessimistic for this generator: its tables are clean and its scan is perfectly legible.
-- It did make a retrieval error reach an answer (v12), which holdout v1 could not. Hybrid ranks better on average but, with a dense model that prefers tables with the
-  same topic words, it pushed one prose chunk out of the top 8.
+- It did make a retrieval error reach an answer (v12), which holdout v1 could not. Hybrid ranks better on average but, for v12, the dense ranking put the gold chunk
+  at 14 (BM25 had it at 6) and fusion moved it to 9; that chunk opens with a paragraph about board changes (column interleave), which probably dilutes its embedding.
 - Three documents now agree that hybrid beats BM25 on mean rank under every normalisation. They disagree about Snowball (hybrid: level, better, better; BM25: worse, worse, better),
   and the evidence for each is a handful of questions; a fourth document would be a better use of effort than tuning the stemmer.
 - Not tuned: no setting was changed or chosen on any set; the three normalisation modes already existed and the rule was written before the document did.

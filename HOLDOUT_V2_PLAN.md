@@ -1,4 +1,4 @@
-# Plan: a larger, less Kirana-like holdout (for a later iteration; not implemented)
+# Plan: a larger, less Kirana-like holdout (implemented 2026-10-29: see eval/ITERATIONS.md, "Holdout v2")
 
 Why: the current holdout has 10 chunks, so k=8 returns most of the document and retrieval changes cannot show up in answers. It also
 resembles Kirana (same author, similar structure). Generalization is the priority: the recruiter's demo is an unseen document.
