@@ -289,3 +289,95 @@ is reported as "passes, no gain". If it fails on any set it is rejected.
    retrieval difference should be visible in answers; a difference of one question is noise (single LLM runs).
 8. Unanswerable and false premise: at least 3 of the 4 near-miss questions are refused; at least 1 of the 2 false-premise questions is answered correctly;
    the conflict question is the most likely of the three kinds to get the wrong status.
+
+## Holdout v2: results
+
+Document: Halbrook Regional Health Group report, 30 pages, **68 chunks** (holdout v1: 10, Kirana: 27). 28 questions, 23 with gold chunks (v22 to v26
+unanswerable). Runs on disk: `holdout2_baseline` (hybrid, `spelling`, k=8, the default code), `holdout2_bm25` (same, `--retriever bm25`). Ablation output:
+`eval/results/ablation_v2.md`. Failure analysis: `eval/failure_analysis_holdout2.md`. Single runs; one question is 3.6 points.
+
+### Retrieval only (no LLM), full ranking, mean first-gold-chunk rank (hit@1 / recall@5 in brackets for holdout v2)
+
+| retriever | normalise | core (17) | hard (15) | Kirana pooled (32) | holdout v1 (11) | holdout v2 (23) |
+|---|---|---|---|---|---|---|
+| bm25 | none | 1.47 | 2.00 | 1.72 | 1.55 | 3.57 (52% / 78%) |
+| bm25 | spelling | 1.47 | 2.20 | 1.81 | 1.55 | 3.57 (52% / 78%) |
+| bm25 | full | 1.41 | 2.47 | 1.91 | 1.82 | 2.61 (61% / 80%) |
+| hybrid | none | 1.47 | 1.27 | 1.38 | 1.45 | 2.70 (57% / 85%) |
+| **hybrid** | **spelling (default)** | 1.47 | 1.33 | **1.41** | **1.45** | **2.70 (57% / 85%)** |
+| hybrid | full (Snowball) | 1.29 | 1.53 | 1.41 | 1.36 | 2.39 (57% / 89%) |
+
+The first five columns for Kirana and holdout v1 reproduce iteration 3 and its follow-up exactly (no code under `src/` changed).
+
+### Decision rule, applied as pre-registered (candidate <= reference at two decimals on Kirana pooled, holdout v1 and holdout v2)
+
+| comparison (candidate vs reference) | Kirana | holdout v1 | holdout v2 | verdict |
+|---|---|---|---|---|
+| **Snowball: hybrid full vs hybrid spelling (primary)** | 1.41 vs 1.41 | 1.36 vs 1.45 | 2.39 vs 2.70 | **passes, gain somewhere** |
+| Snowball: bm25 full vs bm25 spelling (secondary) | 1.91 vs 1.81 | 1.82 vs 1.55 | 2.61 vs 3.57 | FAILS (Kirana, holdout v1) |
+| Spelling pass: hybrid spelling vs hybrid none | 1.41 vs 1.38 | 1.45 vs 1.45 | 2.70 vs 2.70 | FAILS (Kirana by 0.03) |
+| Spelling pass: bm25 spelling vs bm25 none | 1.81 vs 1.72 | 1.55 vs 1.55 | 3.57 vs 3.57 | FAILS (Kirana) |
+| Retriever: hybrid vs bm25, spelling | 1.41 vs 1.81 | 1.45 vs 1.55 | 2.70 vs 3.57 | passes, gain on all three |
+| Retriever: hybrid vs bm25, none | 1.38 vs 1.72 | 1.45 vs 1.55 | 2.70 vs 3.57 | passes, gain on all three |
+| Retriever: hybrid vs bm25, full | 1.41 vs 1.91 | 1.36 vs 1.82 | 2.39 vs 2.61 | passes, gain on all three |
+
+**What the rule says about Snowball:** under the default retriever it passes. The Kirana comparison is an exact tie (rank sums 45 and 45 over 32
+questions), holdout v1 improves by 0.09 and holdout v2 by 0.31. By the rule as written, Snowball would be kept. **The default is not changed**: that decision
+is the author's, and the reading below says why the pass is thinner than the numbers look.
+
+- **Each gain is one question.** The whole holdout v2 gain is v15, the footnote question (hybrid rank 13 to 3, BM25 34 to 9; "colleagues" stems to the same
+  token as "colleague" in the neighbouring training paragraph). The other four changed questions net out at +3 (v06 3 to 2, v07 3 to 5, v08 2 to 3, v09 4 to 5), so without v15 Snowball
+  is worse on holdout v2. Holdout v1's gain is w05 (2 to 1). Hit@1 on holdout v2 is the same (57%) with and without it.
+- The rule is stated on mean rank and counts a tie as a pass, so it cannot distinguish "level" from "better"; it also does not weigh the BM25-only result, where Snowball loses on
+  Kirana and holdout v1 and only wins on holdout v2 (again through v15).
+- The rule also says the **spelling pass fails** (hybrid: 1.41 vs 1.38 on Kirana, one hard question one rank lower; identical on both holdouts, including this document that mixes UK and US
+  spelling). It earns nothing measurable. `none` is the simplest setting that passes everywhere; I leave that to the author too.
+- Hybrid passes against BM25 on all three, with a gain on every set, for all three normalisations. This is now the best-supported retrieval conclusion: three documents, same direction.
+
+### Answer metrics, holdout v2 (answerable = 23)
+
+| metric | hybrid (`holdout2_baseline`) | BM25 (`holdout2_bm25`) |
+|---|---|---|
+| hit@1 / hit@5 / hit@8 (page) | 83 / 96 / 100 | 74 / 96 / 100 |
+| chunk hit@1 / hit@8 / recall@5 | 57 / 91 / 85 | 52 / 91 / 78 |
+| status / facts / judge correct | 96 / 91 / 89 | 100 / 96 / 93 |
+| judge partial | 7 | 7 |
+| oracle judge correct | 100 | 100 |
+| false-refusal / refusal recall | 4 / 100 | 0 / 100 |
+| answer-call cost (list price, USD) | 0.0925 | 0.0908 |
+| corpus chunks | 68 | 68 |
+
+Per-question: the only differences are v12 (hybrid wrong, BM25 partial: gold chunk at rank 9 vs 6) and v14 (hybrid partial, BM25 correct: same context, generator
+and judge strictness). v15 is partial in both (footnote glued to a training paragraph). Everything else is correct in both, including the conflict, five unanswerable questions and both false premises.
+
+### Predictions vs actual
+
+| # | prediction | actual | verdict |
+|---|---|---|---|
+| 1 | 55 to 90 chunks | 68 | right |
+| 2a | three-page table merged only across two pages | `p13-t1` pages 13-14, `p15-t1` separate | right |
+| 2b | two-column reading order wrong | paragraphs of the two columns interleaved (`p4-x1`, `p9-x1`, `p23-x1`, ...) | right |
+| 2c | merged-header table has a mangled or empty header row | header has an empty cell and the second header row becomes a data row; values intact | partly right |
+| 2d | unruled table not detected | detected and extracted cleanly (`p17-t1`) | **wrong** |
+| 2e | footnote text lands in prose chunks | yes (`p8-x4`); it caused the one failure that is purely ingestion | right |
+| 2f | at least one chart or scan number wrong or missing | all values right (`p10-f1`, `p11-f1`, `p25-s1`) | **wrong** |
+| - | not predicted | the table of contents became a 212-word table chunk; section labels drift on column-interleaved pages | new |
+| 3 | hybrid not worse than BM25, better by >= 0.3 at the default; mean rank 2 to 4 | 2.70 vs 3.57 (0.87 better); 2.70 | right |
+| 4 | Snowball (hybrid) fails the rule | **passes** (tie on Kirana, better on both holdouts), but each gain is one question | **wrong** |
+| 5 | spelling vs none within 0.1 under hybrid | 0.03, 0.00, 0.00 | right |
+| 6 | page hit@8 below 100% (85 to 95%); judge-correct 60 to 80%; failures mostly ingestion | hit@8 100%; judge 89% (hybrid), 93% (BM25); oracle 100%; the failures are retrieval (v12, v15), one ingestion-caused | **wrong** (the document is easier for the pipeline than predicted) |
+| 7 | hybrid has >= as many judge-correct answers as BM25, by 1 to 3 | 25 vs 26 | **wrong** |
+| 8 | >= 3 of 4 near-miss refused; >= 1 of 2 false premises right; conflict most likely wrong | 4/4 (5/5 with the appendix question); 2/2; conflict right | right on the first two, **wrong** on the third |
+
+### Honest reading
+
+- The larger, structurally different document did not break the pipeline: answers are as good as on Kirana. Ingestion damage is real (interleaved columns, a footnote
+  attached to the wrong paragraph, a table split over two chunks) but the answers survive it because chunks still contain the facts and k=8 over 68 chunks covers about 12% of the document.
+  The plan's expectation that ingestion failures would dominate was too pessimistic for this generator: its tables are clean and its scan is perfectly legible.
+- It did make a retrieval error reach an answer (v12), which holdout v1 could not. Hybrid ranks better on average but, with a dense model that prefers tables with the
+  same topic words, it pushed one prose chunk out of the top 8.
+- Three documents now agree that hybrid beats BM25 on mean rank under every normalisation. They disagree about Snowball (hybrid: level, better, better; BM25: worse, worse, better),
+  and the evidence for each is a handful of questions; a fourth document would be a better use of effort than tuning the stemmer.
+- Not tuned: no setting was changed or chosen on any set; the three normalisation modes already existed and the rule was written before the document did.
+- Limits: all three documents are synthetic and by the same author as the code; 23 questions with chunk labels; single LLM runs; one question is 3.6 points; the gold-chunk labels were assigned by
+  matching strings against the ingested chunks, so a gold chunk can only be one that ingestion produced.
