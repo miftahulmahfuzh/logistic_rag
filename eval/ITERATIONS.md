@@ -146,3 +146,75 @@ Kirana core+hard combined mean rank (32 questions): none 1.72, spelling 1.81, fu
 these two documents (it matters only when the query and the text use different spellings, which no question here tests beyond h05).
 Full Snowball does buy hit@1 on core (71% to 82%), which is the part of iteration 2 that looked like a gain. The switch
 `KIRANA_NORMALISE` stays because it is one line and keeps the ablation reproducible.
+
+## Step C and D: hybrid retrieval, measured
+
+Runs on disk: `iter3`, `hard_iter3`, `holdout_iter3` (hybrid, k=8, `spelling` normalisation); `iter3_bm25`, `hard_iter3_bm25`,
+`holdout_iter3_bm25` (BM25 only, same normalisation, the separation runs); `holdout_iter2` (holdout baseline, iteration 2 code).
+Single runs, response cache on (`.cache/llm`, vision transcripts unchanged). Judge and generator are LLMs: a one-question swing is
+noise (20, 18 and 13 questions).
+
+### Retrieval only (no LLM), first-gold-chunk rank over the full ranking (`scripts/retrieval_ablation.py`)
+
+| retriever / normalisation | core mean rank | hard mean rank | Kirana 32-question mean | holdout mean rank | hard recall@5 | holdout recall@5 |
+|---|---|---|---|---|---|---|
+| BM25, none (iteration 2, change A only) | 1.47 | 2.00 | 1.72 | 1.55 | 90% | 95% |
+| BM25, full (iteration 2 as shipped) | 1.41 | 2.47 | 1.91 | 1.82 | 73% | 86% |
+| BM25, spelling (Step B decision) | 1.47 | 2.20 | 1.81 | 1.55 | 83% | 95% |
+| **hybrid, spelling (iteration 3)** | **1.47** | **1.33** | **1.41** | **1.45** | **93%** | **100%** |
+
+### Answer metrics, three suites
+
+| metric | core it2 | core it3 | core it3 bm25 | hard it2 | hard it3 | hard it3 bm25 | holdout it2 | holdout it3 | holdout it3 bm25 |
+|---|---|---|---|---|---|---|---|---|---|
+| hit@1 / hit@5 (page) | 88 / 100 | 82 / 100 | 76 / 100 | 60 / 93 | 87 / 100 | 53 / 100 | 82 / 91 | 82 / 100 | 82 / 100 |
+| hit@8 (page) | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 | 100 |
+| chunk hit@1 / recall@5 | 82 / 94 | 71 / 98 | 71 / 96 | 47 / 73 | 73 / 93 | 40 / 83 | 73 / 86 | 73 / 100 | 73 / 95 |
+| status / facts / judge correct | 95 / 94 / 95 | 95 / 94 / 95 | 95 / 94 / 95 | 94 / 93 / 94 | 100 / 100 / 94 | 94 / 93 / 89 | 92 / 91 / 92 | 92 / 91 / 92 | 92 / 100 / 100 |
+| oracle judge correct | 89 | 89 | 89 | 100 | 100 | 100 | 100 | 100 | 100 |
+| false-refusal / refusal recall | 6 / 100 | 6 / 100 | 6 / 100 | 7 / 100 | 0 / 100 | 7 / 100 | 9 / 100 | 9 / 100 | 9 / 100 |
+| answer-call cost (list price, USD) | 0.0573 | 0.0594 | 0.0571 | 0.0515 | 0.0526 | 0.0512 | 0.0312 | 0.0304 | 0.0325 |
+| corpus chunks | 27 | 27 | 27 | 27 | 27 | 27 | 10 | 10 | 10 |
+
+All values are percentages except cost. Hit@1 and the chunk metrics count answerable questions only (17 core, 15 hard, 11 holdout).
+
+### Predictions vs actual
+
+| prediction | actual | verdict |
+|---|---|---|
+| Hybrid raises hard chunk recall@5 from 73% toward 85%+ | 73% to **93%** (mean first-gold rank 2.47 to 1.33) | **right** |
+| h04, h05, h12 move up | h04 7 to 2, h05 6 to 3, h12 5 to 1 | **right** |
+| h01 may be fixed | **fixed** (retrieval rank 1, answered correctly, no word overlap) | right |
+| Hit@8 stays 100% | 100% on all three suites | **right** |
+| Core judge-correct stays at or above 95% | 95% | **right** (but see below: page hit@1 fell) |
+| Cost unchanged or slightly lower | core +3.7%, hard +2.1%, holdout -2.6% vs iteration 2 | **wrong on Kirana** (slightly higher, tokens in +1.6% / +1.1%); holdout lower |
+| Index build adds a one-time download and a few seconds | model download about 25 s once; embedding 27 chunks is below a second | right |
+| Holdout: hybrid not worse than BM25-only on retrieval-only metrics | mean rank 1.45 vs 1.55, recall@5 100% vs 95%, hit@1 equal | **right** (not overfit by the plan's test) |
+| Risk: dense promotes vague chunks over exact-number matches | core q07 (an exact-label table lookup) first-gold rank 3 (BM25) to 4 (hybrid), and q13 1 to 2; q01 improved 4 to 3 | **partly seen**, small, no answer failure |
+
+### Questions whose outcome changed (iteration 2 to iteration 3 hybrid, answer level)
+
+| question | it2 | it3 | cause |
+|---|---|---|---|
+| h01 | wrong (refused) | **correct** | hybrid (dense match, zero shared words); the BM25-only separation run still refuses |
+| h09 | correct | partial | not retrieval: the gold chunk is rank 1 in all runs. The generator answered "Yes ... NOT above" after seeing the same figures in a different context order. Generator noise. |
+| q14 | wrong | partial | transcript unchanged (cache); the judge rewarded a partly right answer. Still an image-transcription failure. |
+| w07 (holdout) | partial (refused) | partial (refused) | unchanged; the BM25-only run was judged correct. Both runs contain the table and the rule in the context, so the difference is generator phrasing (hybrid's answer omitted one of the three sites). Noise. |
+| everything else | same | same | |
+
+### Which step caused what
+
+- **Step B (drop Snowball, keep spelling)** made BM25-only retrieval worse on the sets where Snowball had helped: core hit@1 88% to 76% (page), chunk hit@1 82% to 71%
+  (q07 table 1 to 3, q08 1 to 2), hard judge 94% to 89% (h09 is generator noise, see above). This is the cost of following the pre-registered rule; it was
+  decided on first-gold rank, where Snowball lost on both documents, not on hit@1.
+- **Step C (hybrid)** recovered and exceeded it: core page hit@1 76% to 82%, hard hit@1 53% to 87%, hard chunk recall@5 83% to 93%, holdout chunk recall@5 95% to 100%.
+  Net against iteration 2: hard up a lot on retrieval, core page hit@1 down 6 points (one question, q07 and q13 sit one or two ranks lower), holdout neutral on answers.
+
+### Honest reading
+
+Retrieval clearly improved on the hard set (the set built to expose missing meaning matching) and did not get worse on the unseen holdout, so the
+mechanism transfers at least in direction. Answer-level gains are small: hard judge-correct is 94% in both iteration 2 and 3, because a fixed h01 was offset by generator
+noise on h09 and a partial q14. The holdout cannot show retrieval gains at the answer level: its corpus is 10 chunks, so k=8 returns most of the document
+whatever the ranker does. The core set did not improve (its page hit@1 is lower than iteration 2's 88%, still within one or two questions).
+No setting was tuned on any set: model, RRF constant, weights, k were fixed in advance; the only data-driven choice was the stemmer, by the stated rule.
+The holdout is 13 questions and one fictional document written by the same author as the code, so it is a weak test of generality, not a proof.

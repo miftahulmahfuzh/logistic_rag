@@ -106,9 +106,8 @@ def render(results_dir: Path, analysis_path: Path, suite: str = "core") -> str:
     if not runs:
         return "# Results\n\nNo runs yet.\n"
     base = next((r for t, r in runs.items() if t.endswith("baseline")), next(iter(runs.values())))
-    main_runs = [t for t in runs if "_k" not in t] or list(
-        runs
-    )  # `<tag>_k3` style tags are k-sweep runs
+    # `<tag>_k3` tags are k-sweep runs, `<tag>_bm25` are retriever-separation runs
+    main_runs = [t for t in runs if "_k" not in t and not t.endswith("_bm25")] or list(runs)
     latest_tag = max(main_runs, key=lambda t: runs[t].get("finished_at", ""))
     latest = runs[latest_tag]
     sb, sl = summarise(base), summarise(latest)
