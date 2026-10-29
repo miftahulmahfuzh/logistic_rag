@@ -38,4 +38,4 @@ pythonpath = ["src"]
 "src/kirana_rag/cli.py" = ["B008"]  # typer's idiom is a call in the default
 
 [tool.ruff.lint]
-ignore = ["SIM905"]
+ignore = ["SIM905", "ISC004"]

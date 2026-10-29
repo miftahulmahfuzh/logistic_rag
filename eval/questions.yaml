@@ -1,0 +1,168 @@
+# DRAFT: needs author review. Questions and expected answers come from BASELINE_IMPLEMENTATION_PLAN.md
+# Appendix A and were re-checked against the PDF text layer and page images.
+#
+# Fields:
+#   must_contain: deterministic check on the answer text, after normalisation (lowercase, commas removed).
+#                 Every entry must appear; an entry that is a list means any one of its strings.
+#   gold_pages:   pages that support the answer; a retrieval hit is any retrieved chunk covering one of them.
+#   expected_status: answered | refused | conflict
+- id: q01
+  type: prose
+  question: "What was Kirana's revenue in 2025 and by how much did it grow?"
+  expected_answer: "THB 8,420 million, up 10.0%"
+  must_contain: ["8420", "10.0"]
+  gold_pages: [2, 3, 4]
+  expected_status: answered
+  notes: "Stated in the CEO letter (p2), the KPI cards (p3) and Table 1 (p4)."
+- id: q02
+  type: table
+  question: "What was net profit in 2024?"
+  expected_answer: "THB 468 million"
+  must_contain: ["468"]
+  gold_pages: [4]
+  expected_status: answered
+  notes: "Single table cell; the year column must be read correctly."
+- id: q03
+  type: multihop
+  question: "Is net debt at end of 2025 within the company's internal limit?"
+  expected_answer: "Net debt THB 2,310m vs EBITDA 1,347m = 1.71x, within the internal limit of 2.0x EBITDA"
+  must_contain: ["1.71"]
+  gold_pages: [4]
+  expected_status: answered
+  notes: "Needs table values plus the limit stated in prose, then a division."
+- id: q04
+  type: table_crossref
+  question: "What was the 2025 utilisation of the Cibitung cold store?"
+  expected_answer: "96% (Table 2, on the continuation page)"
+  must_contain: ["96"]
+  gold_pages: [8]
+  expected_status: answered
+  notes: "Row sits on the continuation page of the facilities table."
+- id: q05
+  type: table_crossref
+  question: "How many of the major facilities are cold-chain sites?"
+  expected_answer: "6: Bang Na, Rayong, Cibitung, Denpasar, Thu Duc, Johor Bahru"
+  must_contain: ["bang na", "rayong", "cibitung", "denpasar", "thu duc", "johor bahru"]
+  gold_pages: [7, 8]
+  expected_status: answered
+  notes: "Answerable only by reading the whole merged table (rows on both pages)."
+- id: q06
+  type: table_crossref
+  question: "Which major facilities are above 92% utilisation, the expansion-study trigger?"
+  expected_answer: "Laem Chabang 93%, Cikarang 94%, Cibitung 96%. Thu Duc is exactly 92%, not above."
+  must_contain: ["laem chabang", "cikarang", "cibitung"]
+  gold_pages: [7, 8]
+  expected_status: answered
+  notes: "Whole merged table plus the trigger in prose; boundary case at exactly 92%."
+- id: q07
+  type: table
+  question: "How many electric light trucks does Indonesia have?"
+  expected_answer: "44"
+  must_contain: ["44"]
+  gold_pages: [9]
+  expected_status: answered
+  notes: "Row/column intersection in the fleet table."
+- id: q08
+  type: conflict
+  question: "How many electric trucks did Kirana add in 2025?"
+  expected_answer: "82 per the fleet section and the errata; the CEO letter says 96 and the errata corrects it"
+  must_contain: ["82", "96"]
+  gold_pages: [2, 9, 12]
+  expected_status: conflict
+  notes: "Conflicting sources; the errata is authoritative."
+- id: q09
+  type: chart
+  question: "What was revenue in the third quarter of 2025?"
+  expected_answer: "THB 2,105 million"
+  must_contain: ["2105"]
+  gold_pages: [5]
+  expected_status: answered
+  notes: "Value exists only in the revenue-by-quarter chart image."
+- id: q10
+  type: chart
+  question: "What share of 2025 revenue came from Indonesia?"
+  expected_answer: "31%"
+  must_contain: ["31"]
+  gold_pages: [5]
+  expected_status: answered
+  notes: "Value exists only in the revenue-by-country chart image."
+- id: q11
+  type: chart
+  question: "In which month was on-time delivery lowest in 2025 and what was it?"
+  expected_answer: "November, 89.7%"
+  must_contain: ["november", "89.7"]
+  gold_pages: [6]
+  expected_status: answered
+  notes: "Minimum over a monthly line chart that only exists as an image."
+- id: q12
+  type: multihop
+  question: "What was emissions intensity per parcel in 2025 and what level would the 30% reduction target from the 2023 baseline imply?"
+  expected_answer: "2.40 g CO2e per parcel in 2025; 2023 was 2.71 so the target is about 1.90"
+  must_contain: ["2.40", ["1.90", "1.9", "1.897"]]
+  gold_pages: [9]
+  expected_status: answered
+  notes: "Chart value plus prose target plus a calculation."
+- id: q13
+  type: kpi
+  question: "What was the customer NPS in 2025 and in 2024?"
+  expected_answer: "52 in 2025, 47 in 2024"
+  must_contain: ["52", "47"]
+  gold_pages: [3]
+  expected_status: answered
+  notes: "KPI card on the at-a-glance page, image only."
+- id: q14
+  type: diagram
+  question: "How many trucks per day run on the Hat Yai to Shah Alam cross-border lane?"
+  expected_answer: "18 trucks/day"
+  must_contain: ["18"]
+  gold_pages: [7]
+  expected_status: answered
+  notes: "Edge label of the line-haul network diagram."
+- id: q15
+  type: scan
+  question: "What is the 2026 tariff for cold-chain pallet storage?"
+  expected_answer: "THB 780.00 per pallet per month, excluding 7% VAT"
+  must_contain: ["780"]
+  gold_pages: [13]
+  expected_status: answered
+  notes: "Scanned page with no text layer."
+- id: q16
+  type: scan
+  question: "What does last-mile delivery of a 2 kg parcel cost including VAT under the 2026 tariff?"
+  expected_answer: "THB 38.00 + 7% VAT = THB 40.66"
+  must_contain: ["40.66"]
+  gold_pages: [13]
+  expected_status: answered
+  notes: "Scan transcription plus a VAT calculation."
+- id: q17
+  type: unanswerable
+  question: "What volume discount applies to a customer storing 500 pallets?"
+  expected_answer: "Not in the report; Schedule C is referenced but not included"
+  must_contain: []
+  gold_pages: [13]
+  expected_status: refused
+  notes: "Tariff points to Schedule C, which is not in the report. Page 13 is a hint only, not evidence."
+- id: q18
+  type: unanswerable
+  question: "What is the net profit forecast for 2026?"
+  expected_answer: "Not given; only revenue growth of 11-13% and capex of about THB 1,050m"
+  must_contain: []
+  gold_pages: [11]
+  expected_status: refused
+  notes: "Nearby facts exist (outlook) but do not answer the question. Page 11 is a hint only."
+- id: q19
+  type: unanswerable
+  question: "Who is the Chief Financial Officer?"
+  expected_answer: "Not in the report (only the CEO is named)"
+  must_contain: []
+  gold_pages: []
+  expected_status: refused
+  notes: "Absent entirely."
+- id: q20
+  type: false_premise
+  question: "Which new country will Kirana enter in 2026?"
+  expected_answer: "None: the report says it does not plan to enter any new country in 2026"
+  must_contain: [["no new country", "not plan to enter", "does not plan", "none", "no plans"]]
+  gold_pages: [11]
+  expected_status: answered
+  notes: "Must answer 'none' from the outlook, not refuse and not invent a country."

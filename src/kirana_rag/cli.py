@@ -18,7 +18,7 @@ def _pages(pages: list[int]) -> str:
 
 @app.callback()
 def _main() -> None:
-    """Kirana document intelligence."""
+    """Document intelligence over annual-report PDFs."""
 
 
 @app.command()
@@ -141,6 +141,46 @@ def ask(
         f"\nlatency: retrieval {ans.retrieval_ms:.1f} ms, llm {ans.llm_ms:.0f} ms | "
         f"tokens: {ans.tokens_in} in / {ans.tokens_out} out | est. cost: {cost} "
         f"| model: {config.settings().model}"
+    )
+
+
+@app.command("eval")
+def eval_cmd(
+    tag: str = typer.Option("baseline", help="Run tag; writes eval/results/<tag>.json."),
+    questions: Path = typer.Option(None, help="Questions file (default eval/questions.yaml)."),
+    doc: str = typer.Option(
+        None, "--doc", help="doc_id to evaluate against (default: all ingested)."
+    ),
+    k: int = typer.Option(5, "-k", help="Chunks given to the generator."),
+    only: str = typer.Option(
+        "", help="Comma-separated question ids, e.g. q03,q09 (does not write RESULTS.md)."
+    ),
+    oracle: bool = typer.Option(True, help="Also run the oracle (gold-page context) pass."),
+) -> None:
+    """Run the eval set, save eval/results/<tag>.json and regenerate eval/RESULTS.md."""
+    from . import config
+    from .eval import report, runner
+
+    qs = runner.load_questions(
+        questions or config.EVAL_DIR / "questions.yaml", set(filter(None, only.split(","))) or None
+    )
+    results = runner.run_eval(qs, doc, tag, k, oracle)
+    if only:
+        for r in results["records"]:
+            a = r["answer"]
+            console.print(
+                f"{r['id']}: {a['status']} facts={a['facts_correct']} judge={a['judge']} :: {a['answer'][:160]}",
+                highlight=False,
+            )
+        return
+    path = runner.save(results)
+    md = report.render(runner.RESULTS_DIR, config.EVAL_DIR / report.ANALYSIS_FILE)
+    (config.EVAL_DIR / "RESULTS.md").write_text(md + "\n")
+    s = report.summarise(results)
+    console.print(f"wrote {path.name} and eval/RESULTS.md")
+    console.print(
+        f"hit@5 {s['hit@5']:.2f} | status {s['answer']['status_correct']:.2f} | "
+        f"facts {s['answer']['facts_correct']:.2f} | judge correct {s['answer']['judge_correct']:.2f}"
     )
 
 
