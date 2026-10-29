@@ -103,9 +103,10 @@ Verify image transcripts with a second pass; add chunk-level gold labels and 30 
 rows, conceptual wording); stemming then local dense embeddings with hybrid fusion; a calculator tool for arithmetic;
 per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
 
-## AI tools
+## How AI tools are used
 
-Built with Claude Code (Claude Sonnet 5.5 wrote most of the code from a written plan). The author reviews the code and can explain it.
+Built with Claude Code (Claude Sonnet 5.5 writes the code from an author-verified plan).
+Author brainstorms the detailed requirements and features and also reviews the code.
 At runtime the system calls GLM-5.3 (answers, judging) and GLM-4.6V (image transcription) through the z.ai API.
 
 ## Layout
