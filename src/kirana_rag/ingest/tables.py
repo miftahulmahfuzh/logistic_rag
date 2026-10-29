@@ -1,5 +1,6 @@
 """Text-layer tables: find_tables -> cell grid -> markdown, with cross-page merging."""
 
+import re
 from dataclasses import dataclass
 
 import pymupdf
@@ -25,6 +26,9 @@ class Table:
             self.parts = [(self.page, self.bbox)]
 
 
+NUMBER_RE = re.compile(r"^[\d.,\-\u2013%()\u00a3$\u20ac\s]+$")
+
+
 def _clean(s: str) -> str:
     return " ".join(s.split()).replace("|", "/")
 
@@ -38,10 +42,39 @@ def extract_tables(page: pymupdf.Page) -> list[Table]:
             cells = [_clean(page.get_textbox(pymupdf.Rect(c))) if c else "" for c in row.cells]
             if any(cells):
                 rows.append(cells)
+        rows = fold_header_band(rows)
         if len(rows) >= 2:
             out.append(Table(page.number + 1, tuple(t.bbox), rows, page.rect.height))
     out.sort(key=lambda t: t.bbox[1])
     return out
+
+
+def fold_header_band(rows: list[list[str]]) -> list[list[str]]:
+    """Fold a two-row header (spanning group cells over sub-headings) into one header row.
+
+    A band is two rows where the second row starts with an empty cell or the first row has an
+    empty cell between filled ones, and the second row holds labels, not numbers. Anything
+    else is returned unchanged.
+    """
+    if len(rows) < 3:
+        return rows
+    top, sub = rows[0], rows[1]
+    filled = [i for i, c in enumerate(top) if c]
+    gap_inside = bool(filled) and any(not top[i] for i in range(filled[0], filled[-1] + 1))
+    sub_cells = [c for c in sub if c]
+    if not sub_cells or not (not sub[0] or gap_inside):
+        return rows
+    if sum(bool(NUMBER_RE.match(c)) for c in sub_cells) * 2 > len(sub_cells):
+        return rows
+    folded, group = [], ""  # group: the spanning label currently in force
+    for t, u in zip(top, sub):
+        if t:
+            group = t
+        elif not u:
+            group = ""  # an empty column ends the span
+        label = f"{group} / {u}" if u and group else (u or t)
+        folded.append(label)
+    return [folded] + rows[2:]
 
 
 def to_markdown(rows: list[list[str]]) -> str:

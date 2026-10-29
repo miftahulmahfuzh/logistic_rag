@@ -278,3 +278,24 @@ def test_navigation_needs_most_lines_to_end_in_a_page_number():
     assert navigation_groups(nav[:2]) == []  # too short to be a list
     leader_free = [mk(f"Item {i}      {i}") for i in range(1, 5)]
     assert len(navigation_groups(leader_free)) == 1
+
+
+def test_header_band_is_folded_only_when_it_is_a_band():
+    band = [
+        ["Site", "Inpatient", "", "Outpatient", ""],
+        ["", "Elective", "Day", "First", "Repeat"],
+        ["A1", "10", "20", "30", "40"],
+    ]
+    folded = tables.fold_header_band(band)
+    assert folded[0] == [
+        "Site",
+        "Inpatient / Elective",
+        "Inpatient / Day",
+        "Outpatient / First",
+        "Outpatient / Repeat",
+    ]
+    assert len(folded) == 2 and folded[1][0] == "A1"
+    plain = [["Site", "Qty", "Area"], ["A1", "10", "20"], ["B2", "30", "40"]]
+    assert tables.fold_header_band(plain) == plain
+    numbers = [["Site", "", "Total"], ["", "10", "20"], ["B2", "30", "40"]]
+    assert tables.fold_header_band(numbers) == numbers  # the second row is data, not labels
