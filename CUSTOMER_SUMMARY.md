@@ -9,7 +9,7 @@ A tool your team can ask questions about the annual report, in plain English. Ea
 We tested it on 79 questions we wrote ourselves, across three reports (yours and two other fictional companies, to check it is not tuned to one document), and repeated each test three times because the language model does not give the identical answer every time.
 
 - **Your report, the standard 20 questions: 95% of answers fully correct** (range 90 to 100% over three runs). A harder set of 18 questions (rephrased, near-duplicate figures, questions the report cannot answer): **98%**.
-- **Every citation was checked and correct.** Every question the report cannot answer was declined, never invented.
+- **Every quoted passage was confirmed on the cited page by code**, and the cited page was the expected one in about 93 to 95% of answers (the rest cite another page that also holds the fact). Every question the report cannot answer was declined, never invented.
 - **Other companies' reports: 95 to 100%**, including a 30-page report with two-column pages, footnotes and a scanned page.
 - **Speed and cost:** about 2.5 seconds per answer and roughly $0.002 per question at list prices.
 
