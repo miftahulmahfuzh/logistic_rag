@@ -429,3 +429,22 @@ Corpus: Kirana 27 chunks, Northmere 10, Halbrook 68. The "before" chunk files ar
 5. Noise: the run-to-run range on holdout v2 judge-correct is at least 2 questions (7 points) wide.
 6. Risk: the column detector misclassifies at least one page of Kirana or Northmere (for example a KPI-card page with several narrow blocks). If so, the page is recorded and the detector tightened from typography, not from that page's content.
 7. Hybrid vs BM25 on holdout v2 after the fixes: within noise at answer level.
+
+## Step 3 and 4: ingestion fixes and re-ingest
+
+Fixes (one commit each, with synthetic-PDF tests on layouts none of the documents contain: three columns, two columns with a full-width heading and table, a footnote on a page without a table, a four-page table, a contents list without a table, a header band with numbers below it): A multi-column reading order, B footnotes as their own chunks, C tables over any number of pages, D contents lists, E merged header cells. Mechanism refinements are in `docs/decisions.md`; the numbers of the plan are unchanged. The same PDFs were re-ingested with `--force`, so the doc ids did not change; vision transcripts came from the cache (no vision call was made). Chunk files after the fixes: `eval/results/chunks_after/`; comparison with `scripts/chunk_diff.py <before> <after>`.
+
+| document | chunks before | chunks after | difference |
+|---|---|---|---|
+| Kirana | 27 | 27 | none: the file is byte-identical to `chunks_before` |
+| Northmere | 10 | 10 | none: byte-identical |
+| Halbrook | 68 | 74 | 23 chunks replaced by 29, listed below |
+
+Halbrook, what changed (every difference):
+- Column pages now read in order and the chunk boundaries move with it: `p3` (three paragraphs, the "Our values" and "Our hospitals" chunks swap places), `p4-x1/x2` (the Chair's review is one continuous text, the sentence about the largest projects is now in `p4-x1`), `p5-x3/x4` (a signature is no longer glued to a cut-off sentence), `p6-x3`, `p7-x1..x3` (one chunk more), `p9-x1`, `p19-x3`, `p23-x1` (the glossary starts at its first term), `p24-x1..x4`, `p26-x1`, `p27-x2/x4` (the travel paragraph no longer carries the "Water" label).
+- Footnotes are their own chunks: `p8-x5` (the "Headcount excludes ... GmbH" note), `p9-x2`, `p19-x4`. Their source prose chunks lost the footnote text.
+- `p2-x1`: the contents list is a text chunk (was the table `p2-t1`).
+- `p12-t1`: one header row (`Inpatient / Elective`, `Inpatient / Day case`, `Outpatient / First`, `Outpatient / Follow-up`).
+- Not changed: the ward table is still `p13-t1` (pages 13 and 14) plus `p15-t1`. The page-14 part ends at 45% of the page height, so it fails the pre-registered "previous part ends in the lower 60%" bar; the threshold was not loosened (see `docs/decisions.md`).
+
+Relabelling: `eval/questions_holdout2_v2chunks.yaml` is a copy of the frozen holdout v2 file with `gold_chunks` re-resolved by `scripts/resolve_gold_chunks.py` from the unchanged `gold_text`. All 23 questions with evidence resolved; every other field is identical to the frozen file. Five labels changed: v05 `p3-x3` to `p3-x2`, v12 `p4-x2` to `p4-x1`, v13 `p3-x3` to `p3-x2`, v14 `p4-x1` to `p4-x2`, v15 `p8-x4` to `p8-x5`. All gold chunk ids of the Kirana core and hard sets and of holdout v1 still exist (the chunk files are identical), so no relabelled copy was needed for them.
