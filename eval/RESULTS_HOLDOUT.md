@@ -70,7 +70,7 @@ Latency note: cached replies report the original call's latency. Cost uses z.ai 
 ## Per question (`holdout_iter3`)
 
 | id | type | gold page rank | gold chunk rank | status | facts | judge | oracle judge | cites ok | verified | note |
-|---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|---|
 | w01 | prose | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
 | w02 | table | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
 | w03 | synonym | 1 | 2 | answered | yes | correct | correct | yes | 100% |  |

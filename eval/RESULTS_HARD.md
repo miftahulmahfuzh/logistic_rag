@@ -72,7 +72,7 @@ Latency note: cached replies report the original call's latency. Cost uses z.ai 
 ## Per question (`hard_iter3`)
 
 | id | type | gold page rank | gold chunk rank | status | facts | judge | oracle judge | cites ok | verified | note |
-|---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|---|
 | h01 | synonym | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
 | h02 | synonym | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
 | h03 | synonym | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |

@@ -222,7 +222,7 @@ def render(results_dir: Path, analysis_path: Path, suite: str = "core") -> str:
         f"## Per question (`{latest_tag}`)",
         "",
         "| id | type | gold page rank | gold chunk rank | status | facts | judge | oracle judge | cites ok | verified | note |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     failures = []
     for r in latest["records"]:

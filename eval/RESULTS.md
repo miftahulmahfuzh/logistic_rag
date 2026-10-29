@@ -74,7 +74,7 @@ Latency note: cached replies report the original call's latency. Cost uses z.ai 
 ## Per question (`iter3`)
 
 | id | type | gold page rank | gold chunk rank | status | facts | judge | oracle judge | cites ok | verified | note |
-|---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|---|
 | q01 | prose | 3 | 3 | answered | yes | correct | correct | yes | 100% |  |
 | q02 | table | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
 | q03 | multihop | 1 | 1 | answered | NO | correct | correct | yes | 100% | disagree |

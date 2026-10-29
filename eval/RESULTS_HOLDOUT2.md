@@ -74,7 +74,7 @@ Latency note: cached replies report the original call's latency. Cost uses z.ai 
 ## Per question (`holdout2_baseline`)
 
 | id | type | gold page rank | gold chunk rank | status | facts | judge | oracle judge | cites ok | verified | note |
-|---|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|---|
 | v01 | prose | 1 | 8 | answered | yes | correct | correct | yes | 100% |  |
 | v02 | table | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
 | v03 | multihop | 1 | 1 | answered | yes | correct | correct | yes | 100% |  |
