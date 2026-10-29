@@ -234,3 +234,58 @@ request, so it is post hoc: the default was **not** changed because of it.
 - Snowball under hybrid is no longer clearly bad: it is best on core and holdout, worst on hard, and its Kirana mean (1.40) is level with spelling (1.41). The Step B rule was
   stated on BM25-only results, where Snowball lost on both documents; under hybrid, applying the same rule would keep it. Switching now would be re-deciding after seeing the
   results, so the default stays `spelling` and the difference is reported as an open question. A proper decision needs the larger holdout in `HOLDOUT_V2_PLAN.md`.
+
+---
+
+# Holdout v2: a larger, less Kirana-like document, and a decision rule for normalisation
+
+Plan: `HOLDOUT_V2_PLAN.md`. Everything in this section down to "Predictions" is written and committed **before any eval is run on the new
+document** (the document does not exist yet when this is committed; it is generated from `scripts/make_holdout2_pdf.py` afterwards). The
+questions in `questions.yaml`, `questions_hard.yaml` and `questions_holdout.yaml` stay untouched. No setting is changed in this work.
+
+## What is measured
+
+- Document: a third fictional company (a regional hospital group), 25 to 40 pages, deliberately unlike Kirana and Northmere (see the plan, section 1).
+- Questions (about 25) are written and frozen in a commit **before the current code is run on the document**. Gold chunk ids come from the
+  ingest of the document, assigned mechanically by matching a verbatim snippet recorded in each question (`gold_text`) against the chunk text,
+  never by looking at what retrieval returns. A snippet that no chunk contains is an ingestion loss: the question loses its chunk labels, is
+  listed in the failure analysis, and still counts at the answer level.
+- Retrieval-only ablation (no LLM, full ranking so a gold chunk is always ranked): normalisation `none|spelling|full` x retriever `bm25|hybrid`
+  on four question sets: core (17 questions with chunk labels), hard (15), holdout v1 (11), holdout v2 (n, see results). "Kirana" is core
+  and hard pooled (32), as in iteration 3. Metric: mean first-gold-chunk rank; hit@1 and recall@5 alongside.
+- Answer level: the default code (hybrid, `spelling`, k=8) on holdout v2 (`holdout2_baseline`) and the BM25-only separation run (`holdout2_bm25`).
+  No other answer runs: the normalisation ablation is retrieval only.
+
+## Decision rule (fixed now, applied mechanically)
+
+A candidate setting C replaces the reference R only if its mean first-gold-chunk rank, rounded to two decimals, is **less than or equal to**
+R's on all three of: Kirana pooled (32), holdout v1, holdout v2. Equal counts as "not worsened". If C passes with no improvement anywhere, that
+is reported as "passes, no gain". If it fails on any set it is rejected.
+
+- Snowball: C = hybrid + `full`, R = hybrid + `spelling` (the current default). The same comparison under BM25 is reported as a secondary
+  row, because the iteration 3 rule was stated on BM25 results.
+- Spelling pass: C = `spelling`, R = `none`, under each retriever, to ask whether the pass earns its place.
+- Retriever: hybrid is kept only if its mean rank is <= BM25's with the same normalisation on all three.
+- The rule's verdict is reported, but **the default is not changed in this work**: the switch is left to the author. Nothing is tuned on any
+  holdout; the settings compared are the three that already exist.
+
+## Predictions (to be marked right or wrong afterwards)
+
+1. Corpus: 55 to 90 chunks (target 60+ met).
+2. Ingestion pitfalls, recorded and not fixed: (a) the three-page table is merged only across its first two pages (the merge loop folds a table
+   into the next page once, so the third page stays a separate chunk); (b) two-column pages come out in the wrong reading order or interleaved,
+   because blocks are sorted by y then x; (c) the table with merged header cells has a mangled or empty header row; (d) the table without
+   ruling lines is not detected as a table and ends up as prose; (e) footnote text lands inside prose chunks. The chart and scan pages are
+   transcribed by the vision model; at least one number from them is wrong or missing.
+3. Retrieval, holdout v2: hybrid is not worse than BM25 on mean first-gold-chunk rank for the same normalisation, and is better by at
+   least 0.3 rank in the default normalisation. Mean rank for hybrid + `spelling` is between 2 and 4 (a 60+ chunk corpus lifts ranks
+   against holdout v1's 1.45).
+4. Snowball verdict: hybrid + `full` **fails** the rule (worse than hybrid + `spelling` on at least one of the three sets). Confidence is low;
+   under hybrid the differences on Kirana and holdout v1 were within 0.1 in the follow-up.
+5. Spelling vs `none` under hybrid: within 0.1 rank on all three sets (no measurable gain).
+6. Answer level, holdout v2: page hit@8 on answerable questions is below 100% for the first time (85 to 95%); overall judge-correct is between 60% and
+   80%, well under Kirana's 95%, and most failures trace to ingestion (tables, reading order, scan/chart transcripts), not to retrieval.
+7. Hybrid vs BM25 on answers: hybrid has at least as many judge-correct answers as BM25-only, by one to three questions. This is the first set where a
+   retrieval difference should be visible in answers; a difference of one question is noise (single LLM runs).
+8. Unanswerable and false premise: at least 3 of the 4 near-miss questions are refused; at least 1 of the 2 false-premise questions is answered correctly;
+   the conflict question is the most likely of the three kinds to get the wrong status.
