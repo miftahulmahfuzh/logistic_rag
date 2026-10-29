@@ -224,3 +224,35 @@ def test_small_text_without_marker_or_with_body_size_is_not_a_footnote(tmp_path,
         res = pipeline.ingest(pdf, force=True)
         (c,) = [c for c in res.chunks if "Ombra" in c.text]
         assert "Fn3" in c.text  # still merged with the prose, as before
+
+
+def test_table_over_four_pages_is_one_chunk(tmp_path):
+    pdf = tmp_path / "t.pdf"
+    build_pdf(
+        pdf,
+        [
+            {"table": (570, [HEADER] + _rows(10))},
+            {"table": (70, [HEADER] + _rows(35, 10))},
+            {"table": (70, [HEADER] + _rows(35, 45))},
+            {"table": (70, [HEADER] + _rows(5, 80))},
+        ],
+    )
+    by_page = _extract(pdf)
+    tables.merge_continued(by_page)
+    (t,) = [t for ts in by_page.values() for t in ts]
+    assert t.pages == [1, 2, 3, 4] and len(t.rows) == 1 + 10 + 35 + 35 + 5
+
+
+def test_table_run_stops_when_a_middle_page_ends_high(tmp_path):
+    pdf = tmp_path / "t.pdf"
+    build_pdf(
+        pdf,
+        [
+            {"table": (570, [HEADER] + _rows(10))},
+            {"table": (70, [HEADER] + _rows(4, 10))},  # ends in the upper half: the table is over
+            {"table": (70, [HEADER] + _rows(5, 14))},
+        ],
+    )
+    by_page = _extract(pdf)
+    tables.merge_continued(by_page)
+    assert [len(by_page[n]) for n in (1, 2, 3)] == [1, 0, 1]

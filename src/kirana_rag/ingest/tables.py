@@ -55,27 +55,33 @@ def _norm_header(row: list[str]) -> list[str]:
     return [c.lower() for c in row]
 
 
-def merge_continued(tables_by_page: dict[int, list[Table]]) -> None:
-    """Merge a table ending page N with one starting page N+1 when the header row is the same.
+def _continues(a: Table, b: Table) -> bool:
+    """True when table b, first on the page after a's last part, carries on a."""
+    last_page, last_box = a.parts[-1]
+    return (
+        last_page + 1 == b.page
+        and len(a.rows[0]) == len(b.rows[0])
+        and _norm_header(a.rows[0]) == _norm_header(b.rows[0])
+        and last_box[3] >= a.page_height * MERGE_BOTTOM_FRAC
+        and b.bbox[1] <= b.page_height * MERGE_TOP_FRAC
+    )
 
-    Mutates tables_by_page: the continuation is folded into the first table and removed.
+
+def merge_continued(tables_by_page: dict[int, list[Table]]) -> None:
+    """Merge a table ending page N with one starting page N+1 when the header row is the same, over any run of pages.
+
+    Mutates tables_by_page: each continuation is folded into the first table and removed.
     """
+    tail: Table | None = (
+        None  # the table that ends the previous page (the merged one if it spans pages)
+    )
     for n in sorted(tables_by_page):
-        nxt = tables_by_page.get(n + 1)
-        cur = tables_by_page.get(n)
-        if not cur or not nxt:
-            continue
-        a, b = cur[-1], nxt[0]
-        if len(a.rows[0]) != len(b.rows[0]):
-            continue
-        if _norm_header(a.rows[0]) != _norm_header(b.rows[0]):
-            continue
-        if (
-            a.bbox[3] < a.page_height * MERGE_BOTTOM_FRAC
-            or b.bbox[1] > b.page_height * MERGE_TOP_FRAC
-        ):
-            continue
-        a.rows.extend(b.rows[1:])  # identical header repeated on the next page: drop it
-        a.pages = (a.pages or [a.page]) + (b.pages or [b.page])
-        a.parts = (a.parts or []) + (b.parts or [])
-        nxt.pop(0)
+        cur = tables_by_page[n]
+        merged = False
+        if tail and cur and _continues(tail, cur[0]):
+            b = cur.pop(0)
+            tail.rows.extend(b.rows[1:])  # identical header repeated on the next page: drop it
+            tail.pages = (tail.pages or []) + (b.pages or [b.page])
+            tail.parts = (tail.parts or []) + (b.parts or [])
+            merged = True
+        tail = cur[-1] if cur else (tail if merged else None)
