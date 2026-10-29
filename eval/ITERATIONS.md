@@ -381,3 +381,51 @@ and judge strictness). v15 is partial in both (footnote glued to a training para
 - Not tuned: no setting was changed or chosen on any set; the three normalisation modes already existed and the rule was written before the document did.
 - Limits: all three documents are synthetic and by the same author as the code; 23 questions with chunk labels; single LLM runs; one question is 3.6 points; the gold-chunk labels were assigned by
   matching strings against the ingested chunks, so a gold chunk can only be one that ingestion produced.
+
+---
+
+# Iteration 4: general ingestion fixes, measured with repeated runs
+
+Plan: `FOURTH_ITERATION_IMPLEMENTATION_PLAN.md`. Everything in this section down to "Predictions" is written and committed **before any document is
+re-ingested and before any eval is run in this iteration**. All four question files are frozen (no question, `must_contain`, `gold_text` or `gold_*` label is edited).
+Default normalisation (`spelling`), retriever (hybrid) and k (8) do not change.
+
+## Baselines this iteration is measured against
+
+Retrieval only, hybrid + `spelling`, mean first-gold-chunk rank (`eval/results/ablation_v2.md`):
+
+| set | mean first-gold rank |
+|---|---|
+| Kirana pooled (core + hard) | 1.41 |
+| holdout v1 (Northmere) | 1.45 |
+| holdout v2 (Halbrook) | 2.70 |
+
+Answers, k=8, single runs: core 95% judge-correct, hard 94%, holdout v1 92%, holdout v2 89% (BM25-only 93%).
+Corpus: Kirana 27 chunks, Northmere 10, Halbrook 68. The "before" chunk files are saved in `eval/results/chunks_before/<doc_id>.jsonl`.
+
+## Fixed in advance (not tuned)
+
+- **Columns:** a page is multi-column when its text blocks (excluding blocks wider than 70% of the page width: full-width headings, captions, tables) fall into 2 to 3 groups whose
+  x-ranges overlap by less than 5% of the page width and each group holds at least 3 blocks. Read order: full-width blocks and column groups in top-to-bottom bands; inside a band,
+  column by column, each top to bottom. Otherwise: the current order.
+- **Footnotes:** a block in the bottom 25% of the page, set at most 85% of the page's body size, beginning with a marker (digit, superscript digit or symbol), becomes its own `text` chunk,
+  section unchanged, marker kept, not merged with other prose.
+- **Tables over N pages:** merge any run of consecutive pages where each continuation table has the same header row and column count, the previous one ends in the lower 60% of its page
+  and the next starts in the upper 40% (existing thresholds), with no limit on the number of pages.
+- **Table of contents:** a block group whose lines mostly (>= 60%) end in a run of dots or spaces followed by a page number is navigation: one `text` chunk, not `table`.
+- **Merged header cells:** when the first two rows of a table are a header band (second row's first cell empty, or first row with empty cells between non-empty ones), fold them into one header row
+  (`Inpatient / Elective`, ...). Otherwise unchanged.
+- **Repeated runs:** N = 3 per answer-level comparison, response cache bypassed (salted) for answer and judge calls; vision transcripts stay cached. Report mean and min-max per metric.
+  A difference is real only if the ranges do not overlap; otherwise "within noise".
+- Detection uses layout (geometry, font size, position, dotted leaders), never words. Nothing document-specific in `src/`; `tests/test_generality.py` stays green.
+- Regression contract: a page that is not special must come out exactly as before (checked with `scripts/chunk_diff.py` against `eval/results/chunks_before/`).
+
+## Predictions (to be marked right or wrong afterwards)
+
+1. Regression: re-ingesting Kirana and Northmere gives chunk text identical to the saved files except where a fix applies; every difference is listed and explained (expected: none on Northmere, none or a footnote/ToC difference on Kirana). Any other difference means the fix is not general and is reverted or narrowed.
+2. Halbrook re-ingest: column pages read in order (`p4-x1` no longer jumps columns; the glossary starts at its first term), the footnote is its own chunk (v15 gold moves to it), the ward table is one chunk over pages 13 to 15, the contents page is a text chunk, `p12-t1` has one header row. Chunk count 66 to 80.
+3. Retrieval only: holdout v2 mean first-gold rank is below 2.70 (with the relabelled gold chunks); Kirana pooled <= 1.41 and holdout v1 <= 1.45.
+4. Answers (3 runs each): holdout v2 judge-correct mean at least as high as before and v15 correct in at least 2 of 3 runs. Kirana core, hard and holdout v1 means stay within the baseline's noise range. The v12 failure may persist (ranking issue).
+5. Noise: the run-to-run range on holdout v2 judge-correct is at least 2 questions (7 points) wide.
+6. Risk: the column detector misclassifies at least one page of Kirana or Northmere (for example a KPI-card page with several narrow blocks). If so, the page is recorded and the detector tightened from typography, not from that page's content.
+7. Hybrid vs BM25 on holdout v2 after the fixes: within noise at answer level.
