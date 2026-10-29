@@ -62,26 +62,33 @@ Details and the by-eye check of every transcript are in `docs/ingestion_notes.md
   failure can be assigned to ingestion, retrieval or generation.
 - All LLM calls go through one client with retry and backoff, concurrency of 2, and a response cache keyed on the full request.
 
-## Baseline results (k=5; full tables in `eval/RESULTS.md` and `eval/RESULTS_HARD.md`)
+## Results: baseline (k=5) vs iteration 2 (k=8) (full tables in `eval/RESULTS.md`, `eval/RESULTS_HARD.md`, `eval/ITERATIONS.md`)
 
-Two question sets, same code, same ingest. The 20-question **core** set is the brief's eval set. The 18-question
+Two question sets, same questions in both columns. The 20-question **core** set is the brief's eval set. The 18-question
 **hard** set (paraphrase, US/UK spelling, conceptual wording, near-duplicate rows, near-miss unanswerables) was written
 before any improvement work so the "baseline, measure, fix, measure again" loop has something to move.
+Iteration 2 made three small changes: (A) fixed the duplicate chunk from merged tables, (B) added spelling and stemming normalisation
+to BM25, (C) raised the default k from 5 to 8. Predictions were committed before the run.
 
-| metric | core (20) | hard (18) |
-|---|---|---|
-| retrieval hit@1 / hit@5 (page-level) | 76% / 100% | 53% / 93% |
-| chunk-level hit@1 / recall@5 | 71% / 96% | 33% / 83% |
-| status correct | 95% | 94% |
-| facts correct (must_contain) | 100% | 87% |
-| LLM judge correct | 95% | 89% |
-| judge correct with oracle (gold-page) context | 95% | 100% |
-| citations verified by code | 100% | 100% |
-| refusal recall / false-refusal rate | 100% / 6% | 100% / 7% |
-| est. cost of the answer calls, whole set (z.ai list price) | $0.040 | $0.048 |
+| metric | core baseline | core iteration 2 | hard baseline | hard iteration 2 |
+|---|---|---|---|---|
+| retrieval hit@1 / hit@5 (page-level) | 76% / 100% | 88% / 100% | 53% / 93% | 60% / 93% |
+| chunk-level hit@1 / recall@5 | 71% / 96% | 82% / 94% | 33% / 83% | 47% / 73% |
+| status correct | 95% | 95% | 94% | 94% |
+| facts correct (must_contain) | 100% | 94% | 87% | 93% |
+| LLM judge correct | 95% | 95% | 89% | 94% |
+| judge correct with oracle (gold-page) context | 95% | 89% | 100% | 100% |
+| citations verified by code | 100% | 100% | 100% | 100% |
+| refusal recall / false-refusal rate | 100% / 6% | 100% / 6% | 100% / 7% | 100% / 7% |
+| est. cost of the answer calls, whole set (z.ai list price) | $0.048 | $0.057 | $0.040 | $0.052 |
+
+What moved: h04 is fixed and hard judge-correct rose by one question, almost entirely from the deeper context (k=8). With A+B at k=5 the
+judge scores are 90% core and 83% hard, i.e. worse than baseline. What did not: h01 and q14 still fail (expected), and
+stemming made the first-gold-chunk rank worse on average (chunk recall@5 on hard 83% to 73%), which k=8 hides. Predictions that were wrong:
+cost rose 21-28%, not 40-60%; false refusals did not reach 0%; h05 did not improve. Single runs on 38 questions: directional, not proof.
 
 The hard set is retrieval-limited, not generation-limited: with the gold pages handed to the generator it scores 100%,
-with retrieved context 89%. The core set's one failure (q14) is an image-transcription error. See
+with retrieved context 89% at baseline. The core set's one failure (q14) is an image-transcription error. See
 `eval/failure_analysis.md` and `eval/failure_analysis_hard.md` for every failure, its stage and the evidence.
 Both eval sets have been reviewed by the author. Cost uses z.ai pay-as-you-go list prices; the real account is a
 flat subscription.
@@ -90,9 +97,9 @@ flat subscription.
 
 - Page-level gold labels overstate retrieval for tables (a prose chunk on the same page counts as a hit).
 - **Vision output is non-deterministic and unverified.** The same image can be transcribed differently across runs at temperature 0 (seen on a diagram edge and a chart title). Facts that live only in images (9 of 20 core questions) inherit that risk, so the eval numbers describe one ingest run. The response cache makes reruns repeatable, not reliable.
-- Known ingestion defect, left in the baseline on purpose: the continuation page of a merged table also emits a flattened prose chunk (`eval/failure_analysis_hard.md`).
+- Stemming (iteration 2) lowered the rank of some table chunks; k=8 compensates. Whether to keep the Snowball pass is an open decision (`docs/decisions.md`).
 - Reading order is top-to-bottom, left-to-right; multi-column layouts would interleave.
-- BM25 has no stemming or synonyms; conceptual questions with different wording will degrade.
+- BM25 has light stemming and UK/US spelling normalisation but no synonyms; conceptual questions with different wording will degrade (h01 still fails).
 - Arithmetic is done by the model (one rounding slip observed).
 - Only text-layer tables are parsed as tables; a table inside an image is a vision transcript.
 - A small corpus: conclusions about k and ranking may not transfer to a 200-page report.
@@ -100,8 +107,8 @@ flat subscription.
 ## What I would do with another week
 
 Verify image transcripts with a second pass; add chunk-level gold labels and 30 harder questions (synonyms, near-duplicate
-rows, conceptual wording); stemming then local dense embeddings with hybrid fusion; a calculator tool for arithmetic;
-per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
+rows, conceptual wording); decide on the stemmer, then local dense embeddings with hybrid fusion; a calculator tool for arithmetic;
+table-aware retrieval (whole table or none); per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
 
 ## How AI tools are used
 

@@ -82,3 +82,10 @@ Ordered improvements:
 4. Local dense embeddings + hybrid (reciprocal rank fusion) so table chunks rank on meaning, not word overlap.
 5. Arithmetic via a calculator tool instead of the model.
 6. Refusal threshold only if the harder set shows retrieval-score separation (the current evidence says it does not).
+
+## After iteration 2 (A table duplicate, B stemming, C k=8)
+
+Still failing: **q14** (diagram edge attached to the wrong node by the vision model; the transcript is cached, so unchanged).
+New: q03's `must_contain` check fails because the answer says "1.71-1.72x" (generator arithmetic wording, judge still correct), and
+the oracle pass for q06 came back partial once (one misread value). Chunk recall@5 slipped 96% to 94% and the first-gold-chunk
+rank got slightly worse on average under stemming; k=8 hides it. See `eval/ITERATIONS.md`.

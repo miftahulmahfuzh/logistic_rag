@@ -55,3 +55,10 @@ Ordered by evidence: (1) fix the merged-table duplicate chunk (ingestion bug abo
 (3) stemming/spelling normalisation (cheap, helps h05-like cases); (4) table-aware retrieval (retrieve a whole table
 or none); (5) re-run both sets and report the delta. Generation changes are
 not justified by this data: oracle accuracy is already 100%.
+
+## After iteration 2 (A table duplicate, B stemming, C k=8)
+
+Still failing: **h01** ("underused warehouses": the table shares no words with the question; the model refuses). Needs
+meaning-based retrieval. h04 is fixed (judge correct) but fragile: the table ranks 7th, so it is only answered because k=8 reaches it
+(refused at k=5). Retrieval got worse for h04, h05 and h12 under stemming (see `eval/ITERATIONS.md`): chunk recall@5 fell from 83% to 73%.
+The duplicate `p8-x1` no longer exists. Unanswerable questions are still all refused.

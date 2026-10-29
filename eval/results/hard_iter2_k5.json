@@ -1,0 +1,3011 @@
+{
+  "tag": "hard_iter2_k5",
+  "suite": "hard",
+  "finished_at": "2026-10-29T09:03:10+00:00",
+  "k": 5,
+  "oracle": true,
+  "doc_ids": [
+    "kirana-logistics-annual-report-2025-109f0c11"
+  ],
+  "n_chunks": 27,
+  "models": {
+    "text": "glm-5.3",
+    "vision": "glm-4.6v"
+  },
+  "tokens": {
+    "in": 19323,
+    "out": 2457,
+    "note": "tokens of calls not served from the response cache in this process"
+  },
+  "records": [
+    {
+      "id": "h01",
+      "type": "synonym",
+      "question": "Which warehouses are underused, below the level that triggers a closure review?",
+      "expected_answer": "Hat Yai (64%) and Da Nang (62%) are below 65%. Note the watch list needs two consecutive quarters below 65%; the report only gives an annual figure.",
+      "gold_pages": [
+        7,
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "hat yai",
+        "da nang"
+      ],
+      "gold_chunks": [
+        "p7-t1",
+        "p7-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 0.5,
+          "8": 0.5
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 6.1404
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 3.5195
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 3.1353
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 2.4579
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 1.7471
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 1.4031
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 1.2647
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document states that sites remaining below 65% utilisation for two consecutive quarters are placed on a consolidation watch list, but no per-site utilisation figures or table of individual warehouses are included in the excerpts, so it is impossible to name which warehouses fall below that level.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "Sites that remain below 65% for two consecutive quarters are placed on a consolidation watch list",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 921,
+        "tokens_out": 130,
+        "llm_ms": 3138.388022023719,
+        "status_correct": false,
+        "facts_correct": false,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "wrong",
+        "judge_reason": "The reference answer identifies Hat Yai (64%) and Da Nang (62%) as below 65%, but the model answer claims no per-site utilisation figures are available.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The document does not describe a closure review; it says sites below 65% utilisation for two consecutive quarters are placed on a 'consolidation watch list'. Two facilities are below 65% in 2025: Hat Yai, Thailand (TH-HDY, 64%) and Da Nang, Vietnam (VN-DNG, 62%). Note the report gives only one year of utilisation data, so it cannot confirm whether these sites have been below 65% for two consecutive quarters.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "Sites that remain below 65% for two consecutive quarters are placed on a consolidation watch list",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "TH-HDY | Hat Yai, Songkhla | Thailand | Cross-dock | 10,900 | 64%",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 8,
+            "quote": "VN-DNG | Da Nang | Vietnam | Cross-dock | 8,400 | 62%",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1473,
+        "tokens_out": 302,
+        "llm_ms": 0.22986700059846044,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly identifies Hat Yai (64%) and Da Nang (62%) as below 65% and notes the two-consecutive-quarters watch-list caveat.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p7-x1",
+        "p7-f1",
+        "p7-t1"
+      ]
+    },
+    {
+      "id": "h02",
+      "type": "synonym",
+      "question": "How much did the company invest in capital projects in 2024?",
+      "expected_answer": "THB 742 million",
+      "gold_pages": [
+        4
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "742"
+      ],
+      "gold_chunks": [
+        "p4-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 5.1071
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 2.7323
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 1.9118
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.6706
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 1.5448
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 1.1873
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 1.0488
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 1.0392
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Capital expenditure in 2024 was THB 742 million, per the five-line financial summary (Table 1, page 4).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Capital expenditure | 610 | 742 | 905 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1109,
+        "tokens_out": 89,
+        "llm_ms": 0.9471990051679313,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states THB 742 million, matching the reference.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Capital expenditure in 2024 was THB 742 million, as shown in the five-line financial summary (Table 1).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Capital expenditure | 610 | 742 | 905 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 644,
+        "tokens_out": 87,
+        "llm_ms": 0.3184709930792451,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference figure of THB 742 million.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-t1"
+      ]
+    },
+    {
+      "id": "h03",
+      "type": "synonym",
+      "question": "By how many did the headcount grow between 2024 and 2025?",
+      "expected_answer": "510 (6,340 to 6,850)",
+      "gold_pages": [
+        10
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "510"
+      ],
+      "gold_chunks": [
+        "p10-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 4,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 4.4296
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 3.5287
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 2.0999
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 2.0838
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 2.0681
+          },
+          {
+            "chunk_id": "p9-f1",
+            "pages": [
+              9
+            ],
+            "type": "figure",
+            "score": 2.0525
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 1.8705
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 1.7857
+          }
+        ],
+        "first_gold_rank": 4,
+        "mrr": 0.25,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Headcount grew by 510 employees, from 6,340 in 2024 to 6,850 in 2025 (6,850 − 6,340 = 510).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p10-t1",
+            "page": 10,
+            "quote": "| Total | 6,340 | 6,850 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1006,
+        "tokens_out": 92,
+        "llm_ms": 5414.523712010123,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference exactly: growth of 510 from 6,340 to 6,850.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Total headcount grew by 510 employees, from 6,340 in 2024 to 6,850 in 2025 (6,850 − 6,340 = 510). Source: Table 5 (figure/table transcript).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p10-t1",
+            "page": 10,
+            "quote": "| Total | 6,340 | 6,850 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 579,
+        "tokens_out": 103,
+        "llm_ms": 0.14646397903561592,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: growth of 510 from 6,340 to 6,850.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p10-t1",
+        "p10-x1"
+      ]
+    },
+    {
+      "id": "h04",
+      "type": "table",
+      "question": "Which single warehouse has the largest floor area, and how big is it?",
+      "expected_answer": "Lat Krabang, Bangkok (TH-LKB), 62,000 sqm",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "lat krabang",
+        "62000"
+      ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 7,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 2.7792
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.9807
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 1.7471
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 1.4031
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 1.3166
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 1.2647
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 1.1843
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 1.0119
+          }
+        ],
+        "first_gold_rank": 7,
+        "mrr": 0.14285714285714285,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts only state aggregate warehouse data (37 warehouses totalling 566,000 sqm, per the '2025 at a glance' table). No excerpt breaks down floor area by individual warehouse, so the largest single warehouse and its size cannot be determined.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-s1",
+            "page": 3,
+            "quote": "Warehouses, 566,000 sqm | 37",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 962,
+        "tokens_out": 109,
+        "llm_ms": 4699.146501981886,
+        "status_correct": false,
+        "facts_correct": false,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "wrong",
+        "judge_reason": "The reference identifies Lat Krabang, Bangkok (TH-LKB) at 62,000 sqm, but the model claims the information is unavailable.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "TH-LKB at Lat Krabang, Bangkok, Thailand, with 62,000 square metres, is the largest single warehouse in Table 2.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "TH-LKB | Lat Krabang, Bangkok | Thailand | Ambient + cross-dock | 62,000",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1473,
+        "tokens_out": 92,
+        "llm_ms": 0.15533200348727405,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: TH-LKB at Lat Krabang, Bangkok, 62,000 sqm.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p7-x1",
+        "p7-f1",
+        "p7-t1"
+      ]
+    },
+    {
+      "id": "h05",
+      "type": "table_crossref",
+      "question": "What is the utilization of the Cikarang site?",
+      "expected_answer": "94%",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "94"
+      ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 6,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 6.2758
+          },
+          {
+            "chunk_id": "p7-f1",
+            "pages": [
+              7
+            ],
+            "type": "figure",
+            "score": 3.0619
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 1.8637
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 1.7469
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 1.5448
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 1.4841
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not report the utilisation of the Cikarang site. It defines utilisation ('average share of usable pallet positions occupied') and gives network-wide thresholds (65% watch list, 92% expansion study), and says Table 2 lists the 23 major facilities, but no per-site utilisation figures, including Cikarang's, appear in the provided excerpts.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "Utilisation is the average share of usable pallet positions occupied during the year.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p12-x1",
+            "page": 12,
+            "quote": "• Utilisation: average share of usable pallet positions occupied.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1100,
+        "tokens_out": 182,
+        "llm_ms": 4370.190098008607,
+        "status_correct": false,
+        "facts_correct": false,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "wrong",
+        "judge_reason": "The reference states Cikarang utilisation is 94%, but the model answer claims the information is not available.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The Cikarang site (ID-CKR) had a utilisation of 94% in 2025.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| ID-CKR | Cikarang, Bekasi | Indonesia | Ambient + cross-dock | 58,000 | 94% | 2015 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1470,
+        "tokens_out": 97,
+        "llm_ms": 0.16748197958804667,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states the Cikarang site utilization is 94%, matching the reference.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p7-x1",
+        "p7-f1",
+        "p7-t1"
+      ]
+    },
+    {
+      "id": "h06",
+      "type": "table_crossref",
+      "question": "How does the floor area of the Johor Bahru cold store compare with the Denpasar one?",
+      "expected_answer": "Johor Bahru 9,200 sqm vs Denpasar 8,100 sqm; Johor Bahru is 1,100 sqm larger",
+      "gold_pages": [
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "9200",
+        "8100"
+      ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 6.6473
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 3.6347
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 3.343
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.9807
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 1.3166
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 1.0681
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.9379
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The Johor Bahru cold store (MY-JHB, 9,200 sqm) is larger than the Denpasar cold store (ID-DPS, 8,100 sqm) by 1,100 sqm.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| MY-JHB | Johor Bahru | Malaysia | Cold chain | 9,200 | 85% | 2022 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| ID-DPS | Denpasar, Bali | Indonesia | Cold chain | 8,100 | 90% | 2024 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1735,
+        "tokens_out": 162,
+        "llm_ms": 3357.5628230173606,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference figures and comparison exactly.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "The Johor Bahru cold store (MY-JHB, 9,200 sqm) is 1,100 sqm larger than the Denpasar cold store (ID-DPS, 8,100 sqm): 9,200 − 8,100 = 1,100 sqm, i.e. about 13.6% larger.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| MY-JHB | Johor Bahru | Malaysia | Cold chain | 9,200 | 85% | 2022 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| ID-DPS | Denpasar, Bali | Indonesia | Cold chain | 8,100 | 90% | 2024 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1096,
+        "tokens_out": 210,
+        "llm_ms": 0.14104999718256295,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference figures and comparison exactly, with additional correct detail.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p7-t1"
+      ]
+    },
+    {
+      "id": "h07",
+      "type": "multihop",
+      "question": "Does the 18% electric share of the fleet agree with the fleet table?",
+      "expected_answer": "Yes: 218 electric of 1,240 vehicles is about 17.6%, which rounds to 18%",
+      "gold_pages": [
+        9
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "218",
+        "1240"
+      ],
+      "gold_chunks": [
+        "p9-t1",
+        "p9-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 5.9997
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 5.6877
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 4.2184
+          },
+          {
+            "chunk_id": "p12-x2",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 3.9247
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 2.1894
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 2.0077
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 1.9954
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.9944
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Yes. The table shows 218 electric light trucks out of a total fleet of 1,240: 218 / 1,240 = 0.1758, or about 17.6%, which rounds to the 18% stated in the text.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "Electric light truck | 132 | 44 | 18 | 24 | 218",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "Total | 590 | 384 | 155 | 111 | 1,240",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Electric vehicles now make up 18% of the fleet.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 948,
+        "tokens_out": 199,
+        "llm_ms": 0.34497000160627067,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: 218 of 1,240 is about 17.6%, rounding to 18%.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Yes, approximately. The table shows 218 electric light trucks out of 1,240 total vehicles. Calculation: 218 / 1,240 = 17.6%, which the report rounds to 18%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "Electric light truck | 132 | 44 | 18 | 24 | 218",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "Total | 590 | 384 | 155 | 111 | 1,240",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Electric vehicles now make up 18% of the fleet.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 890,
+        "tokens_out": 190,
+        "llm_ms": 0.10846302029676735,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches reference: 218/1,240 ≈ 17.6%, rounds to 18%.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p9-t1",
+        "p9-x1",
+        "p9-t2",
+        "p9-f1"
+      ]
+    },
+    {
+      "id": "h08",
+      "type": "multihop",
+      "question": "Which quarter was strongest for revenue, and what fraction of the full-year revenue did it account for?",
+      "expected_answer": "Q4, THB 2,305m of 8,420m = about 27.4%",
+      "gold_pages": [
+        4,
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "q4",
+          "fourth"
+        ],
+        "27"
+      ],
+      "gold_chunks": [
+        "p5-f1",
+        "p4-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.5,
+          "5": 0.5,
+          "8": 0.5
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 7.3194
+          },
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 4.02
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 3.8655
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 3.0007
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 2.5458
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 2.1941
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 2.1773
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.8916
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Q4 was the strongest quarter (THB 2,305 million, per Figure 1). Full-year revenue = 1,962 + 2,048 + 2,105 + 2,305 = 8,420 THB million. Q4 fraction = 2,305 / 8,420 ≈ 27.4% of full-year revenue.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-f1",
+            "page": 5,
+            "quote": "Figure 1. Revenue by quarter, 2025 (THB million)",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p5-x1",
+            "page": 5,
+            "quote": "The fourth quarter was the strongest, driven by peak-season e-commerce volume",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1018,
+        "tokens_out": 209,
+        "llm_ms": 3261.919584008865,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer matches the reference: Q4 strongest at THB 2,305m of 8,420m total, about 27.4%.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Q4 was the strongest quarter with THB 2,305 million (Figure 1, a transcript of a figure). Full-year 2025 revenue was THB 8,420 million (Table 1). Q4 share = 2,305 / 8,420 = 0.2738, i.e. approximately 27.4% of full-year revenue.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-f1",
+            "page": 5,
+            "quote": "| Q4      | 2,305                |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p5-x1",
+            "page": 5,
+            "quote": "The fourth quarter was the strongest, driven by peak-season e-commerce volume",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Revenue | 6,910 | 7,655 | 8,420 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 929,
+        "tokens_out": 219,
+        "llm_ms": 0.2745749952737242,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: Q4 strongest at THB 2,305m of 8,420m, about 27.4%.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p4-x1",
+        "p4-t1",
+        "p5-x1",
+        "p5-f1",
+        "p5-f2"
+      ]
+    },
+    {
+      "id": "h09",
+      "type": "chart",
+      "question": "Was on-time delivery in the last month of the year back above the annual average?",
+      "expected_answer": "No. December was 92.9% against a full-year average of 94.0%",
+      "gold_pages": [
+        6
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "92.9",
+        "94"
+      ],
+      "gold_chunks": [
+        "p6-f1",
+        "p6-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 0.5,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 7.5267
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 6.6339
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 6.623
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 5.0311
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 4.5353
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 4.3554
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 4.3535
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 4.2903
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "No. On-time delivery in December was 92.9% (source: figure on page 6, a chart transcript), while the annual average across the 12 months was 94.04% (1128.5 / 12). December's 92.9% was below the average, not above it.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-f1",
+            "page": 6,
+            "quote": "| Dec   | 92.9                  |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1052,
+        "tokens_out": 303,
+        "llm_ms": 4589.178312016884,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer matches the reference: December 92.9% was below the annual average of ~94%.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "No. The annual average OTD was 94.0%, and December's OTD was 92.9%, so the last month remained below the annual average (92.9 < 94.0).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-x1",
+            "page": 6,
+            "quote": "Full-year on-time delivery (OTD) was 94.0%",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p6-f1",
+            "page": 6,
+            "quote": "Dec   92.9",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 671,
+        "tokens_out": 140,
+        "llm_ms": 0.3009109932463616,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: December 92.9% vs annual average 94.0%, so no.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p6-x1",
+        "p6-f1"
+      ]
+    },
+    {
+      "id": "h10",
+      "type": "scan",
+      "question": "What would storing 200 pallets of frozen goods cost for one month before tax?",
+      "expected_answer": "200 x THB 1,150.00 = THB 230,000, excluding 7% VAT",
+      "gold_pages": [
+        13
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "230000"
+      ],
+      "gold_chunks": [
+        "p13-s1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 8.0351
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 7.0428
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 5.6902
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 4.6476
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 2.6287
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 2.1941
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 2.0849
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Frozen pallet storage is THB 1,150.00 per pallet per month (excluding VAT). 200 pallets x THB 1,150.00 = THB 230,000.00 for one month, excluding 7% VAT. Source: tariff table in a scanned appendix.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Frozen pallet storage (-18 C) | per pallet per month | 1,150.00",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1283,
+        "tokens_out": 118,
+        "llm_ms": 3390.1095390028786,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: 200 × THB 1,150 = THB 230,000 excluding 7% VAT.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "200 pallets × 1,150.00 THB per frozen pallet per month = 230,000.00 THB before VAT (rates exclude 7% VAT). Source: tariff table in Appendix B (scan transcript).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Frozen pallet storage (-18 C) | per pallet per month | 1,150.00",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Rates exclude 7% VAT. Effective 1 January 2026.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 590,
+        "tokens_out": 155,
+        "llm_ms": 0.10860798647627234,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both answers compute 200 × THB 1,150 = THB 230,000 excluding 7% VAT.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p13-s1"
+      ]
+    },
+    {
+      "id": "h11",
+      "type": "conceptual",
+      "question": "Why did service quality slip toward the end of the year?",
+      "expected_answer": "Flooding in southern Thailand closed sections of the main southern highway; line-haul to Hat Yai was rerouted over slower roads",
+      "gold_pages": [
+        2,
+        6
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "flood"
+        ]
+      ],
+      "gold_chunks": [
+        "p6-x1",
+        "p2-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.5,
+          "5": 0.5,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 2.9029
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 2.5286
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 2.4157
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 2.3545
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 1.931
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 1.8012
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.4097
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 1.2532
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Flooding in southern Thailand closed sections of the main southern highway, and line-haul to Hat Yai was rerouted through slower inland roads; service recovered in December once the highway reopened.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-x1",
+            "page": 6,
+            "quote": "Flooding in southern Thailand closed sections of the main southern highway, and line-haul to Hat Yai was rerouted through slower inland roads.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1075,
+        "tokens_out": 105,
+        "llm_ms": 2247.6728089968674,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer matches the reference facts about flooding closing the southern highway and rerouted line-haul to Hat Yai.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Severe flooding in southern Thailand closed sections of the main southern highway for several weeks in Q4, forcing line-haul traffic to Hat Yai to be rerouted through slower inland roads; OTD fell to 91.8% in October and 89.7% in November before recovering to 92.9% in December once the highway reopened.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p2-x1",
+            "page": 2,
+            "quote": "Severe flooding in southern Thailand closed sections of the main southern highway for several weeks and forced us to reroute line-haul traffic.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p6-x1",
+            "page": 6,
+            "quote": "line-haul to Hat Yai was rerouted through slower inland roads. Service recovered in December once the highway reopened.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p6-f1",
+            "page": 6,
+            "quote": "| Oct   | 91.8 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 980,
+        "tokens_out": 211,
+        "llm_ms": 0.27889199554920197,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference facts (southern Thailand flooding closed the main southern highway, forcing line-haul to Hat Yai onto slower roads) with additional consistent detail.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p2-x1",
+        "p2-x2",
+        "p6-x1",
+        "p6-f1"
+      ]
+    },
+    {
+      "id": "h12",
+      "type": "conceptual",
+      "question": "Did any hackers get hold of customer information last year?",
+      "expected_answer": "No. A ransomware attempt in June 2025 was detected and contained with no customer data lost",
+      "gold_pages": [
+        11
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "no customer data",
+          "ransomware",
+          "contained"
+        ]
+      ],
+      "gold_chunks": [
+        "p11-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 5,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 4.8127
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 4.0939
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 2.3472
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 2.2234
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 2.1426
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 2.1414
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 1.7471
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 1.5884
+          }
+        ],
+        "first_gold_rank": 3,
+        "mrr": 0.3333333333333333,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "No. A ransomware attempt in June 2025 was detected and contained, with no customer data lost.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-x1",
+            "page": 11,
+            "quote": "A ransomware attempt in June 2025 was detected and contained with no customer data lost.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1089,
+        "tokens_out": 79,
+        "llm_ms": 1645.734753983561,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "No. A ransomware attempt in June 2025 was detected and contained with no customer data lost.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-x1",
+            "page": 11,
+            "quote": "A ransomware attempt in June 2025 was detected and contained with no customer data lost.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 630,
+        "tokens_out": 78,
+        "llm_ms": 0.13097401824779809,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p11-x1",
+        "p11-x2"
+      ]
+    },
+    {
+      "id": "h13",
+      "type": "synonym",
+      "question": "How many battery-powered vehicles did the company run at the close of 2024?",
+      "expected_answer": "136",
+      "gold_pages": [
+        9
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "136"
+      ],
+      "gold_chunks": [
+        "p9-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 5.1071
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 2.531
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 2.5134
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 2.43
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 1.7782
+          },
+          {
+            "chunk_id": "p12-x2",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 1.511
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 1.4839
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 1.1873
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The report states the electric fleet grew from 136 vehicles at the end of 2024 to 218 at the end of 2025, so the company ran 136 electric vehicles at the close of 2024.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Our electric fleet grew from 136 vehicles at the end of 2024 to 218 at the end of 2025",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1017,
+        "tokens_out": 108,
+        "llm_ms": 5737.067718000617,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states 136 battery-powered vehicles at the close of 2024, matching the reference.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "136 electric vehicles at the end of 2024.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Our electric fleet grew from 136 vehicles at the end of 2024 to 218 at the end of 2025, an increase of 82.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 891,
+        "tokens_out": 81,
+        "llm_ms": 0.19489999976940453,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states 136 battery-powered vehicles at the close of 2024, matching the reference.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p9-t1",
+        "p9-x1",
+        "p9-t2",
+        "p9-f1"
+      ]
+    },
+    {
+      "id": "h14",
+      "type": "diagram",
+      "question": "How often does the ship service between Laem Chabang and Cikarang run?",
+      "expected_answer": "3 sailings per week (sea freight via Tanjung Priok)",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "3 sailings",
+          "three sailings",
+          "3 per week",
+          "three per week",
+          "3 a week"
+        ]
+      ],
+      "gold_chunks": [
+        "p7-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-f1",
+            "pages": [
+              7
+            ],
+            "type": "figure",
+            "score": 7.2592
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 3.2308
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 2.718
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 2.0627
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 1.4097
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 1.2532
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 1.1004
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The sea freight service between Laem Chabang and Cikarang (via Tanjung Priok) runs 3 sailings per week.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-f1",
+            "page": 7,
+            "quote": "Laem Chabang -- Sea freight via Tanjung Priok 3 sailings per week --> Cikarang",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1800,
+        "tokens_out": 94,
+        "llm_ms": 2241.766456019832,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: 3 sailings per week via Tanjung Priok.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "3 sailings per week",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-f1",
+            "page": 7,
+            "quote": "Laem Chabang -- Sea freight via Tanjung Priok 3 sailings per week --> Cikarang",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1477,
+        "tokens_out": 69,
+        "llm_ms": 0.14064100105315447,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: 3 sailings per week.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p7-x1",
+        "p7-f1",
+        "p7-t1"
+      ]
+    },
+    {
+      "id": "h15",
+      "type": "table_crossref",
+      "question": "How many facilities in Indonesia are above the level that triggers an expansion study?",
+      "expected_answer": "2: Cikarang (94%) and Cibitung (96%); the threshold is above 92%",
+      "gold_pages": [
+        7,
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "cikarang",
+          "id-ckr"
+        ],
+        [
+          "cibitung",
+          "id-cbt"
+        ]
+      ],
+      "gold_chunks": [
+        "p7-t1",
+        "p7-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 9.1496
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 3.7027
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 1.2132
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 1.0835
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 1.0488
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 0.8648
+          },
+          {
+            "chunk_id": "p7-f1",
+            "pages": [
+              7
+            ],
+            "type": "figure",
+            "score": 0.7504
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.7082
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Sites above 92% utilisation trigger an expansion study. In Indonesia, two facilities exceed that level: ID-CKR Cikarang at 94% and ID-CBT Cibitung at 96%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "sites above 92% trigger an expansion study.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "ID-CKR | Cikarang, Bekasi | Indonesia | Ambient + cross-dock | 58,000 | 94%",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "ID-CBT | Cibitung, Bekasi | Indonesia | Cold chain | 21,000 | 96%",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1748,
+        "tokens_out": 210,
+        "llm_ms": 3893.763016007142,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: two facilities (Cikarang 94%, Cibitung 96%) exceed the 92% threshold.",
+        "disagree": false
+      },
+      "oracle": {
+        "status": "answered",
+        "answer": "Two Indonesian facilities exceed the 92% expansion-study trigger: ID-CKR Cikarang at 94% and ID-CBT Cibitung at 96%. Calculation: expansion study triggers when utilisation is above 92% ('sites above 92% trigger an expansion study'); of the 7 Indonesian facilities in Table 2, only Cikarang (94%) and Cibitung (96%) exceed 92%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "sites above 92% trigger an expansion study",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "ID-CKR | Cikarang, Bekasi | Indonesia | Ambient + cross-dock | 58,000 | 94%",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "ID-CBT | Cibitung, Bekasi | Indonesia | Cold chain | 21,000 | 96%",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1473,
+        "tokens_out": 286,
+        "llm_ms": 0.14919499517418444,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer matches: two facilities (Cikarang 94%, Cibitung 96%) above the 92% threshold.",
+        "disagree": false
+      },
+      "oracle_chunk_ids": [
+        "p7-x1",
+        "p7-f1",
+        "p7-t1"
+      ]
+    },
+    {
+      "id": "h16",
+      "type": "unanswerable",
+      "question": "What was the customer NPS in 2023?",
+      "expected_answer": "Not given: the report only shows 2025 (52) and 2024 (47)",
+      "gold_pages": [],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 4.6273
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 4.207
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 2.1426
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 1.7795
+          },
+          {
+            "chunk_id": "p9-f1",
+            "pages": [
+              9
+            ],
+            "type": "figure",
+            "score": 1.7314
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 1.55
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 1.4813
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 1.4031
+          }
+        ],
+        "first_gold_rank": null,
+        "mrr": 0.0,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": false
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts do not state the customer NPS for 2023. The 'at a glance' table only gives NPS of 52 for 2025 and 47 for 2024; no 2023 figure appears anywhere in the provided excerpts.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-s1",
+            "page": 3,
+            "quote": "Customer NPS (2024: 47) | 52",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 987,
+        "tokens_out": 121,
+        "llm_ms": 0.12166801025159657,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": null,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both state that 2023 NPS is not given, with only 2025 (52) and 2024 (47) provided.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "h17",
+      "type": "unanswerable",
+      "question": "What is the average annual salary per employee?",
+      "expected_answer": "Not in the report: headcount is given but no payroll cost",
+      "gold_pages": [],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 5.8791
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 4.4346
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 3.7036
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 3.19
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 2.519
+          },
+          {
+            "chunk_id": "p9-f1",
+            "pages": [
+              9
+            ],
+            "type": "figure",
+            "score": 2.4267
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 2.1301
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 1.6371
+          }
+        ],
+        "first_gold_rank": null,
+        "mrr": 0.0,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": false
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts do not contain any salary, payroll, or compensation figures, so the average annual salary per employee cannot be calculated. Revenue and employee counts are given, but wage data is missing.",
+        "error": "",
+        "citations": [],
+        "tokens_in": 669,
+        "tokens_out": 57,
+        "llm_ms": 2261.90276700072,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": null,
+        "citations_verified": null,
+        "judge": "correct",
+        "judge_reason": "Both answers state that salary/payroll information is not available in the document.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "h18",
+      "type": "unanswerable",
+      "question": "How much did the ransomware incident cost the company?",
+      "expected_answer": "Not given: the report only says the attempt was detected and contained",
+      "gold_pages": [],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 6.1015
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 5.1071
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0
+          }
+        ],
+        "first_gold_rank": null,
+        "mrr": 0.0,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": false
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state any cost figure for the June 2025 ransomware attempt; it only says it was detected and contained with no customer data lost. No financial impact is given in the excerpts.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-x1",
+            "page": 11,
+            "quote": "A ransomware attempt in June 2025 was detected and contained with no customer data lost.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 695,
+        "tokens_out": 99,
+        "llm_ms": 0.2894619829021394,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": null,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states that no cost is given and the attempt was detected and contained.",
+        "disagree": false
+      }
+    }
+  ]
+}
