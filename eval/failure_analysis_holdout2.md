@@ -63,3 +63,7 @@ Holdout v2 judge-correct 92% (89-93) before, 93% (93-93) after; BM25-only after 
 | Table of contents as a table chunk | **Fixed:** `p2-x1` is a text chunk |
 
 Question level: **v12 is now correct in 3 of 3 runs** (hybrid rank 9 to 4; its evidence is no longer split and no longer opens with a paragraph from the other column). v14 went from correct in 2 of 3 runs to 0 of 3 (the answer drops "one fewer than in 2024"; the sentence is in context both times, so this is generator/judge strictness). v15 unchanged (partial 3 of 3). All other questions are correct in every run, hybrid and BM25.
+
+### After iteration 4b (footnotes out of column grouping; table continues when last on its page)
+
+`p8` now reads in order (the "Staff turnover" sentence is back in "Our people"); `p9` chunks are unchanged. The ward table is one chunk over pages 13 to 15 (`p13-t1`), 73 chunks in total. Retrieval mean first-gold rank 2.26 to 2.39 (the large merged table ranks 1 to 2 places lower for v07 to v09), judge-correct 95% (93-100). v15 is still outside k=8 (rank 11) and varies by run (partial, correct, wrong). Remaining: v14 judge strictness, v15 ranking.

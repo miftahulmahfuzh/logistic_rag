@@ -522,3 +522,23 @@ Predictions (to be marked right or wrong afterwards):
 3. Retrieval only, holdout v2 hybrid + `spelling`: mean first-gold rank within +-0.3 of 2.26 (no direction predicted; v09 and v07 to v09 gold chunks move with the merge); Kirana pooled 1.41 and holdout v1 1.45 unchanged.
 4. Answers (3 runs, holdout v2 only, since the other chunk files stay identical): judge-correct within noise of 93%; v15 still partial in 3 of 3 runs; v12 stays correct.
 5. On the author's question whether change 2 improves generalisation: it cannot be shown with three documents. The expected evidence is only "no regression elsewhere"; the false-merge risk it adds (two unrelated tables with the same header, one ending high on a page) is reduced, not removed, by the no-text-below guard. Reported as such.
+
+## Iteration 4b: results
+
+Code: footnote-shaped blocks are out of the column grouping; a table continues when its last part ends in the lower 60% **or** nothing else sits below it (the old path is kept, so nothing that merged before stops merging). Re-ingested with `--force`: Kirana and Northmere chunk files byte-identical to `chunks_before` again; Halbrook 74 to 73 chunks (`chunks_after_4b/`). Changed chunks: `p8` re-split (`p8-x1` "Our people" now holds the left column in order, `p8-x3` "Pay and reward" no longer contains "Staff turnover ..."), and `p13-t1` now covers pages 13 to 15 (`p15-t1` is gone). `p9` chunks are unchanged. New gold labels in `eval/questions_holdout2_v3chunks.yaml` (a copy of the frozen file; only v08 and v09 changed, `p15-t1` to `p13-t1`). Because every other chunk file is identical, only holdout v2 was re-run: 3 repeats `after4b_holdout2_r1..r3`; retrieval in `ablation_v4b.md`.
+
+| holdout v2 | iteration 4 | iteration 4b |
+|---|---|---|
+| retrieval, mean first-gold rank, hybrid + `spelling` | 2.26 | 2.39 |
+| judge correct, 3 runs | 93% (93-93) | 95% (93-100) |
+| chunk hit@8 | 96% | 96% |
+
+Retrieval moved the wrong way slightly: the merged ward table is one large chunk and ranks lower for the ward questions (v07 3 to 4, v08 2 to 4, v09 4 to 5; v13 2 to 1). Kirana pooled 1.41 and holdout v1 1.45 are unchanged. Answers: within noise (ranges overlap). v15 now varies by run (partial, correct, wrong) although its footnote chunk is still at rank 11, outside k=8; one run got it right, so this is generator variance, not a fix. v14 partial, correct, partial (strictness noise as before). v12 correct in 3 of 3 again.
+
+| # | prediction | actual | verdict |
+|---|---|---|---|
+| 1 | Kirana and Northmere byte-identical | identical | right |
+| 2 | `p8` in order, ward table one chunk over 13 to 15, 72 to 76 chunks | all three; `p9` unchanged | right |
+| 3 | holdout v2 rank within +-0.3 of 2.26; Kirana and holdout v1 unchanged | 2.39; 1.41; 1.45 | right |
+| 4 | judge-correct within noise of 93%; v15 partial in 3 of 3; v12 stays correct | 95% (93-100); v15 partial/correct/wrong; v12 correct 3 of 3 | right on two, **wrong** on v15 |
+| 5 | generalisation cannot be shown with three documents; evidence is non-regression only | non-regression only (Kirana, Northmere identical; holdout v2 within noise); the merged table cost a little retrieval rank | right |

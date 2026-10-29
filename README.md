@@ -171,8 +171,7 @@ Answer comparisons use 3 runs with the answer and judge cache salted per run (`k
 | judge-correct, core / hard / holdout v1 | 92% (90-95) / 98% (94-100) / 100% | 95% (90-100) / 98% (94-100) / 100% |
 
 The fixes show in retrieval and in one question (v12, why capex rose: wrong in 3 of 3 runs before, correct in 3 of 3 after); at answer level the net is within noise. v15 (footnote) is now its
-own chunk but still ranks 11th, outside k=8. The ward table's third page is not merged (the page-14 part ends at 45% of the page, under the fixed threshold) and pages with a footnote wider than a column keep
-the old order; both are left as they are rather than tuned on this document. The Kirana movement in the table is pure LLM noise (identical chunks), which is the scale to read the rest against.
+own chunk but still ranks 11th, outside k=8. Iteration 4b (the author's follow-up decisions, post-hoc on this document and recorded as such) then took footnotes out of the column grouping and let a table continue when it is the last thing on its page: `p8` reads in order, the ward table is one chunk, holdout v2 rank 2.39 and judge-correct 95% (93-100), Kirana and Northmere still byte-identical. The Kirana movement in the table is pure LLM noise (identical chunks), which is the scale to read the rest against.
 
 ## Known limitations
 
@@ -181,7 +180,7 @@ the old order; both are left as they are rather than tuned on this document. The
 - Snowball stemming was dropped in iteration 3 (it lowered the first-gold rank on both documents); `KIRANA_NORMALISE=full` brings it back for comparison.
 - The dense model is small and English-only; it can promote vaguely related chunks over exact-number matches (q07 lost a rank or two).
 - The two holdouts are synthetic documents (10 and 68 chunks) written by the same author as the code: a weak test of generality, not proof.
-- Multi-column pages are read column by column only when the detector is sure (2 to 3 groups of at least 3 blocks); a page with a footnote that spans past the gutter, or an ambiguous layout, keeps the top-to-bottom order and can still interleave (holdout v2 `p8`, `p9`). A footnote is its own chunk, but a short note about a different topic than the question can rank outside k=8 (v15). A table continues across pages only while each part ends in the lower 60% of its page (the ward table's third page on holdout v2 is not merged).
+- Multi-column pages are read column by column only when the detector is sure (2 to 3 groups of at least 3 blocks); an ambiguous layout keeps the top-to-bottom order and can still interleave. A footnote is its own chunk, but a short note about a different topic than the question can rank outside k=8 (v15). A table continues across pages when each part ends low on its page or is the last thing on it; one large merged table can rank lower than its parts did (holdout v2 ward questions, 1 to 2 places).
 - BM25 has UK/US spelling normalisation only; meaning-based matches come from the small dense model (h01 now works, but it is not a reranker).
 - Arithmetic is done by the model (one rounding slip observed).
 - Only text-layer tables are parsed as tables; a table inside an image is a vision transcript.
@@ -191,7 +190,7 @@ the old order; both are left as they are rather than tuned on this document. The
 
 Verify image transcripts with a second pass (q14, vision non-determinism); a calculator tool for arithmetic (q03); table-aware retrieval (whole table or
 none) with a short natural-language description per table chunk; a refusal threshold only if retrieval scores separate answerable from unanswerable;
-a larger eval set across several real documents so deltas are not limited by 79 questions on a few reports; a third pass on ingestion (leave footnote-shaped blocks out of the column grouping; a page-break rule for tables that does not depend on how far down the page they end); retrieval that lifts short footnote chunks; cross-encoder reranking;
+a larger eval set across several real documents so deltas are not limited by 79 questions on a few reports; a third pass on ingestion (none outstanding from holdout v2 apart from footnote retrieval); retrieval that lifts short footnote chunks; cross-encoder reranking;
 per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
 
 ## How AI tools are used
