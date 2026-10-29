@@ -11,7 +11,14 @@ import pymupdf
 from .. import config
 from . import images, tables
 from .chunk import Chunk, group_paragraphs, make_header
-from .pdf import PageRecord, doc_title, is_heading, read_pages, strip_headers_footers
+from .pdf import (
+    PageRecord,
+    doc_title,
+    is_heading,
+    read_pages,
+    reading_order,
+    strip_headers_footers,
+)
 
 DECORATIVE_MAX_WORDS = 15
 
@@ -93,6 +100,11 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
         page = doc[rec.number - 1]
         sm = summaries[rec.number]
         consumed: set[int] = set()  # ids of blocks that belong to a table, figure or caption
+        figure_regions = images.select_regions(page, rec.text_chars)
+        rec.blocks = reading_order(
+            rec,
+            table_regions.get(rec.number, []) + [r.bbox for r in figure_regions],
+        )
         headings = [
             (b.bbox[1], " ".join(b.text.split())) for b in rec.blocks if is_heading(b, body_size)
         ]
@@ -132,7 +144,7 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
             )
             sm.tables += 1
 
-        for region in images.select_regions(page, rec.text_chars):
+        for region in figure_regions:
             inside = images.blocks_inside(rec, region.bbox)
             consumed |= {id(b) for b in inside}
             cap = images.find_caption(rec.blocks, region.bbox)

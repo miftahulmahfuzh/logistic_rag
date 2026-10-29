@@ -3,9 +3,14 @@ import pymupdf
 from kirana_rag import config
 from kirana_rag.ingest import images, pipeline, tables
 from kirana_rag.ingest.chunk import group_paragraphs, tokens
-from kirana_rag.ingest.pdf import Block, read_pages, strip_headers_footers
+from kirana_rag.ingest.pdf import (
+    Block,
+    read_pages,
+    reading_order,
+    strip_headers_footers,
+)
 
-from .pdfmaker import build_pdf
+from .pdfmaker import build_layout_pdf, build_pdf
 
 HEADER = ["Code", "Site", "Area"]
 
@@ -115,3 +120,79 @@ def test_prose_grouping_respects_target_and_splits_long_paragraph():
     long = [Block((0, 0, 1, 2), ("A sentence with some words. " * 120), 10)]
     parts = group_paragraphs(long)
     assert len(parts) > 1 and all(tokens(p) <= 450 for p in parts)
+
+
+LEFT, MID, RIGHT = (57, 215), (215, 380), (380, 538)
+
+
+def _paras(prefix: str, n: int, reps: int = 4) -> list[str]:
+    return [
+        f"{prefix}{i} " + "lorem ipsum dolor sit amet consectetur " * reps for i in range(1, n + 1)
+    ]
+
+
+def _ordered_prefixes(path, regions=()):
+    doc = pymupdf.open(path)
+    pages, _ = read_pages(doc)
+    rec = pages[0]
+    return [b.text.split()[0] for b in reading_order(rec, list(regions)) if "Acme" not in b.text]
+
+
+def _column_items(cols, top=100, step=90, width_edge=0, reps=4):
+    items = []
+    for (x0, x1), prefix in cols:
+        for i, text in enumerate(_paras(prefix, 3, reps)):
+            items.append((x0, top + i * step, x1 - width_edge, text, 10))
+    return items
+
+
+def test_three_column_page_reads_column_by_column(tmp_path):
+    pdf = tmp_path / "c.pdf"
+    items = _column_items([(LEFT, "Aa"), (MID, "Bb"), (RIGHT, "Cc")], width_edge=12)
+    build_layout_pdf(pdf, [items])
+    assert _ordered_prefixes(pdf) == ["Aa1", "Aa2", "Aa3", "Bb1", "Bb2", "Bb3", "Cc1", "Cc2", "Cc3"]
+
+
+def test_two_columns_with_full_width_heading_and_table_form_bands(tmp_path):
+    pdf = tmp_path / "c.pdf"
+    wide = [(57, 60, 538, "Tessellate full width heading", 16)]
+    top = _column_items([((57, 280), "La"), ((310, 538), "Ra")], top=100, step=30, reps=1)
+    table_y = 240
+    below = _column_items([((57, 280), "Lb"), ((310, 538), "Rb")], top=330, step=30, reps=1)
+    build_layout_pdf(pdf, [wide + top + below])
+    got = _ordered_prefixes(pdf, regions=[(57, table_y, 538, 320)])
+    assert got == ["Tessellate", "La1", "La2", "La3", "Ra1", "Ra2", "Ra3"] + [
+        "Lb1",
+        "Lb2",
+        "Lb3",
+        "Rb1",
+        "Rb2",
+        "Rb3",
+    ]
+
+
+def test_two_columns_without_enough_blocks_keep_the_old_order(tmp_path):
+    pdf = tmp_path / "c.pdf"
+    items = _column_items([((57, 280), "Ld"), ((310, 538), "Rd")], top=100, step=60, reps=1)
+    items = items[:3] + items[3:5]  # right column has only 2 blocks: not sure, so unchanged
+    build_layout_pdf(pdf, [items])
+    got = _ordered_prefixes(pdf)
+    assert got == ["Ld1", "Rd1", "Ld2", "Rd2", "Ld3"]
+
+
+def test_single_column_page_order_is_unchanged(tmp_path):
+    pdf = tmp_path / "c.pdf"
+    build_layout_pdf(pdf, [[(57, 100 + i * 70, 538, t, 10) for i, t in enumerate(_paras("Zs", 5))]])
+    doc = pymupdf.open(pdf)
+    pages, _ = read_pages(doc)
+    assert reading_order(pages[0], []) is pages[0].blocks
+
+
+def test_columns_through_the_pipeline_keep_a_sentence_together(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "CACHE_DIR", tmp_path / "cache")
+    pdf = tmp_path / "c.pdf"
+    items = _column_items([((57, 280), "Pa"), ((310, 538), "Pb")], top=100, step=90)
+    build_layout_pdf(pdf, [items])
+    res = pipeline.ingest(pdf, force=True)
+    text = "\n".join(c.text for c in res.chunks)
+    assert text.index("Pa3") < text.index("Pb1")

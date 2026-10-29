@@ -30,6 +30,7 @@ FORBIDDEN += [
     "GmbH",
     "Ward 6E",
 ]
+FORBIDDEN += ["Tessellate", "Ombra", "Vellum", "Quorrin"]  # words of the synthetic layout tests
 
 
 def test_src_has_no_document_specific_literals():

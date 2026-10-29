@@ -33,3 +33,24 @@ def build_pdf(path, pages: list[dict]) -> None:
             page.insert_image(pymupdf.Rect(*spec["image"]), pixmap=pix, keep_proportion=False)
         page.insert_text((57, 820), FOOTER.format(n=n), fontsize=8)
     doc.save(path)
+
+
+def text_box(
+    page: pymupdf.Page, x0: float, y0: float, x1: float, text: str, size: float = 10
+) -> float:
+    """One paragraph as its own block, wrapped to the given width; returns the bottom y."""
+    rect = pymupdf.Rect(x0, y0, x1, y0 + 400)
+    page.insert_textbox(rect, text, fontsize=size)
+    block = page.get_text("blocks", clip=rect)[-1]
+    return block[3]
+
+
+def build_layout_pdf(path, pages: list[list[tuple]]) -> None:
+    """pages: [[(x0, y0, x1, text, size), ...], ...]; every item is a separate text block."""
+    doc = pymupdf.open()
+    for n, items in enumerate(pages, 1):
+        page = doc.new_page(width=595, height=842)
+        for x0, y0, x1, text, size in items:
+            text_box(page, x0, y0, x1, text, size)
+        page.insert_text((57, 820), FOOTER.format(n=n), fontsize=8)
+    doc.save(path)

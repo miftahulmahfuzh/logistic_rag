@@ -11,6 +11,11 @@ CAPTION_RE = re.compile(r"^\s*(Figure|Fig\.|Chart|Table)\s*\d+", re.IGNORECASE)
 EDGE_FRAC = 0.12  # header/footer lines live in the top/bottom 12% of the page
 HEADING_RATIO = 1.2
 HEADING_MAX_WORDS = 15
+# a block wider than this share of the page spans it: heading, caption or table, not a column
+FULL_WIDTH_FRAC = 0.7
+COLUMN_GAP_FRAC = 0.05  # columns overlap by less than this share of the page width
+COLUMN_MIN_BLOCKS = 3
+COLUMN_MAX = 3
 
 
 @dataclass
@@ -101,3 +106,61 @@ def doc_title(doc: pymupdf.Document, pages: list[PageRecord], fallback: str) -> 
         biggest = max(pages[0].blocks, key=lambda b: b.size)
         return " ".join(biggest.text.split())
     return fallback
+
+
+def centre_inside(inner: tuple, outer: tuple) -> bool:
+    cx, cy = (inner[0] + inner[2]) / 2, (inner[1] + inner[3]) / 2
+    return outer[0] <= cx <= outer[2] and outer[1] <= cy <= outer[3]
+
+
+def _column_groups(blocks: list[Block], page_width: float) -> list[list[Block]] | None:
+    """Group narrow blocks by x-range; None unless there are 2 to 3 groups of at least 3 blocks each."""
+    tol = COLUMN_GAP_FRAC * page_width
+    groups: list[list[Block]] = []
+    right = 0.0
+    for b in sorted(blocks, key=lambda b: b.bbox[0]):
+        overlap = min(b.bbox[2], right) - b.bbox[0]
+        if groups and overlap >= min(tol, (b.bbox[2] - b.bbox[0]) / 2):
+            groups[-1].append(b)
+            right = max(right, b.bbox[2])
+        else:
+            groups.append([b])
+            right = b.bbox[2]
+    if not 2 <= len(groups) <= COLUMN_MAX or any(len(g) < COLUMN_MIN_BLOCKS for g in groups):
+        return None
+    return groups
+
+
+def reading_order(page: PageRecord, regions: list[tuple]) -> list[Block]:
+    """Blocks in reading order: column by column in bands between full-width blocks, else y then x.
+
+    `regions` are table and figure boxes. Blocks inside them are not columns of prose, and a
+    full-width region ends a band like a full-width block does. Unsure means the existing order.
+    """
+    inside = [b for b in page.blocks if any(centre_inside(b.bbox, r) for r in regions)]
+    inside_ids = {id(b) for b in inside}
+    free = [b for b in page.blocks if id(b) not in inside_ids]
+
+    def wide(box: tuple) -> bool:
+        return box[2] - box[0] > FULL_WIDTH_FRAC * page.width
+
+    narrow = [b for b in free if not wide(b.bbox)]
+    groups = _column_groups(narrow, page.width)
+    if groups is None:
+        return page.blocks
+    column_of = {id(b): i for i, g in enumerate(groups) for b in g}
+    seps = [b.bbox for b in free if wide(b.bbox)] + [r for r in regions if wide(r)]
+    seps_y = sorted((box[1] + box[3]) / 2 for box in seps)
+
+    def band(box: tuple) -> int:
+        return sum(1 for y in seps_y if y < (box[1] + box[3]) / 2)
+
+    full = {id(b) for b in free if wide(b.bbox)}
+    ordered: list[Block] = []
+    for i in range(len(seps_y) + 1):
+        in_band = [b for b in page.blocks if band(b.bbox) == i]
+        ordered += [b for b in in_band if id(b) in full]
+        for col in range(len(groups)):
+            ordered += [b for b in in_band if column_of.get(id(b)) == col]
+        ordered += [b for b in in_band if id(b) in inside_ids]
+    return ordered

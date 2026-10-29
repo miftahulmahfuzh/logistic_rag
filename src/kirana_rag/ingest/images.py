@@ -5,7 +5,7 @@ from dataclasses import dataclass
 import pymupdf
 
 from .. import config, llm
-from .pdf import CAPTION_RE, Block, PageRecord
+from .pdf import CAPTION_RE, Block, PageRecord, centre_inside
 
 VISION_PROMPT = (
     "Transcribe this image from a document. Begin with its title, heading or caption line if it has one. Then transcribe every visible title, axis label, legend "
@@ -93,9 +93,4 @@ def find_caption(
 
 def blocks_inside(page: PageRecord, bbox: tuple) -> list[Block]:
     """Text blocks whose centre lies inside the region (they belong to the image, not to prose)."""
-    return [b for b in page.blocks if _centre_inside(b.bbox, bbox)]
-
-
-def _centre_inside(inner: tuple, outer: tuple) -> bool:
-    cx, cy = (inner[0] + inner[2]) / 2, (inner[1] + inner[3]) / 2
-    return outer[0] <= cx <= outer[2] and outer[1] <= cy <= outer[3]
+    return [b for b in page.blocks if centre_inside(b.bbox, bbox)]
