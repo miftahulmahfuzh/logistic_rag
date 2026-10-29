@@ -67,6 +67,11 @@ def ingest(
         )
     console.print(t)
     console.print(f"{len(res.chunks)} chunks written to .cache/{res.doc_id}/chunks.jsonl")
+    from .retrieve import load_index
+
+    load_index(
+        res.doc_id
+    )  # embeds the chunks once and caches embeddings.npy (BM25 fallback if offline)
 
 
 @app.command()
@@ -74,6 +79,7 @@ def ask(
     question: str = typer.Argument(..., help="Question about the ingested document(s)."),
     doc: str = typer.Option(None, "--doc", help="Search one doc_id only (default: all ingested)."),
     k: int = typer.Option(config.DEFAULT_TOP_K, "-k", help="Number of chunks to retrieve."),
+    retriever: str = typer.Option("hybrid", help="hybrid (BM25 + dense) or bm25."),
     as_json: bool = typer.Option(False, "--json", help="Machine-readable output."),
 ) -> None:
     """Ask a question; prints status, answer, verified citations, retrieval and cost info."""
@@ -82,7 +88,7 @@ def ask(
     from .answer import ask as run_ask
     from .retrieve import load_index
 
-    index = load_index(doc)
+    index = load_index(doc, retriever)
     if not index.chunks:
         typer.echo("No ingested documents. Run `kirana ingest <pdf>` first.", err=True)
         raise typer.Exit(1)
@@ -161,6 +167,7 @@ def eval_cmd(
         "", help="Comma-separated question ids, e.g. q03,q09 (does not write RESULTS.md)."
     ),
     oracle: bool = typer.Option(True, help="Also run the oracle (gold-page context) pass."),
+    retriever: str = typer.Option("hybrid", help="hybrid (BM25 + dense) or bm25."),
 ) -> None:
     """Run the eval set, save eval/results/<tag>.json and regenerate eval/RESULTS.md."""
     from . import config
@@ -170,7 +177,7 @@ def eval_cmd(
     qs = runner.load_questions(
         questions or config.EVAL_DIR / default_file, set(filter(None, only.split(","))) or None
     )
-    results = runner.run_eval(qs, doc, tag, k, oracle, suite)
+    results = runner.run_eval(qs, doc, tag, k, oracle, suite, retriever)
     if only:
         for r in results["records"]:
             a = r["answer"]

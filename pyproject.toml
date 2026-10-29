@@ -12,6 +12,8 @@ dependencies = [
     "python-dotenv",
     "rich",
     "snowballstemmer>=3.1.1",
+    "fastembed>=0.9.1",
+    "numpy>=2.5.4",
 ]
 
 [dependency-groups]

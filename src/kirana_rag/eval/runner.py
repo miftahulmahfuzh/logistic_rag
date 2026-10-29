@@ -11,7 +11,7 @@ from .. import config, llm
 from ..answer import Answer, answer_question
 from ..ingest.chunk import Chunk
 from ..ingest.pipeline import list_doc_ids, load_chunks
-from ..retrieve import Index
+from ..retrieve import Index, load_index
 from . import metrics
 from .judge import judge
 
@@ -117,6 +117,7 @@ def run_eval(
     k: int,
     oracle: bool = True,
     suite: str = "core",
+    retriever: str = "hybrid",
 ) -> dict:
     """Run every question (2 in flight) and return the full results dict."""
     ids = [doc_id] if doc_id else list_doc_ids()
@@ -125,7 +126,7 @@ def run_eval(
             f"{len(ids)} documents are ingested; pass --doc <doc_id> so the eval is not polluted"
         )
     chunks = [c for d in ids for c in load_chunks(d)]
-    index = Index(chunks)
+    index = load_index(ids[0], retriever)
     before = llm.Usage(**llm.USAGE.__dict__)
     with ThreadPoolExecutor(max_workers=config.MAX_CONCURRENCY) as pool:
         records = list(pool.map(lambda q: run_question(q, index, chunks, k, oracle), questions))
@@ -135,6 +136,7 @@ def run_eval(
         "suite": suite,
         "finished_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "k": k,
+        "retriever": index.retriever,
         "oracle": oracle,
         "doc_ids": ids,
         "n_chunks": len(chunks),

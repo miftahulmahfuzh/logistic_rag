@@ -25,15 +25,13 @@ SETS = {
 }
 
 
-def evaluate(index: Index, questions: list[dict], **search_args) -> dict[str, float]:
+def evaluate(index: Index, questions: list[dict]) -> dict[str, float]:
     ranks, hit1, recall5 = [], [], []
     for q in questions:
         gold = q.get("gold_chunks")
         if not gold:
             continue
-        ids = [
-            h.chunk.chunk_id for h in index.search(q["question"], len(index.chunks), **search_args)
-        ]
+        ids = [h.chunk.chunk_id for h in index.search(q["question"], len(index.chunks))]
         rank = metrics.chunk_rank(ids, gold)
         ranks.append(rank)
         hit1.append(rank == 1)
@@ -48,22 +46,21 @@ def evaluate(index: Index, questions: list[dict], **search_args) -> dict[str, fl
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--retriever", default=None)
+    ap.add_argument("--retriever", default="hybrid")
     ap.add_argument("--normalise", default="full")
     args = ap.parse_args()
     docs = {
         name: next(d for d in list_doc_ids() if d.startswith(name))
         for name in ("kirana", "northmere")
     }
-    extra = {"retriever": args.retriever} if args.retriever else {}
     print(
         "| normalise | set | n | mean first-gold rank | hit@1 | recall@5 |\n|---|---|---|---|---|---|"
     )
     for mode in args.normalise.split(","):
         os.environ["KIRANA_NORMALISE"] = mode
         for name, (qfile, prefix) in SETS.items():
-            index = load_index(docs[prefix])
-            r = evaluate(index, runner.load_questions(config.EVAL_DIR / qfile), **extra)
+            index = load_index(docs[prefix], args.retriever)
+            r = evaluate(index, runner.load_questions(config.EVAL_DIR / qfile))
             print(
                 f"| {mode} | {name} | {r['n']} | {r['mean_rank']:.2f} | {r['hit@1']:.0%} | {r['recall@5']:.0%} |"
             )
