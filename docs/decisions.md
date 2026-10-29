@@ -16,3 +16,5 @@ One line per decision, dated.
 - 2026-10-29: Token prices added to `config.py` from docs.z.ai/guides/overview/pricing (glm-5.3 $1.4 in / $4.4 out per M tokens; glm-4.6v $0.3 / $0.9). The author pays a flat subscription, so dollar figures are list-price equivalents.
 - 2026-10-29: Known ingestion defect left unfixed on purpose so the baseline stays as measured: the continuation page of a merged table also emits a flattened prose chunk (see `eval/failure_analysis_hard.md`). First item of the improvement list.
 - 2026-10-29: Author reviewed both eval sets (questions.yaml, questions_hard.yaml); status changed from DRAFT to REVIEWED.
+- 2026-10-29: Iteration 2, change A (merged-table duplicate fixed): the known defect above is resolved; corpus 28 -> 27 chunks.
+- 2026-10-29: Iteration 2, change B: BM25 tokenizer applies `isation(s)?` -> `ization`, a short UK->US dict and the English Snowball stemmer (`snowballstemmer`, pure Python) to tokens without digits; same function for index and query. No synonym lists. Reason: baseline hypothesis "no stemming"; h05 only passed via a second keyword. Keep/revert is decided after the measurement (see eval/ITERATIONS.md).

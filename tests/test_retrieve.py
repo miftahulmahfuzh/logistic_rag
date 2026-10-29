@@ -15,11 +15,27 @@ def test_tokenizer_strips_thousands_separators():
 
 
 def test_tokenizer_lowercases_drops_stopwords_keeps_decimals():
-    assert tokenize("What is the OTD in November: 89.7%?") == ["otd", "november", "89.7"]
+    assert tokenize("What is the OTD in November: 89.7%?") == ["otd", *tokenize("november"), "89.7"]
 
 
-def test_no_stemming():
-    assert tokenize("utilisation") != tokenize("utilization")
+def test_spelling_and_plural_variants_collapse():
+    assert tokenize("utilisation") == tokenize("utilization") == tokenize("utilisations")
+    assert tokenize("trucks") == tokenize("truck")
+
+
+def test_numbers_are_not_stemmed():
+    assert tokenize("8,420 1.71 q3 2025") == ["8420", "1.71", "q3", "2025"]
+
+
+def test_us_query_finds_uk_spelled_chunk():
+    idx = Index(
+        [
+            _chunk("a", "Warehouse utilisation by site", 1),
+            _chunk("b", "Employees by country at year end", 2),
+            _chunk("c", "Revenue by quarter", 3),
+        ]
+    )
+    assert idx.search("utilization", k=1)[0].chunk.chunk_id == "a"
 
 
 def test_ranking_on_toy_corpus():

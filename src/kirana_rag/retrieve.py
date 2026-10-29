@@ -4,6 +4,7 @@ import re
 import sys
 from dataclasses import dataclass
 
+import snowballstemmer
 from rank_bm25 import BM25Okapi
 
 from . import config
@@ -16,15 +17,37 @@ STOPWORDS = frozenset(
 )
 _THOUSANDS = re.compile(r"(?<=\d),(?=\d{3}\b)")
 _TOKEN = re.compile(r"\d+\.\d+|[a-z0-9]+")
+_ISATION = re.compile(r"isation(s)?\b")
+UK_TO_US = {
+    "labour": "labor",
+    "colour": "color",
+    "centre": "center",
+    "programme": "program",
+    "organise": "organize",
+    "favour": "favor",
+    "behaviour": "behavior",
+    "licence": "license",
+    "tonne": "ton",
+}
+_STEMMER = snowballstemmer.stemmer("english")
+
+
+def _normalise(token: str) -> str:
+    """UK -> US spelling, then English Snowball stem. Tokens with a digit are left alone."""
+    if any(ch.isdigit() for ch in token):
+        return token
+    token = UK_TO_US.get(token, _ISATION.sub(r"ization\1", token))
+    return _STEMMER.stemWord(token)
 
 
 def tokenize(text: str) -> list[str]:
-    """Lowercase, `8,420` -> `8420`, alphanumeric tokens (decimals kept whole), stopwords out.
+    """Lowercase, `8,420` -> `8420`, alphanumeric tokens (decimals kept whole), stopwords out,
+    then UK->US spelling and Snowball stemming (not for tokens with digits).
 
-    No stemming on purpose: the baseline records that as a hypothesis for failures.
+    Used for both the index and the query, so they always agree.
     """
     text = _THOUSANDS.sub("", text.lower())
-    return [t for t in _TOKEN.findall(text) if t not in STOPWORDS]
+    return [_normalise(t) for t in _TOKEN.findall(text) if t not in STOPWORDS]
 
 
 @dataclass
