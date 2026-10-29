@@ -1,0 +1,1812 @@
+{
+  "tag": "before_holdout_r1",
+  "suite": "holdout",
+  "finished_at": "2026-10-29T10:19:00+00:00",
+  "k": 8,
+  "retriever": "hybrid",
+  "oracle": false,
+  "doc_ids": [
+    "northmere-wind-solar-annual-report-2025-83cfc21d"
+  ],
+  "n_chunks": 10,
+  "models": {
+    "text": "glm-5.3",
+    "vision": "glm-4.6v"
+  },
+  "tokens": {
+    "in": 19003,
+    "out": 1923,
+    "note": "tokens of calls not served from the response cache in this process"
+  },
+  "records": [
+    {
+      "id": "w01",
+      "type": "prose",
+      "question": "What was turnover in 2025 and how much did it grow?",
+      "expected_answer": "£412 million, up 8.4%",
+      "gold_pages": [
+        2,
+        3
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "412",
+        "8.4"
+      ],
+      "gold_chunks": [
+        "p2-x1",
+        "p3-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0312
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0297
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0296
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0296
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Turnover in 2025 was £412 million, up from £380 million in 2024 — an increase of 8.4% (the Chair's statement gives this percentage; the underlying figures appear in the financial summary table).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-t1",
+            "page": 3,
+            "quote": "| Turnover | 380 | 412 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p2-x1",
+            "page": 2,
+            "quote": "Turnover reached £412 million, an increase of 8.4% on the £380 million recorded in 2024.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1415,
+        "tokens_out": 146,
+        "llm_ms": 4810.78696300392,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: £412 million turnover, up 8.4%, with extra correct detail.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w02",
+      "type": "table",
+      "question": "What was operating profit in 2024?",
+      "expected_answer": "£71 million",
+      "gold_pages": [
+        3
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "71"
+      ],
+      "gold_chunks": [
+        "p3-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0301
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Operating profit in 2024 was £71 million.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-t1",
+            "page": 3,
+            "quote": "| Operating profit | 71 | 79 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1186,
+        "tokens_out": 58,
+        "llm_ms": 8162.148578005144,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference value of £71 million.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w03",
+      "type": "synonym",
+      "question": "What was the group's net debt at the end of 2025?",
+      "expected_answer": "£312 million (reported as net borrowings)",
+      "gold_pages": [
+        3
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "312"
+      ],
+      "gold_chunks": [
+        "p3-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0307
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0299
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Net borrowings at the end of 2025 were £312 million.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-t1",
+            "page": 3,
+            "quote": "| Net borrowings | 288 | 312 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p3-x1",
+            "page": 3,
+            "quote": "Net borrowings are measured after deducting cash and cash equivalents.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1416,
+        "tokens_out": 108,
+        "llm_ms": 1775.9544180007651,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly: net borrowings of £312 million.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w04",
+      "type": "synonym",
+      "question": "Which site can generate the most electricity, and how much?",
+      "expected_answer": "Dunmere Flats, 410 MW",
+      "gold_pages": [
+        4,
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "dunmere flats",
+        "410"
+      ],
+      "gold_chunks": [
+        "p4-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 4,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0294
+          }
+        ],
+        "first_gold_rank": 3,
+        "mrr": 0.3333333333333333,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Dunmere Flats has the largest installed capacity at 410 MW (offshore wind), so it can generate the most electricity. The document reports capacity, not generation per site.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Dunmere Flats | Offshore wind | 410 | 93.6 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1188,
+        "tokens_out": 116,
+        "llm_ms": 2066.9886840041727,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer matches the reference: Dunmere Flats with 410 MW.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w05",
+      "type": "table",
+      "question": "How much power can the Westerleigh Sands site produce?",
+      "expected_answer": "276 MW",
+      "gold_pages": [
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "276"
+      ],
+      "gold_chunks": [
+        "p4-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0317
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0296
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Westerleigh Sands is an offshore wind site with an installed capacity of 276 MW. The document gives capacity, not actual output for the site.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Westerleigh Sands | Offshore wind | 276 | 95.0 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1444,
+        "tokens_out": 92,
+        "llm_ms": 2178.5426400019787,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states 276 MW, matching the reference.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w06",
+      "type": "figure",
+      "question": "How much electricity did solar generate in 2025?",
+      "expected_answer": "395 GWh",
+      "gold_pages": [
+        6
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "395"
+      ],
+      "gold_chunks": [
+        "p6-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0311
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0311
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0299
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Solar generated 395 GWh in 2025 (source: Figure 1, a chart/table on page 6).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-f1",
+            "page": 6,
+            "quote": "| Solar          | 395  |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1443,
+        "tokens_out": 73,
+        "llm_ms": 2112.3185259930324,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: solar generated 395 GWh in 2025.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w07",
+      "type": "synonym",
+      "question": "Which sites are underperforming enough to trigger a performance review?",
+      "expected_answer": "Brannock Ridge (91.2%), Fenwick (89.7%) and Greyfell (90.4%) are below 92%. The review needs two consecutive years below 92%; the report gives only 2025.",
+      "gold_pages": [
+        4,
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "brannock ridge",
+        "fenwick",
+        "greyfell"
+      ],
+      "gold_chunks": [
+        "p4-x1",
+        "p4-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0299
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not identify which sites trigger a performance review. A review requires availability below 92% in two consecutive years, but only 2025 availability is provided. In 2025, Brannock Ridge (91.2%), Fenwick (89.7%) and Greyfell (90.4%) fell below 92%, but the document contains no 2024 availability data to confirm two consecutive years.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "A site is placed under performance review when its availability is below 92% in two consecutive years.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Brannock Ridge | Onshore wind | 96 | 91.2 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Fenwick | Onshore wind | 74 | 89.7 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Greyfell | Onshore wind | 109 | 90.4 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1404,
+        "tokens_out": 313,
+        "llm_ms": 4721.781500993529,
+        "status_correct": false,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer names the same three sites below 92% and correctly notes only 2025 data is available, so two consecutive years cannot be confirmed.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w08",
+      "type": "multihop",
+      "question": "By how much did capital investment rise between 2024 and 2025?",
+      "expected_answer": "£45 million (156 to 201)",
+      "gold_pages": [
+        3
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "45"
+      ],
+      "gold_chunks": [
+        "p3-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0297
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0296
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Capital investment rose by £45 million, from £156 million in 2024 to £201 million in 2025 (£201m − £156m = £45m).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-t1",
+            "page": 3,
+            "quote": "| Capital investment | 156 | 201 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1161,
+        "tokens_out": 90,
+        "llm_ms": 1945.9340400062501,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states the £45 million rise from £156 million to £201 million, matching the reference.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w09",
+      "type": "prose",
+      "question": "How many staff does the company employ?",
+      "expected_answer": "1,284 colleagues",
+      "gold_pages": [
+        2
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "1284"
+      ],
+      "gold_chunks": [
+        "p2-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0299
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "1,284 colleagues in 2025, up from 1,196 a year earlier.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p2-x1",
+            "page": 2,
+            "quote": "Our workforce stands at 1,284 colleagues, up from 1,196 a year earlier.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1131,
+        "tokens_out": 79,
+        "llm_ms": 2090.177826001309,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states 1,284 colleagues, matching the reference, with additional correct detail.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w10",
+      "type": "crossref",
+      "question": "Did the group meet its lost-time injury target, and by what margin?",
+      "expected_answer": "Yes: 0.31 against a target of 0.40, 0.09 better",
+      "gold_pages": [
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "0.31",
+        "0.40"
+      ],
+      "gold_chunks": [
+        "p5-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0299
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Yes. The lost-time injury rate was 0.31 per 200,000 hours worked against a target of 0.40, so it was 0.09 below target (0.40 − 0.31 = 0.09), i.e. beaten by 0.09.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-x1",
+            "page": 5,
+            "quote": "The lost-time injury rate was 0.31 per 200,000 hours worked, against a target of 0.40.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1089,
+        "tokens_out": 127,
+        "llm_ms": 4809.997881995514,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: rate 0.31 vs target 0.40, beaten by 0.09.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w11",
+      "type": "unanswerable",
+      "question": "What connection charge applies at the Fenwick site?",
+      "expected_answer": "Not given; the report refers to Appendix B, which is not included",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0317
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0296
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document says connection charges are set out in Appendix B, but Appendix B is not included in the provided excerpts, so the Fenwick connection charge is not available.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "Connection charges for each site are set out in Appendix B.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1145,
+        "tokens_out": 84,
+        "llm_ms": 2574.1998330049682,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both state the charge is not available because it's in the missing Appendix B.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w12",
+      "type": "unanswerable",
+      "question": "What is the operating profit forecast for 2026?",
+      "expected_answer": "Not given; only turnover growth of 6-8% and capital investment of about £230 million",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0301
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state an operating profit forecast for 2026. The 2026 outlook only gives expected turnover growth of 6% to 8% and capital investment of about £230 million.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "For 2026 we expect turnover growth of 6% to 8% and capital investment of about £230 million.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1188,
+        "tokens_out": 105,
+        "llm_ms": 14268.662118003704,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both answers state no operating profit forecast for 2026 is given, citing the same turnover growth and capital investment figures.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "w13",
+      "type": "false_premise",
+      "question": "Which offshore site will the group acquire in 2026?",
+      "expected_answer": "None: the report says it does not plan to acquire any offshore site in 2026",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "no offshore",
+          "not plan to acquire",
+          "does not plan",
+          "none",
+          "no plans"
+        ]
+      ],
+      "gold_chunks": [
+        "p7-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4,
+              5
+            ],
+            "type": "table",
+            "score": 0.0317
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0312
+          },
+          {
+            "chunk_id": "p3-t1",
+            "pages": [
+              3
+            ],
+            "type": "table",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0301
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "None — the document states the group does not plan to acquire any offshore site in 2026.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "We do not plan to acquire any offshore site in 2026; our focus is on raising output from existing sites.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1457,
+        "tokens_out": 82,
+        "llm_ms": 2024.2650030122604,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: no offshore site will be acquired in 2026.",
+        "disagree": false
+      }
+    }
+  ]
+}

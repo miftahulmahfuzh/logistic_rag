@@ -1,0 +1,2840 @@
+{
+  "tag": "before_core_r1",
+  "suite": "core",
+  "finished_at": "2026-10-29T10:10:47+00:00",
+  "k": 8,
+  "retriever": "hybrid",
+  "oracle": false,
+  "doc_ids": [
+    "kirana-logistics-annual-report-2025-109f0c11"
+  ],
+  "n_chunks": 27,
+  "models": {
+    "text": "glm-5.3",
+    "vision": "glm-4.6v"
+  },
+  "tokens": {
+    "in": 36513,
+    "out": 3697,
+    "note": "tokens of calls not served from the response cache in this process"
+  },
+  "records": [
+    {
+      "id": "q01",
+      "type": "prose",
+      "question": "What was Kirana's revenue in 2025 and by how much did it grow?",
+      "expected_answer": "THB 8,420 million, up 10.0%",
+      "gold_pages": [
+        2,
+        3,
+        4
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "8420",
+        "10.0"
+      ],
+      "gold_chunks": [
+        "p2-x1",
+        "p4-t1",
+        "p3-s1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 3,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.3333333333333333,
+          "5": 0.6666666666666666,
+          "8": 0.6666666666666666
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.03
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0297
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0293
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0292
+          }
+        ],
+        "first_gold_rank": 3,
+        "mrr": 0.3333333333333333,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Revenue in 2025 was THB 8,420 million, up 10.0% from THB 7,655 million in 2024 (a rise of 8,420 - 7,655 = 765 THB million).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-s1",
+            "page": 3,
+            "quote": "Revenue (+10.0%) | THB 8,420 m",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Revenue | 6,910 | 7,655 | 8,420 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1304,
+        "tokens_out": 148,
+        "llm_ms": 2496.632202004548,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: THB 8,420 million revenue, up 10.0%.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q02",
+      "type": "table",
+      "question": "What was net profit in 2024?",
+      "expected_answer": "THB 468 million",
+      "gold_pages": [
+        4
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "468"
+      ],
+      "gold_chunks": [
+        "p4-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0297
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 0.0287
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0284
+          },
+          {
+            "chunk_id": "p9-f1",
+            "pages": [
+              9
+            ],
+            "type": "figure",
+            "score": 0.0284
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Net profit in 2024 was THB 468 million.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "| Net profit | 412 | 468 | 531 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1472,
+        "tokens_out": 67,
+        "llm_ms": 2201.394749979954,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference exactly.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q03",
+      "type": "multihop",
+      "question": "Is net debt at end of 2025 within the company's internal limit?",
+      "expected_answer": "Net debt THB 2,310m vs EBITDA 1,347m = 1.71x, within the internal limit of 2.0x EBITDA",
+      "gold_pages": [
+        4
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "1.71"
+      ],
+      "gold_chunks": [
+        "p4-t1",
+        "p4-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.03
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 0.0289
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0282
+          },
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0281
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Yes. Net debt at 31 Dec 2025 was THB 2,310 million and EBITDA was THB 1,347 million, giving net debt/EBITDA of 2,310 / 1,347 ≈ 1.72x, below the internal limit of 2.0 times EBITDA. The financial review also states net debt \"remains within our internal limit of 2.0 times EBITDA.\"",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "Net debt (31 Dec) | 1,880 | 2,050 | 2,310",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-t1",
+            "page": 4,
+            "quote": "EBITDA | 1,036 | 1,186 | 1,347",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p4-x1",
+            "page": 4,
+            "quote": "Net debt rose accordingly but remains within our internal limit of 2.0 times EBITDA.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1408,
+        "tokens_out": 264,
+        "llm_ms": 3235.026353999274,
+        "status_correct": true,
+        "facts_correct": false,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Same facts (THB 2,310m net debt, THB 1,347m EBITDA, ~1.7x vs 2.0x limit); minor rounding difference only.",
+        "disagree": true
+      }
+    },
+    {
+      "id": "q04",
+      "type": "table_crossref",
+      "question": "What was the 2025 utilisation of the Cibitung cold store?",
+      "expected_answer": "96% (Table 2, on the continuation page)",
+      "gold_pages": [
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "96"
+      ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0293
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.029
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0289
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The Cibitung cold store (ID-CBT, Cibitung, Bekasi, Indonesia) had a 2025 utilisation of 96%.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| ID-CBT | Cibitung, Bekasi | Indonesia | Cold chain | 21,000 | 96% | 2019 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2258,
+        "tokens_out": 99,
+        "llm_ms": 1917.7755059790798,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": false,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states the 2025 utilisation of the Cibitung cold store as 96%.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q05",
+      "type": "table_crossref",
+      "question": "How many of the major facilities are cold-chain sites?",
+      "expected_answer": "6: Bang Na, Rayong, Cibitung, Denpasar, Thu Duc, Johor Bahru",
+      "gold_pages": [
+        7,
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "bang na",
+        "rayong",
+        "cibitung",
+        "denpasar",
+        "thu duc",
+        "johor bahru"
+      ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p7-f1",
+            "pages": [
+              7
+            ],
+            "type": "figure",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0296
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0283
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Six of the 23 major facilities are cold-chain sites: TH-BNA (Bang Na), TH-RYG (Rayong), ID-CBT (Cibitung), ID-DPS (Denpasar), VN-HCM (Thu Duc) and MY-JHB (Johor Bahru).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| TH-BNA | Bang Na, Samut Prakan | Thailand | Cold chain |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "| TH-RYG | Rayong | Thailand | Cold chain | 9,600 | 82% | 2021 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 8,
+            "quote": "| ID-CBT | Cibitung, Bekasi | Indonesia | Cold chain | 21,000 | 96% | 2019 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 8,
+            "quote": "| ID-DPS | Denpasar, Bali | Indonesia | Cold chain | 8,100 | 90% | 2024 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 8,
+            "quote": "| VN-HCM | Thu Duc, Ho Chi Minh City | Vietnam | Cold chain |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 8,
+            "quote": "| MY-JHB | Johor Bahru | Malaysia | Cold chain | 9,200 | 85% | 2022 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2286,
+        "tokens_out": 377,
+        "llm_ms": 4637.148373003583,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states six cold-chain sites matching the reference list.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q06",
+      "type": "table_crossref",
+      "question": "Which major facilities are above 92% utilisation, the expansion-study trigger?",
+      "expected_answer": "Laem Chabang 93%, Cikarang 94%, Cibitung 96%. Thu Duc is exactly 92%, not above.",
+      "gold_pages": [
+        7,
+        8
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "laem chabang",
+        "cikarang",
+        "cibitung"
+      ],
+      "gold_chunks": [
+        "p7-t1",
+        "p7-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 0.03
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0291
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0288
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0287
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Two major facilities exceed 92% utilisation: ID-CKR (Cikarang, Bekasi, Indonesia) at 94% and ID-CBT (Cibitung, Bekasi, Indonesia) at 96%. VN-HCM is exactly 92%, which is not above the trigger threshold.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "sites above 92% trigger an expansion study.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "ID-CKR | Cikarang, Bekasi | Indonesia | Ambient + cross-dock | 58,000 | 94%",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-t1",
+            "page": 7,
+            "quote": "ID-CBT | Cibitung, Bekasi | Indonesia | Cold chain | 21,000 | 96%",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2098,
+        "tokens_out": 245,
+        "llm_ms": 3548.892779974267,
+        "status_correct": true,
+        "facts_correct": false,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "partial",
+        "judge_reason": "Correctly identifies Cikarang 94% and Cibitung 96% and notes Thu Duc is exactly 92%, but omits Laem Chabang at 93% which is above the trigger.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q07",
+      "type": "table",
+      "question": "How many electric light trucks does Indonesia have?",
+      "expected_answer": "44",
+      "gold_pages": [
+        9
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "44"
+      ],
+      "gold_chunks": [
+        "p9-t1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 4,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p12-x2",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 0.0317
+          },
+          {
+            "chunk_id": "p7-f1",
+            "pages": [
+              7
+            ],
+            "type": "figure",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0296
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Indonesia has 44 electric light trucks as of 31 December 2025 (source: Table 3, Fleet by vehicle type and country).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-t1",
+            "page": 9,
+            "quote": "| Electric light truck | 132 | 44 | 18 | 24 | 218 |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1536,
+        "tokens_out": 88,
+        "llm_ms": 3985.011968994513,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer states 44 electric light trucks, matching the reference.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q08",
+      "type": "conflict",
+      "question": "How many electric trucks did Kirana add in 2025?",
+      "expected_answer": "82 per the fleet section and the errata; the CEO letter says 96 and the errata corrects it",
+      "gold_pages": [
+        2,
+        9,
+        12
+      ],
+      "expected_status": "conflict",
+      "must_contain": [
+        "82",
+        "96"
+      ],
+      "gold_chunks": [
+        "p2-x1",
+        "p9-x1",
+        "p12-x2"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.3333333333333333,
+          "3": 0.6666666666666666,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p12-x2",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p9-t1",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0301
+          },
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0286
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0284
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "conflict",
+        "answer": "The CEO letter says 96 electric trucks were added in 2025, but the document's errata states the correct figure is 82, as reported in the Fleet and sustainability section (fleet grew from 136 to 218). The errata is authoritative: 82.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p2-x1",
+            "page": 2,
+            "quote": "We added 96 electric trucks during the year, mostly in Bangkok and the Klang Valley",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Our electric fleet grew from 136 vehicles at the end of 2024 to 218 at the end of 2025, an increase of 82.",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p12-x2",
+            "page": 12,
+            "quote": "The Letter from the Chief Executive Officer states that 96 electric trucks were added in 2025. The correct figure is 82",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1398,
+        "tokens_out": 227,
+        "llm_ms": 3816.790216980735,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Answer matches the reference: 82 per fleet section and errata, with CEO letter's 96 noted as corrected.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q09",
+      "type": "chart",
+      "question": "What was revenue in the third quarter of 2025?",
+      "expected_answer": "THB 2,105 million",
+      "gold_pages": [
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "2105"
+      ],
+      "gold_chunks": [
+        "p5-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0303
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0302
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0294
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Q3 2025 revenue was THB 2,105 million.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-f1",
+            "page": 5,
+            "quote": "| Q3      | 2,105                |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1036,
+        "tokens_out": 63,
+        "llm_ms": 1688.5478180192877,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference figure of THB 2,105 million.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q10",
+      "type": "chart",
+      "question": "What share of 2025 revenue came from Indonesia?",
+      "expected_answer": "31%",
+      "gold_pages": [
+        5
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "31"
+      ],
+      "gold_chunks": [
+        "p5-f2"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0296
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0291
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 0.0288
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "31% of 2025 revenue came from Indonesia (per Figure 2, Revenue by country, 2025).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p5-f2",
+            "page": 5,
+            "quote": "Figure 2. Revenue by country, 2025 (share of total)",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1314,
+        "tokens_out": 79,
+        "llm_ms": 1458.8658679858781,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: 31% of 2025 revenue came from Indonesia.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q11",
+      "type": "chart",
+      "question": "In which month was on-time delivery lowest in 2025 and what was it?",
+      "expected_answer": "November, 89.7%",
+      "gold_pages": [
+        6
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "november",
+        "89.7"
+      ],
+      "gold_chunks": [
+        "p6-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0304
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0298
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0288
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0288
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "On-time delivery was lowest in November 2025, at 89.7% (source: Figure 5, a figure on page 6).",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p6-f1",
+            "page": 6,
+            "quote": "| Nov   | 89.7                  |",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1267,
+        "tokens_out": 79,
+        "llm_ms": 1510.4129899991676,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: November, 89.7%.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q12",
+      "type": "multihop",
+      "question": "What was emissions intensity per parcel in 2025 and what level would the 30% reduction target from the 2023 baseline imply?",
+      "expected_answer": "2.40 g CO2e per parcel in 2025; 2023 was 2.71 so the target is about 1.90",
+      "gold_pages": [
+        9
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "2.40",
+        [
+          "1.90",
+          "1.9",
+          "1.897"
+        ]
+      ],
+      "gold_chunks": [
+        "p9-f1",
+        "p9-x1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p9-f1",
+            "pages": [
+              9
+            ],
+            "type": "figure",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0291
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0289
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0281
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.028
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Emissions intensity in 2025 was 2.40 g CO2e per parcel. The 2023 baseline was 2.71 g CO2e per parcel; a 30% reduction implies 2.71 × 0.70 = 1.897 g CO2e per parcel (≈1.90) by 2030.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p9-f1",
+            "page": 9,
+            "quote": "| 2023 | 2.71 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-f1",
+            "page": 9,
+            "quote": "| 2025 | 2.40 |",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p9-x1",
+            "page": 9,
+            "quote": "Our target is a 30% reduction in emissions intensity per parcel by 2030, measured against the 2023 baseline.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1945,
+        "tokens_out": 227,
+        "llm_ms": 3394.554516999051,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches reference: 2.40 g CO2e per parcel in 2025, baseline 2.71, and 30% reduction gives ~1.90 g CO2e per parcel.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q13",
+      "type": "kpi",
+      "question": "What was the customer NPS in 2025 and in 2024?",
+      "expected_answer": "52 in 2025, 47 in 2024",
+      "gold_pages": [
+        3
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "52",
+        "47"
+      ],
+      "gold_chunks": [
+        "p3-s1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0298
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 0.0297
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0295
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0292
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.029
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "Customer NPS was 52 in 2025 and 47 in 2024.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p3-s1",
+            "page": 3,
+            "quote": "Customer NPS (2024: 47) | 52",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1303,
+        "tokens_out": 69,
+        "llm_ms": 2378.29564299318,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference exactly: NPS of 52 in 2025 and 47 in 2024.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q14",
+      "type": "diagram",
+      "question": "How many trucks per day run on the Hat Yai to Shah Alam cross-border lane?",
+      "expected_answer": "18 trucks/day",
+      "gold_pages": [
+        7
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "18"
+      ],
+      "gold_chunks": [
+        "p7-f1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p7-f1",
+            "pages": [
+              7
+            ],
+            "type": "figure",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p6-x1",
+            "pages": [
+              6
+            ],
+            "type": "text",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p12-x2",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0311
+          },
+          {
+            "chunk_id": "p9-x1",
+            "pages": [
+              9
+            ],
+            "type": "text",
+            "score": 0.0299
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.0296
+          },
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0291
+          },
+          {
+            "chunk_id": "p10-x1",
+            "pages": [
+              10
+            ],
+            "type": "text",
+            "score": 0.0288
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state a truck frequency for a Hat Yai to Shah Alam lane. The only cross-border figure shown is Lat Krabang to Shah Alam at 18 trucks/day (Figure 3, page 7); the document says Thailand and Malaysia are connected by road via the Hat Yai cross-border lane, but gives no daily truck count for that lane.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p7-f1",
+            "page": 7,
+            "quote": "Lat Krabang (main hub) -- 18 trucks/day (cross-border) --> Shah Alam",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p7-x1",
+            "page": 7,
+            "quote": "Thailand and Malaysia are connected by road through the Hat Yai cross-border lane.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2225,
+        "tokens_out": 197,
+        "llm_ms": 3424.640036013443,
+        "status_correct": false,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "partial",
+        "judge_reason": "The 18 trucks/day figure matches, but the model attributes it to the Lat Krabang–Shah Alam lane rather than Hat Yai–Shah Alam.",
+        "disagree": true
+      }
+    },
+    {
+      "id": "q15",
+      "type": "scan",
+      "question": "What is the 2026 tariff for cold-chain pallet storage?",
+      "expected_answer": "THB 780.00 per pallet per month, excluding 7% VAT",
+      "gold_pages": [
+        13
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "780"
+      ],
+      "gold_chunks": [
+        "p13-s1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0296
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.029
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The 2026 standard contract tariff for cold-chain pallet storage (2-8 C) is THB 780.00 per pallet per month, excluding 7% VAT, effective 1 January 2026. (Frozen pallet storage at -18 C is a separate rate of THB 1,150.00 per pallet per month.)",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Cold-chain pallet storage (2-8 C) | per pallet per month | 780.00",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Rates exclude 7% VAT. Effective 1 January 2026.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 2233,
+        "tokens_out": 181,
+        "llm_ms": 2501.935445005074,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "States THB 780.00 per pallet per month excluding 7% VAT, matching the reference.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q16",
+      "type": "scan",
+      "question": "What does last-mile delivery of a 2 kg parcel cost including VAT under the 2026 tariff?",
+      "expected_answer": "THB 38.00 + 7% VAT = THB 40.66",
+      "gold_pages": [
+        13
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        "40.66"
+      ],
+      "gold_chunks": [
+        "p13-s1"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.031
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0306
+          },
+          {
+            "chunk_id": "p9-f1",
+            "pages": [
+              9
+            ],
+            "type": "figure",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p6-f1",
+            "pages": [
+              6
+            ],
+            "type": "figure",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0283
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "The 2026 tariff lists last-mile parcels up to 2 kg at 38.00 THB per parcel, excluding 7% VAT. Including VAT: 38.00 × 1.07 = 40.66 THB per parcel.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Last-mile parcel up to 2 kg | per parcel | 38.00",
+            "verified": true,
+            "reason": ""
+          },
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Rates exclude 7% VAT. Effective 1 January 2026.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1329,
+        "tokens_out": 142,
+        "llm_ms": 2575.552816997515,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer matches the reference: THB 38.00 plus 7% VAT equals THB 40.66.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q17",
+      "type": "unanswerable",
+      "question": "What volume discount applies to a customer storing 500 pallets?",
+      "expected_answer": "Not in the report; Schedule C is referenced but not included",
+      "gold_pages": [
+        13
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p13-s1",
+            "pages": [
+              13
+            ],
+            "type": "scan",
+            "score": 0.0318
+          },
+          {
+            "chunk_id": "p11-x1",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p12-x1",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p5-x1",
+            "pages": [
+              5
+            ],
+            "type": "text",
+            "score": 0.0305
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0292
+          },
+          {
+            "chunk_id": "p7-x1",
+            "pages": [
+              7
+            ],
+            "type": "text",
+            "score": 0.0291
+          },
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0288
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The document does not state the volume discounts. Appendix B notes that 'Volume discounts are set out in Schedule C (not included in this report).'",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p13-s1",
+            "page": 13,
+            "quote": "Volume discounts are set out in Schedule C (not included in this report).",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1581,
+        "tokens_out": 84,
+        "llm_ms": 2291.988580022007,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Both state the volume discounts are not provided, with Schedule C referenced but not included.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q18",
+      "type": "unanswerable",
+      "question": "What is the net profit forecast for 2026?",
+      "expected_answer": "Not given; only revenue growth of 11-13% and capex of about THB 1,050m",
+      "gold_pages": [
+        11
+      ],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.0325
+          },
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0313
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0312
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0292
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.029
+          },
+          {
+            "chunk_id": "p5-f1",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0284
+          }
+        ],
+        "first_gold_rank": 2,
+        "mrr": 0.5,
+        "hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts do not contain a net profit forecast for 2026. The 2026 outlook covers revenue growth (11%–13%) and capital expenditure (THB 1,050 million), but no net profit figure is given.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-x2",
+            "page": 11,
+            "quote": "We expect revenue growth of 11% to 13% in 2026. Planned capital expenditure is approximately THB 1,050 million.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1156,
+        "tokens_out": 119,
+        "llm_ms": 2153.867298999103,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states no net profit forecast is given and matches the reference's revenue growth and capex figures.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q19",
+      "type": "unanswerable",
+      "question": "Who is the Chief Financial Officer?",
+      "expected_answer": "Not in the report (only the CEO is named)",
+      "gold_pages": [],
+      "expected_status": "refused",
+      "must_contain": [],
+      "gold_chunks": [],
+      "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
+        "retrieved": [
+          {
+            "chunk_id": "p4-t1",
+            "pages": [
+              4
+            ],
+            "type": "table",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.032
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0315
+          },
+          {
+            "chunk_id": "p4-x1",
+            "pages": [
+              4
+            ],
+            "type": "text",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p3-s1",
+            "pages": [
+              3
+            ],
+            "type": "scan",
+            "score": 0.0296
+          },
+          {
+            "chunk_id": "p3-x1",
+            "pages": [
+              3
+            ],
+            "type": "text",
+            "score": 0.0294
+          },
+          {
+            "chunk_id": "p9-t2",
+            "pages": [
+              9
+            ],
+            "type": "table",
+            "score": 0.0286
+          },
+          {
+            "chunk_id": "p12-x2",
+            "pages": [
+              12
+            ],
+            "type": "text",
+            "score": 0.0286
+          }
+        ],
+        "first_gold_rank": null,
+        "mrr": 0.0,
+        "hit": {
+          "1": false,
+          "3": false,
+          "5": false,
+          "8": false
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "refused",
+        "answer": "The excerpts do not name a Chief Financial Officer; only the CEO, Arune Wongsakul, is mentioned.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p2-x1",
+            "page": 2,
+            "quote": "Arune Wongsakul Chief Executive Officer Bangkok, 20 February 2026",
+            "verified": false,
+            "reason": "quote not found verbatim in chunk"
+          }
+        ],
+        "tokens_in": 1341,
+        "tokens_out": 80,
+        "llm_ms": 3564.9163220077753,
+        "status_correct": true,
+        "facts_correct": null,
+        "citation_page_ok": null,
+        "citations_verified": 0.0,
+        "judge": "correct",
+        "judge_reason": "The answer correctly states the CFO is not named and only the CEO is mentioned.",
+        "disagree": false
+      }
+    },
+    {
+      "id": "q20",
+      "type": "false_premise",
+      "question": "Which new country will Kirana enter in 2026?",
+      "expected_answer": "None: the report says it does not plan to enter any new country in 2026",
+      "gold_pages": [
+        11
+      ],
+      "expected_status": "answered",
+      "must_contain": [
+        [
+          "no new country",
+          "not plan to enter",
+          "does not plan",
+          "none",
+          "no plans"
+        ]
+      ],
+      "gold_chunks": [
+        "p11-x2"
+      ],
+      "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
+        "retrieved": [
+          {
+            "chunk_id": "p11-x2",
+            "pages": [
+              11
+            ],
+            "type": "text",
+            "score": 0.0328
+          },
+          {
+            "chunk_id": "p2-x1",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0323
+          },
+          {
+            "chunk_id": "p10-t1",
+            "pages": [
+              10
+            ],
+            "type": "table",
+            "score": 0.0317
+          },
+          {
+            "chunk_id": "p2-x2",
+            "pages": [
+              2
+            ],
+            "type": "text",
+            "score": 0.0312
+          },
+          {
+            "chunk_id": "p5-f2",
+            "pages": [
+              5
+            ],
+            "type": "figure",
+            "score": 0.0308
+          },
+          {
+            "chunk_id": "p1-f1",
+            "pages": [
+              1
+            ],
+            "type": "figure",
+            "score": 0.0292
+          },
+          {
+            "chunk_id": "p1-x1",
+            "pages": [
+              1
+            ],
+            "type": "text",
+            "score": 0.0288
+          },
+          {
+            "chunk_id": "p7-t1",
+            "pages": [
+              7,
+              8
+            ],
+            "type": "table",
+            "score": 0.028
+          }
+        ],
+        "first_gold_rank": 1,
+        "mrr": 1.0,
+        "hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "gold_type_retrieved": {
+          "1": null,
+          "3": null,
+          "5": null,
+          "8": null
+        }
+      },
+      "answer": {
+        "status": "answered",
+        "answer": "None. The document states Kirana does not plan to enter any new country in 2026; it will only open four new facilities in existing countries.",
+        "error": "",
+        "citations": [
+          {
+            "chunk_id": "p11-x2",
+            "page": 11,
+            "quote": "We do not plan to enter any new country in 2026.",
+            "verified": true,
+            "reason": ""
+          }
+        ],
+        "tokens_in": 1889,
+        "tokens_out": 83,
+        "llm_ms": 2733.5989869898185,
+        "status_correct": true,
+        "facts_correct": true,
+        "citation_page_ok": true,
+        "citations_verified": 1.0,
+        "judge": "correct",
+        "judge_reason": "Matches the reference: no new country entry planned in 2026, with correct extra detail.",
+        "disagree": false
+      }
+    }
+  ]
+}
