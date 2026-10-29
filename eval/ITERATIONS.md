@@ -218,3 +218,19 @@ noise on h09 and a partial q14. The holdout cannot show retrieval gains at the a
 whatever the ranker does. The core set did not improve (its page hit@1 is lower than iteration 2's 88%, still within one or two questions).
 No setting was tuned on any set: model, RRF constant, weights, k were fixed in advance; the only data-driven choice was the stemmer, by the stated rule.
 The holdout is 13 questions and one fictional document written by the same author as the code, so it is a weak test of generality, not a proof.
+
+## Follow-up (after the iteration 3 report): normalisation re-checked under hybrid retrieval
+
+Retrieval only, no LLM, `scripts/retrieval_ablation.py --retriever hybrid`. This was run **after** seeing the iteration 3 results, at the author's
+request, so it is post hoc: the default was **not** changed because of it.
+
+| normalise (hybrid) | core mean rank | hard mean rank | Kirana 32 mean | holdout mean rank | holdout hit@1 |
+|---|---|---|---|---|---|
+| none | 1.47 | 1.27 | 1.37 | 1.45 | 73% |
+| spelling (current default) | 1.47 | 1.33 | 1.41 | 1.45 | 73% |
+| full (Snowball) | 1.29 | 1.53 | 1.40 | 1.36 | 82% |
+
+- Spelling vs none: identical except one hard question (1.27 vs 1.33). Under hybrid the spelling pass earns nothing measurable; the dense model already absorbs UK/US variants. It is kept only as cheap, low-risk insurance.
+- Snowball under hybrid is no longer clearly bad: it is best on core and holdout, worst on hard, and its Kirana mean (1.40) is level with spelling (1.41). The Step B rule was
+  stated on BM25-only results, where Snowball lost on both documents; under hybrid, applying the same rule would keep it. Switching now would be re-deciding after seeing the
+  results, so the default stays `spelling` and the difference is reported as an open question. A proper decision needs the larger holdout in `HOLDOUT_V2_PLAN.md`.
