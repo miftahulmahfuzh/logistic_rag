@@ -14,6 +14,7 @@ from .chunk import Chunk, group_paragraphs, make_header
 from .pdf import (
     PageRecord,
     doc_title,
+    is_footnote,
     is_heading,
     read_pages,
     reading_order,
@@ -164,16 +165,22 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
             sm.warnings += chunk.warnings
 
         prose: list = []
+        notes: list = []
         for b in rec.blocks:
             if id(b) in consumed:
                 continue
-            if is_heading(b, body_size):
+            if is_footnote(b, rec):
+                notes.append(b)
+            elif is_heading(b, body_size):
                 _flush_prose(prose, chunks, doc_id, rec, section, title, next_id, sm)
                 prose = []
                 section = " ".join(b.text.split())
             else:
                 prose.append(b)
         _flush_prose(prose, chunks, doc_id, rec, section, title, next_id, sm)
+        for note in notes:  # each footnote stands alone, with its marker
+            chunks.append(_list_chunk(next_id("x"), doc_id, rec, [note], section, title))
+            sm.text_chunks += 1
 
         if not any(rec.number in c.pages for c in chunks):
             sm.warnings.append("nothing extractable on this page")
@@ -194,6 +201,28 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
         )
     )
     return IngestResult(doc_id, title, chunks, summary)
+
+
+def _list_chunk(cid, doc_id, rec: PageRecord, blocks, section, title) -> Chunk:
+    """One text chunk from whole blocks, one line per source line (contents lists, footnotes)."""
+    bbox = [
+        min(b.bbox[0] for b in blocks),
+        min(b.bbox[1] for b in blocks),
+        max(b.bbox[2] for b in blocks),
+        max(b.bbox[3] for b in blocks),
+    ]
+    text = "\n".join(b.text for b in blocks)
+    return Chunk(
+        cid,
+        doc_id,
+        [rec.number],
+        "text",
+        section,
+        "",
+        bbox,
+        text,
+        make_header(title, [rec.number], "text", section),
+    )
 
 
 def _flush_prose(blocks, chunks, doc_id, rec: PageRecord, section, title, next_id, sm) -> None:

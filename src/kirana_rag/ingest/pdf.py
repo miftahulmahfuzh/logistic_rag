@@ -16,6 +16,12 @@ FULL_WIDTH_FRAC = 0.7
 COLUMN_GAP_FRAC = 0.05  # columns overlap by less than this share of the page width
 COLUMN_MIN_BLOCKS = 3
 COLUMN_MAX = 3
+FOOTNOTE_BOTTOM_FRAC = 0.25  # a footnote sits in the bottom quarter of the page ...
+FOOTNOTE_SIZE_RATIO = 0.85  # ... and is set at most this much of the body size
+# a footnote opens with a marker: superscript digits or a symbol (text may follow directly), or plain digits then a space
+FOOTNOTE_RE = re.compile(
+    r"^\s*(?:(?:[\u00b9\u00b2\u00b3\u2070-\u2079]+|[*\u2020\u2021\u00a7\u00b6])\s*|\d{1,2}[.)]?\s+)[^\W\d_]"
+)
 
 
 @dataclass
@@ -164,3 +170,24 @@ def reading_order(page: PageRecord, regions: list[tuple]) -> list[Block]:
             ordered += [b for b in in_band if column_of.get(id(b)) == col]
         ordered += [b for b in in_band if id(b) in inside_ids]
     return ordered
+
+
+def body_size(page: PageRecord) -> float:
+    """The font size most of this page's text is set in (median over characters)."""
+    sizes = sorted((b.size, len(b.text)) for b in page.blocks)
+    half = sum(n for _, n in sizes) / 2
+    seen = 0
+    for size, n in sizes:
+        seen += n
+        if seen >= half:
+            return size
+    return 0.0
+
+
+def is_footnote(b: Block, page: PageRecord) -> bool:
+    """Small text in the bottom quarter of the page that opens with a note marker."""
+    return (
+        b.bbox[1] >= page.height * (1 - FOOTNOTE_BOTTOM_FRAC)
+        and b.size <= body_size(page) * FOOTNOTE_SIZE_RATIO
+        and bool(FOOTNOTE_RE.match(b.text))
+    )

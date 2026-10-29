@@ -196,3 +196,31 @@ def test_columns_through_the_pipeline_keep_a_sentence_together(tmp_path, monkeyp
     res = pipeline.ingest(pdf, force=True)
     text = "\n".join(c.text for c in res.chunks)
     assert text.index("Pa3") < text.index("Pb1")
+
+
+def _footnote_pdf(path, note: str, size: float = 7.5):
+    body = [(57, 100 + i * 80, 538, t, 10) for i, t in enumerate(_paras("Fn", 3))]
+    build_layout_pdf(path, [body + [(57, 700, 400, note, size)]])
+
+
+def test_footnote_becomes_its_own_chunk_on_a_page_without_tables(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "CACHE_DIR", tmp_path / "cache")
+    pdf = tmp_path / "f.pdf"
+    _footnote_pdf(pdf, "\u00b9 Ombra figures exclude one site.")
+    res = pipeline.ingest(pdf, force=True)
+    notes = [c for c in res.chunks if "Ombra" in c.text]
+    assert len(notes) == 1 and notes[0].text.startswith("\u00b9") and notes[0].type == "text"
+    assert "Fn3" not in notes[0].text
+
+
+def test_small_text_without_marker_or_with_body_size_is_not_a_footnote(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "CACHE_DIR", tmp_path / "cache")
+    for note, size in [
+        ("Source: Ombra figures exclude one site.", 7.5),
+        ("1 Ombra at body size.", 10),
+    ]:
+        pdf = tmp_path / f"f{size}.pdf"
+        _footnote_pdf(pdf, note, size)
+        res = pipeline.ingest(pdf, force=True)
+        (c,) = [c for c in res.chunks if "Ombra" in c.text]
+        assert "Fn3" in c.text  # still merged with the prose, as before
