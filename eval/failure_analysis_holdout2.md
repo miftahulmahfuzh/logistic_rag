@@ -48,3 +48,18 @@ and both false premises (v27, v28).
 
 Single fictional report written by the same author as the code; the generator makes tables clean (real scans and spanning tables are messier).
 The scan is typed text at a 0.6 degree tilt, JPEG at 110 dpi, which the vision model reads perfectly.
+
+## After iteration 4 (new ingest, 74 chunks; 3 runs per set; `eval/ITERATIONS.md`, "Iteration 4")
+
+The sections above describe the first ingest and stay as written. Iteration 4 fixed ingestion weaknesses generally (no document-specific code) and re-measured with three repeated runs.
+Holdout v2 judge-correct 92% (89-93) before, 93% (93-93) after; BM25-only after the fixes 93% (93-93). Retrieval only: mean first-gold-chunk rank 2.70 to 2.26 (new labels from the frozen `gold_text`), chunk hit@8 21/23 to 22/23.
+
+| weakness | after iteration 4 |
+|---|---|
+| Two-column reading order interleaved | **Fixed on most column pages** (`p4`, `p5`, `p6`, `p7`, `p23`, `p24`, `p26`, `p27`): the Chair's review is continuous text, the glossary starts at its first term, the travel paragraph no longer carries the "Water" label. **Remains on pages with a wide footnote** (`p8`, `p9`): the footnote block spans past the gutter, so the two column groups merge, the detector is unsure and keeps the old order; on `p8` the sentence "Staff turnover fell..." (left column) still lands in the "Pay and reward" chunk. A possible fix is to leave footnote-shaped blocks out of the column grouping; not done because it would be tuning on this document after seeing it, and it needs a re-ingest and a re-run (open question for the author) |
+| Table over three pages merged over two | **Not fixed on this document.** The merge now follows a table over any number of pages (unit-tested on four pages), but the page-14 part ends at 45% of the page height, which fails the pre-registered "previous part ends in the lower 60%" rule, so `p15-t1` stays separate. Loosening the threshold after seeing this document would be tuning on a holdout |
+| Merged header cells | **Fixed:** `p12-t1` has one header row (`Inpatient / Elective`, `Inpatient / Day case`, `Outpatient / First`, `Outpatient / Follow-up`) |
+| Footnotes glued to prose | **Fixed as chunking** (`p8-x5`, `p9-x2`, `p19-x4` are their own chunks, marker kept). **v15 still fails:** the footnote chunk ranks 11th (hybrid) and 37th (BM25) for the question, outside k=8, so the answer still omits the 612 figure in 3 of 3 runs |
+| Table of contents as a table chunk | **Fixed:** `p2-x1` is a text chunk |
+
+Question level: **v12 is now correct in 3 of 3 runs** (hybrid rank 9 to 4; its evidence is no longer split and no longer opens with a paragraph from the other column). v14 went from correct in 2 of 3 runs to 0 of 3 (the answer drops "one fewer than in 2024"; the sentence is in context both times, so this is generator/judge strictness). v15 unchanged (partial 3 of 3). All other questions are correct in every run, hybrid and BM25.

@@ -156,6 +156,24 @@ pre-registered rule Snowball under hybrid **passes** (tie on Kirana, better on b
 pass earns nothing. The default is unchanged; the switch is the author's call. Predictions were right on ingestion pitfalls (column interleave, split table, footnote)
 and wrong on how much they would hurt (the unruled table and every chart and scan value were read correctly) and on Snowball and hybrid-vs-BM25 at answer level.
 
+## Iteration 4: general ingestion fixes, measured with repeated runs
+
+Plan `FOURTH_ITERATION_IMPLEMENTATION_PLAN.md`; decisions and predictions (committed before any re-ingest or eval) and every number in `eval/ITERATIONS.md`. Five layout-based fixes with no
+document-specific code: multi-column reading order, footnotes as their own chunks, tables over any number of pages, contents lists as text, merged header cells folded into one header
+row. Each has unit tests on synthetic layouts the three documents do not contain. **Kirana and Northmere re-ingest byte-identical** (the regression contract); Halbrook goes from 68 to 74 chunks.
+Answer comparisons use 3 runs with the answer and judge cache salted per run (`kirana eval --repeat 3`, summary with `--summarise`); "real" means the ranges do not overlap.
+
+| | before | after |
+|---|---|---|
+| retrieval, mean first-gold rank, holdout v2 (hybrid, `spelling`) | 2.70 | 2.26 |
+| Kirana pooled / holdout v1 | 1.41 / 1.45 | 1.41 / 1.45 |
+| judge-correct, holdout v2 (28) | 92% (89-93) | 93% (93-93), BM25-only 93% |
+| judge-correct, core / hard / holdout v1 | 92% (90-95) / 98% (94-100) / 100% | 95% (90-100) / 98% (94-100) / 100% |
+
+The fixes show in retrieval and in one question (v12, why capex rose: wrong in 3 of 3 runs before, correct in 3 of 3 after); at answer level the net is within noise. v15 (footnote) is now its
+own chunk but still ranks 11th, outside k=8. The ward table's third page is not merged (the page-14 part ends at 45% of the page, under the fixed threshold) and pages with a footnote wider than a column keep
+the old order; both are left as they are rather than tuned on this document. The Kirana movement in the table is pure LLM noise (identical chunks), which is the scale to read the rest against.
+
 ## Known limitations
 
 - Page-level gold labels overstate retrieval for tables (a prose chunk on the same page counts as a hit).
@@ -163,7 +181,7 @@ and wrong on how much they would hurt (the unruled table and every chart and sca
 - Snowball stemming was dropped in iteration 3 (it lowered the first-gold rank on both documents); `KIRANA_NORMALISE=full` brings it back for comparison.
 - The dense model is small and English-only; it can promote vaguely related chunks over exact-number matches (q07 lost a rank or two).
 - The two holdouts are synthetic documents (10 and 68 chunks) written by the same author as the code: a weak test of generality, not proof.
-- Reading order is top-to-bottom, left-to-right; **multi-column pages come out interleaved** (seen on holdout v2: sentences cut in two, section labels drifting). Footnotes are glued to the neighbouring prose chunk (v15 failed because of it), a table over three pages merges only two, a table of contents becomes a table chunk.
+- Multi-column pages are read column by column only when the detector is sure (2 to 3 groups of at least 3 blocks); a page with a footnote that spans past the gutter, or an ambiguous layout, keeps the top-to-bottom order and can still interleave (holdout v2 `p8`, `p9`). A footnote is its own chunk, but a short note about a different topic than the question can rank outside k=8 (v15). A table continues across pages only while each part ends in the lower 60% of its page (the ward table's third page on holdout v2 is not merged).
 - BM25 has UK/US spelling normalisation only; meaning-based matches come from the small dense model (h01 now works, but it is not a reranker).
 - Arithmetic is done by the model (one rounding slip observed).
 - Only text-layer tables are parsed as tables; a table inside an image is a vision transcript.
@@ -173,7 +191,7 @@ and wrong on how much they would hurt (the unruled table and every chart and sca
 
 Verify image transcripts with a second pass (q14, vision non-determinism); a calculator tool for arithmetic (q03); table-aware retrieval (whole table or
 none) with a short natural-language description per table chunk; a refusal threshold only if retrieval scores separate answerable from unanswerable;
-a larger eval set across several real documents so deltas are not limited by 79 questions on a few reports; a second pass on ingestion (reading order for columns, footnotes, tables over three pages); cross-encoder reranking;
+a larger eval set across several real documents so deltas are not limited by 79 questions on a few reports; a third pass on ingestion (leave footnote-shaped blocks out of the column grouping; a page-break rule for tables that does not depend on how far down the page they end); retrieval that lifts short footnote chunks; cross-encoder reranking;
 per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
 
 ## How AI tools are used
@@ -186,4 +204,4 @@ At runtime the system calls GLM-5.3 (answers, judging) and GLM-4.6V (image trans
 
 `src/kirana_rag/` (`ingest/`, `retrieve.py`, `embed.py`, `answer.py`, `prompts.py`, `llm.py`, `cli.py`, `eval/`), `eval/` (questions, results,
 analysis), `docs/` (ingestion notes, decisions), `scripts/make_subset_pdf.py` (builds a 4-page subset PDF: ingest it and ask
-questions with no code changes), `scripts/make_holdout_pdf.py` and `scripts/make_holdout2_pdf.py` (the holdout reports), `scripts/resolve_gold_chunks.py` (gold chunk ids from `gold_text`), `scripts/retrieval_ablation.py` (retrieval-only metrics and the decision rule), `tests/` (pytest, LLM mocked).
+questions with no code changes), `scripts/make_holdout_pdf.py` and `scripts/make_holdout2_pdf.py` (the holdout reports), `scripts/resolve_gold_chunks.py` (gold chunk ids from `gold_text`), `scripts/retrieval_ablation.py` (retrieval-only metrics and the decision rule), `scripts/chunk_diff.py` (before/after chunk comparison for ingestion changes), `tests/` (pytest, LLM mocked).
