@@ -33,3 +33,9 @@ src = ["src", "tests"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/kirana_rag/cli.py" = ["B008"]  # typer's idiom is a call in the default
+
+[tool.ruff.lint]
+ignore = ["SIM905"]

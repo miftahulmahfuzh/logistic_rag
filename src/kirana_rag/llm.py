@@ -163,7 +163,10 @@ def describe_image(
     msg = data["choices"][0]["message"]
     usage = data.get("usage", {})
     res = LLMResult(
-        msg.get("content") or "", usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0), ms
+        msg.get("content") or "",
+        usage.get("prompt_tokens", 0),
+        usage.get("completion_tokens", 0),
+        ms,
     )
     _cache_put(key, res)
     USAGE.add(s.vision_model, res)
