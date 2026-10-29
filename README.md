@@ -4,6 +4,27 @@ Ingest a company PDF (prose, tables, charts, KPI cards, diagrams, a scanned page
 get answers that cite their pages, and measure retrieval and answer quality separately. Built for a fictional customer,
 Kirana Logistics Group's investor-relations team, but nothing in `src/` is specific to that document (a test enforces it).
 
+## Where things stand (final submission state)
+
+Customer-facing one-pager: [`CUSTOMER_SUMMARY.md`](CUSTOMER_SUMMARY.md). Everything below is evidence for it.
+
+**What it does.** Ingests a PDF with the right method per content type, answers from the command line with page-level citations that code verifies, refuses when the report does not support an answer, flags conflicting statements, and reports retrieval and answer quality separately.
+
+**How well it works** (default settings: hybrid retrieval, k=8; mean and min-max over 3 repeated runs with the answer and judge cache bypassed; 79 questions over 3 documents):
+
+| set | questions | judge-correct | notes |
+|---|---|---|---|
+| core (the brief's eval set, Kirana) | 20 | 95% (90-100) | 100% hit@8, every citation verified |
+| hard (Kirana, paraphrase and near-miss) | 18 | 98% (94-100) | written before any improvement |
+| holdout v1 (second fictional company) | 13 | 100% | one answerable question is refused every run (w07) |
+| holdout v2 (third company, 30 pages, columns, footnotes, scan) | 28 | 95% (93-100) | 2 of the 28 are partial answers (v14, v15) |
+
+Every unanswerable question was refused in every run. Cost is about $0.002 per question at list price (the real account is a flat subscription); median answer latency about 2.5 s (p95 5 to 9 s, with rare retry stalls).
+**Where it fails**, with causes and evidence: q14 (a diagram edge the vision model attached to the wrong node, `eval/failure_analysis.md`), v15 (a footnote fact ranks outside the top 8), v14 (an answer drops a comparison; judge strictness), one false refusal on holdout v1 (w07). Vision transcripts are non-deterministic and unverified. Full lists: `eval/failure_analysis*.md`; the baseline-measure-improve loop with predictions written before each run: `eval/ITERATIONS.md`.
+Run-to-run noise is real: on identical chunks the Kirana core score moved between 90% and 100%, so differences under about 10 points are within noise.
+
+**A new PDF needs no code change.** Put the PDF in the repo root (PDFs are not committed), run `uv run kirana ingest <new>.pdf`, then `uv run kirana ask "..."` (searches every ingested document; use `--doc <doc_id>` to pick one). A test fails if document-specific words enter `src/`.
+
 ## Run it in 5 commands
 
 ```bash
@@ -14,8 +35,9 @@ uv run kirana ask "What was net profit in 2024?"
 uv run kirana eval                # writes eval/results/baseline.json and eval/RESULTS.md
 ```
 
-Useful flags: `ask -k 5` (default 8), `--retriever bm25|hybrid` (default hybrid), `ask --json`, `ask --doc <doc_id>`, `eval --only q03,q09`, `eval --tag mytag -k 3`.
-Ingesting takes about 2 minutes the first time (8 vision calls, two at a time); later runs hit the on-disk cache in `.cache/`.
+Useful flags: `ask -k 5` (default 8), `--retriever bm25|hybrid` (default hybrid), `ask --json`, `ask --doc <doc_id>`, `eval --only q03,q09`, `eval --tag mytag -k 3`, `eval --suite hard|holdout|holdout2 --doc <doc_id>`, `eval --repeat 3` then `eval --summarise --tag <tag>` (repeated runs with mean and range).
+Tests: `uv run pytest` (LLM mocked, no key needed).
+The Kirana report is not committed (`*.pdf` is ignored): copy it into the repo root. Ingesting takes about 2 minutes the first time (8 vision calls, two at a time); later runs hit the on-disk cache in `.cache/`.
 The first retrieval downloads the small embedding model (BAAI/bge-small-en-v1.5, about 25 s once); offline, retrieval falls back to BM25 with a warning.
 
 ## Architecture
@@ -24,7 +46,8 @@ The first retrieval downloads the small embedding model (BAAI/bge-small-en-v1.5,
 PDF --> ingest ---------------------------------------------> .cache/<doc_id>/
         per page:                                              pages.jsonl, chunks.jsonl, vision/*.png
         1. text blocks (PyMuPDF)          -> prose chunks
-        2. tables (page.find_tables)      -> table chunks (continued tables merged across pages)
+        2. tables (page.find_tables)      -> table chunks (continued tables merged across pages, merged header cells folded)
+           columns / footnotes / contents lists handled from layout (reading order, own chunks, text not table)
         3. images / scans                 -> vision model transcript -> figure / scan chunks
 
 question --> BM25 + dense (bge-small) top-k, RRF fusion --> glm-5.3 (JSON, temperature 0) --> code verifies every citation --> CLI output
@@ -50,9 +73,9 @@ Details and the by-eye check of every transcript are in `docs/ingestion_notes.md
 - **Two models, because `glm-5.3` cannot see images.** The native endpoint rejects images and the Anthropic-compatible
   route accepts them but returns confident wrong numbers (96 for a chart whose value is 89.7). So `glm-5.3` does text
   (answering, judging) and `glm-4.6v` does vision. This is the single most important finding of the build.
-- **BM25 first.** No embeddings endpoint is available (`embedding-3` rejected). BM25 is the honest baseline: no model
-  download, millisecond index builds, easy to explain. Dense/hybrid is the first improvement, after the numbers are committed.
-- **No vector database.** The report is 28 chunks; an in-memory index rebuilt per run is the right size.
+- **BM25 first, then hybrid.** No embeddings endpoint is available (`embedding-3` rejected), so the baseline was BM25 (no model
+  download, millisecond index builds). Iteration 3 added a local dense model (`bge-small`) fused by reciprocal rank; hybrid beat BM25 on mean first-gold rank on all three documents (answer-level difference: within noise).
+- **No vector database.** The report is 27 chunks; an in-memory index rebuilt per run is the right size.
 - **Chunking:** page-aware, about 300 tokens, tables never split, one chunk per image. The report is short, so the
   natural unit is a page section; bigger chunks dilute BM25, smaller ones cut a fact from its subject.
 - **Grounding is checked in code.** The model must quote verbatim; code checks the chunk was retrieved, the page belongs
@@ -141,9 +164,9 @@ What did not: answer-level judge scores are flat (94% hard in both: a fixed h01 
 ## Holdout v2: a larger, less Kirana-like document
 
 Plan `HOLDOUT_V2_PLAN.md`; rule, predictions (committed before any run) and every number in `eval/ITERATIONS.md`. A third generated report
-(`scripts/make_holdout2_pdf.py`, a regional hospital group, 30 pages, **68 chunks**): two-column pages, footnotes, a three-page table, merged header
+(`scripts/make_holdout2_pdf.py`, a regional hospital group, 30 pages, 68 chunks at first ingest, 73 after iteration 4): two-column pages, footnotes, a three-page table, merged header
 cells, an unruled table, two charts, a scan, a landscape page, mixed UK/US spelling and `1.234,5` numbers. 28 questions frozen before the document was ingested;
-no code in `src/` changed, and no ingestion weakness was fixed (they are in `eval/failure_analysis_holdout2.md`).
+at that point no code in `src/` changed and the ingestion weaknesses it exposed were only recorded (`eval/failure_analysis_holdout2.md`); iteration 4 below fixed them generally.
 
 | mean first-gold-chunk rank (retrieval only) | Kirana (32) | holdout v1 (11) | holdout v2 (23) |
 |---|---|---|---|
@@ -195,8 +218,7 @@ per-row page tracking for merged tables; layout-aware reading order; a small rev
 
 ## How AI tools are used
 
-Built with Claude Code (Claude Sonnet 5.5 writes the code from an author-verified plan).
-Author brainstorms the detailed requirements and features and also reviews the code.
+I built this with Claude Code (Claude Sonnet 5.5). I brainstormed the requirements and wrote or approved each plan (`BASELINE_`, `SECOND_`, `THIRD_`, `FOURTH_ITERATION_IMPLEMENTATION_PLAN.md`, `HOLDOUT_V2_PLAN.md`); the assistant implemented the steps, with predictions committed before every measurement; I reviewed the code and the eval sets and made the keep/revert decisions (`docs/decisions.md`). I can explain and change any part of it.
 At runtime the system calls GLM-5.3 (answers, judging) and GLM-4.6V (image transcription) through the z.ai API.
 
 ## Layout
