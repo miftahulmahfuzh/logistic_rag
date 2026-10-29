@@ -16,6 +16,7 @@ from .pdf import (
     doc_title,
     is_footnote,
     is_heading,
+    navigation_groups,
     read_pages,
     reading_order,
     strip_headers_footers,
@@ -86,7 +87,15 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
     _write_pages(out / "pages.jsonl", pages)
 
     summaries = {p.number: PageSummary(p.number) for p in pages}
-    tables_by_page = {p.number: tables.extract_tables(doc[p.number - 1]) for p in pages}
+    nav_by_page = {p.number: navigation_groups(p.blocks) for p in pages}
+    tables_by_page = {
+        p.number: [
+            t
+            for t in tables.extract_tables(doc[p.number - 1])
+            if not _is_navigation(t, p, nav_by_page[p.number])
+        ]
+        for p in pages
+    }
     tables.merge_continued(tables_by_page)
     # a merged table also occupies its continuation pages; its blocks there are not prose
     table_regions: dict[int, list[tuple[float, float, float, float]]] = {}
@@ -164,6 +173,12 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
             sm.vlm_tokens += chunk.vlm_tokens
             sm.warnings += chunk.warnings
 
+        for group in nav_by_page[rec.number]:
+            consumed |= {id(b) for b in group}
+            y0 = min(b.bbox[1] for b in group)
+            chunks.append(_list_chunk(next_id("x"), doc_id, rec, group, section_at(y0), title))
+            sm.text_chunks += 1
+
         prose: list = []
         notes: list = []
         for b in rec.blocks:
@@ -201,6 +216,13 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
         )
     )
     return IngestResult(doc_id, title, chunks, summary)
+
+
+def _is_navigation(t: tables.Table, rec: PageRecord, groups: list[list]) -> bool:
+    """A table whose text is mostly the lines of a contents list is navigation, not data."""
+    nav = {id(b) for g in groups for b in g}
+    inside = images.blocks_inside(rec, t.bbox)
+    return bool(inside) and sum(id(b) in nav for b in inside) * 2 >= len(inside)
 
 
 def _list_chunk(cid, doc_id, rec: PageRecord, blocks, section, title) -> Chunk:

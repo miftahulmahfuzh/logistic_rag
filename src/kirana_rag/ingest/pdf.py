@@ -18,10 +18,17 @@ COLUMN_MIN_BLOCKS = 3
 COLUMN_MAX = 3
 FOOTNOTE_BOTTOM_FRAC = 0.25  # a footnote sits in the bottom quarter of the page ...
 FOOTNOTE_SIZE_RATIO = 0.85  # ... and is set at most this much of the body size
+NAV_MIN_LINES = 3
+NAV_LINE_SHARE = 0.6
 # a footnote opens with a marker: superscript digits or a symbol (text may follow directly), or plain digits then a space
 FOOTNOTE_RE = re.compile(
     r"^\s*(?:(?:[\u00b9\u00b2\u00b3\u2070-\u2079]+|[*\u2020\u2021\u00a7\u00b6])\s*|\d{1,2}[.)]?\s+)[^\W\d_]"
 )
+# a navigation line: some text, a run of dot leaders or wide spaces, then a short page number
+NAV_LINE_RE = re.compile(
+    r"\S.*?(?:[.\u00b7\u2026](?:\s?[.\u00b7\u2026]){2,}|\s{3,})\s*(?:\d{1,4}|[ivxlc]{1,6})\s*$"
+)
+PAGE_NUMBER_RE = re.compile(r"^\s*(?:\d{1,4}|[ivxlc]{1,6})\s*$")
 
 
 @dataclass
@@ -191,3 +198,36 @@ def is_footnote(b: Block, page: PageRecord) -> bool:
         and b.size <= body_size(page) * FOOTNOTE_SIZE_RATIO
         and bool(FOOTNOTE_RE.match(b.text))
     )
+
+
+def _entries(text: str) -> list[str]:
+    """Lines of a block, with a line that is only a page number joined to the line before it."""
+    out: list[str] = []
+    for line in text.splitlines():
+        if out and PAGE_NUMBER_RE.match(line):
+            out[-1] += " " + line.strip()
+        else:
+            out.append(line)
+    return out
+
+
+def navigation_groups(blocks: list[Block]) -> list[list[Block]]:
+    """Runs of consecutive blocks whose lines mostly end in a leader and a page number (a contents list)."""
+    runs: list[list[Block]] = []
+    cur: list[Block] = []
+    for b in blocks:
+        if any(NAV_LINE_RE.search(line) for line in _entries(b.text)):
+            cur.append(b)
+        else:
+            if cur:
+                runs.append(cur)
+            cur = []
+    if cur:
+        runs.append(cur)
+    out = []
+    for run in runs:
+        lines = [line for b in run for line in _entries(b.text)]
+        hits = sum(1 for line in lines if NAV_LINE_RE.search(line))
+        if len(lines) >= NAV_MIN_LINES and hits >= NAV_LINE_SHARE * len(lines):
+            out.append(run)
+    return out

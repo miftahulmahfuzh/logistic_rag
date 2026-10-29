@@ -5,6 +5,7 @@ from kirana_rag.ingest import images, pipeline, tables
 from kirana_rag.ingest.chunk import group_paragraphs, tokens
 from kirana_rag.ingest.pdf import (
     Block,
+    navigation_groups,
     read_pages,
     reading_order,
     strip_headers_footers,
@@ -256,3 +257,24 @@ def test_table_run_stops_when_a_middle_page_ends_high(tmp_path):
     by_page = _extract(pdf)
     tables.merge_continued(by_page)
     assert [len(by_page[n]) for n in (1, 2, 3)] == [1, 0, 1]
+
+
+def test_contents_list_is_one_text_chunk_not_a_table(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "CACHE_DIR", tmp_path / "cache")
+    pdf = tmp_path / "n.pdf"
+    entries = [f"Part {c} {'.' * 60} {i * 3}" for i, c in enumerate("ABCDEFGH", 1)]
+    build_layout_pdf(pdf, [[(57, 100 + i * 20, 538, e, 10) for i, e in enumerate(entries)]])
+    res = pipeline.ingest(pdf, force=True)
+    (c,) = [c for c in res.chunks if "Part A" in c.text]
+    assert c.type == "text" and c.text.count("\n") == len(entries) - 1 and "Part H" in c.text
+
+
+def test_navigation_needs_most_lines_to_end_in_a_page_number():
+    mk = lambda t: Block((0, 0, 1, 1), t, 10.0)
+    prose = [mk("A sentence that ends in a year 2024."), mk("Another one with no leader.")]
+    nav = [mk(f"Item {i} {'.' * 20} {i}") for i in range(1, 5)]
+    assert navigation_groups(prose) == []
+    assert len(navigation_groups(prose + nav + prose)) == 1
+    assert navigation_groups(nav[:2]) == []  # too short to be a list
+    leader_free = [mk(f"Item {i}      {i}") for i in range(1, 5)]
+    assert len(navigation_groups(leader_free)) == 1
