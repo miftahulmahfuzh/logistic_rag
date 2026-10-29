@@ -62,25 +62,47 @@ def test_percentile_and_latency_summary():
 
 def _record(qid: str, status: str, expected: str, rank: int | None, judge: str) -> dict:
     ans = {
-        "status": status, "answer": "a", "error": "", "citations": [], "tokens_in": 10, "tokens_out": 5,
-        "llm_ms": 100.0, "status_correct": status == expected, "facts_correct": True,
-        "citation_page_ok": True, "citations_verified": 1.0, "judge": judge, "judge_reason": "",
+        "status": status,
+        "answer": "a",
+        "error": "",
+        "citations": [],
+        "tokens_in": 10,
+        "tokens_out": 5,
+        "llm_ms": 100.0,
+        "status_correct": status == expected,
+        "facts_correct": True,
+        "citation_page_ok": True,
+        "citations_verified": 1.0,
+        "judge": judge,
+        "judge_reason": "",
         "disagree": False,
     }
     hit = {str(k): metrics.hit_at(rank, k) for k in metrics.KS}
     return {
-        "id": qid, "type": "table", "gold_pages": [4], "expected_status": expected,
-        "retrieval": {"hit": hit, "mrr": metrics.reciprocal_rank(rank),
-                      "gold_type_retrieved": {str(k): True for k in metrics.KS},
-                      "first_gold_rank": rank, "retrieved": [{"chunk_id": "p4-t1", "score": 1.0}]},
-        "answer": ans, "oracle": dict(ans),
+        "id": qid,
+        "type": "table",
+        "gold_pages": [4],
+        "expected_status": expected,
+        "retrieval": {
+            "hit": hit,
+            "mrr": metrics.reciprocal_rank(rank),
+            "gold_type_retrieved": {str(k): True for k in metrics.KS},
+            "first_gold_rank": rank,
+            "retrieved": [{"chunk_id": "p4-t1", "score": 1.0}],
+        },
+        "answer": ans,
+        "oracle": dict(ans),
     }
 
 
 def test_summarise_hand_made_results():
-    results = {"records": [_record("a", "answered", "answered", 1, "correct"),
-                           _record("b", "answered", "answered", 4, "wrong"),
-                           _record("c", "refused", "refused", None, "correct")]}
+    results = {
+        "records": [
+            _record("a", "answered", "answered", 1, "correct"),
+            _record("b", "answered", "answered", 4, "wrong"),
+            _record("c", "refused", "refused", None, "correct"),
+        ]
+    }
     s = report.summarise(results)
     assert s["n"] == 3 and s["n_answerable"] == 2
     assert s["hit@1"] == 0.5 and s["hit@3"] == 0.5 and s["hit@5"] == 1.0
