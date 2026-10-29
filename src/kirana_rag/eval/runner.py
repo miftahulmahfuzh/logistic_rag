@@ -150,6 +150,18 @@ def run_eval(
     }
 
 
+def run_repeats(repeat: int, tag: str, *args, **kwargs) -> list[Path]:
+    """Run the eval `repeat` times as `<tag>_r1` ... `<tag>_rN`; each repeat has its own cache salt."""
+    paths = []
+    try:
+        for i in range(1, repeat + 1):
+            llm.CACHE_SALT = f"{tag}_r{i}"
+            paths.append(save(run_eval(*args, tag=f"{tag}_r{i}", **kwargs)))
+    finally:
+        llm.CACHE_SALT = ""
+    return paths
+
+
 def save(results: dict) -> Path:
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     path = RESULTS_DIR / f"{results['tag']}.json"

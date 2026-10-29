@@ -168,15 +168,39 @@ def eval_cmd(
     ),
     oracle: bool = typer.Option(True, help="Also run the oracle (gold-page context) pass."),
     retriever: str = typer.Option("hybrid", help="hybrid (BM25 + dense) or bm25."),
+    repeat: int = typer.Option(
+        1,
+        help="Run N times as <tag>_r1..<tag>_rN with the answer/judge cache salted per repeat.",
+    ),
+    summarise: bool = typer.Option(
+        False, "--summarise", help="Only print mean and min-max over the saved <tag>_rN runs."
+    ),
 ) -> None:
     """Run the eval set, save eval/results/<tag>.json and regenerate eval/RESULTS.md."""
     from . import config
     from .eval import report, runner
 
+    if summarise:
+        runs = report.load_repeats(runner.RESULTS_DIR, tag)
+        if not runs:
+            typer.echo(f"No runs named {tag}_r1 ... in eval/results.", err=True)
+            raise typer.Exit(1)
+        console.print(report.render_repeats(tag, runs), highlight=False)
+        return
     default_file = "questions.yaml" if suite == "core" else f"questions_{suite}.yaml"
     qs = runner.load_questions(
         questions or config.EVAL_DIR / default_file, set(filter(None, only.split(","))) or None
     )
+    if repeat > 1:
+        paths = runner.run_repeats(
+            repeat, tag, qs, doc, k=k, oracle=oracle, suite=suite, retriever=retriever
+        )
+        console.print(f"wrote {', '.join(p.name for p in paths)} (RESULTS*.md not regenerated)")
+        console.print(
+            report.render_repeats(tag, report.load_repeats(runner.RESULTS_DIR, tag)),
+            highlight=False,
+        )
+        return
     results = runner.run_eval(qs, doc, tag, k, oracle, suite, retriever)
     if only:
         for r in results["records"]:

@@ -110,3 +110,26 @@ def test_summarise_hand_made_results():
     assert s["mrr"] == pytest.approx((1 + 0.25) / 2)
     assert s["answer"]["judge_correct"] == pytest.approx(2 / 3)
     assert s["refusal"]["refusal_recall"] == 1.0
+
+
+def _repeat_run(judges: list[str]) -> dict:
+    return {
+        "n_chunks": 3,
+        "retriever": "hybrid",
+        "k": 8,
+        "models": {"text": "glm-5.3", "vision": "glm-4.6v"},
+        "records": [_record(f"q{i}", "answered", "answered", 1, j) for i, j in enumerate(judges)],
+    }
+
+
+def test_summarise_repeats_mean_and_range():
+    runs = [
+        _repeat_run(["correct", "correct", "wrong", "correct"]),
+        _repeat_run(["correct", "correct", "correct", "correct"]),
+        _repeat_run(["correct", "wrong", "wrong", "correct"]),
+    ]
+    out = report.summarise_repeats(runs)
+    mean, lo, hi = out["judge correct"]
+    assert (lo, hi) == (0.5, 1.0) and mean == pytest.approx(0.75)
+    assert report.question_judges(runs)["q1"] == ["correct", "correct", "wrong"]
+    assert "q2: wrong, correct, wrong" in report.render_repeats("t", runs)

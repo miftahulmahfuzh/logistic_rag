@@ -49,6 +49,10 @@ class Usage:
 
 USAGE = Usage()
 
+# Mixed into the text-call cache key when non-empty. A repeated eval run sets a different salt per
+# repeat, so answer and judge calls are fresh while vision calls (no salt) keep hitting the cache.
+CACHE_SALT = ""
+
 
 def _cache_key(*parts: str | bytes) -> str:
     h = hashlib.sha256()
@@ -103,7 +107,8 @@ def complete(
 ) -> LLMResult:
     """Text completion via the Anthropic Messages API, thinking disabled."""
     s = config.settings()
-    key = _cache_key("text", s.model, system, prompt, str(max_tokens), str(temperature))
+    parts = ["text", s.model, system, prompt, str(max_tokens), str(temperature)]
+    key = _cache_key(*parts, CACHE_SALT) if CACHE_SALT else _cache_key(*parts)
     if use_cache and (hit := _cache_get(key)):
         USAGE.add(s.model, hit)
         return hit

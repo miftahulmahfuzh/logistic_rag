@@ -100,3 +100,23 @@ def test_colliding_chunk_ids_are_qualified_by_doc():
     b = Chunk("p1-x1", "docB", [1], "text", "", "", [0, 0, 1, 1], "beta")
     assert set(answer.chunk_refs([a, b])) == {"docA/p1-x1", "docB/p1-x1"}
     assert set(answer.chunk_refs([a])) == {"p1-x1"}
+
+
+def test_cache_salt_changes_text_key_only_when_set(monkeypatch, tmp_path):
+    monkeypatch.setattr("kirana_rag.config.LLM_CACHE_DIR", tmp_path)
+    calls = []
+
+    def fake_post(url, headers, payload):
+        calls.append(1)
+        return {"content": [{"type": "text", "text": "ok"}], "usage": {}}
+
+    monkeypatch.setattr(llm, "_post", fake_post)
+    monkeypatch.setattr(
+        "kirana_rag.config.settings",
+        lambda: type("S", (), {"model": "m", "api_key": "k", "base_url": "u"})(),
+    )
+    llm.complete("hi")
+    assert llm.complete("hi").cached and len(calls) == 1
+    monkeypatch.setattr(llm, "CACHE_SALT", "r1")
+    assert not llm.complete("hi").cached and len(calls) == 2
+    assert llm.complete("hi").cached

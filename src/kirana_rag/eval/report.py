@@ -1,12 +1,14 @@
 """Summaries from per-question records, and the RESULTS.md renderer."""
 
 import json
+import re
 from pathlib import Path
 
 from .. import config
 from . import metrics
 
 ANALYSIS_FILE = "failure_analysis.md"
+REPEAT_TAG_RE = re.compile(r"_r\d+$")  # `<tag>_r1`: one repeat of a repeated run
 
 
 def _pct(v: float | None) -> str:
@@ -102,7 +104,11 @@ def _row(label: str, a: str, b: str | None = None) -> str:
 def render(results_dir: Path, analysis_path: Path, suite: str = "core") -> str:
     """RESULTS.md: baseline vs latest side by side, per-type, per-question, failures, analysis."""
     loaded = {p.stem: json.loads(p.read_text()) for p in sorted(results_dir.glob("*.json"))}
-    runs = {t: r for t, r in loaded.items() if r.get("suite", "core") == suite}
+    runs = {
+        t: r
+        for t, r in loaded.items()
+        if r.get("suite", "core") == suite and not REPEAT_TAG_RE.search(t)
+    }
     if not runs:
         return "# Results\n\nNo runs yet.\n"
     base = next((r for t, r in runs.items() if t.endswith("baseline")), next(iter(runs.values())))
@@ -294,3 +300,62 @@ def _usd(v: float | None) -> str:
 
 def _tick(v: bool | None) -> str:
     return "-" if v is None else ("yes" if v else "NO")
+
+
+REPEAT_METRICS = {
+    "judge correct": lambda s: s["answer"]["judge_correct"],
+    "facts correct": lambda s: s["answer"]["facts_correct"],
+    "status correct": lambda s: s["answer"]["status_correct"],
+    "false refusal rate": lambda s: s["refusal"]["false_refusal_rate"],
+    "chunk hit@8": lambda s: s["chunk_hit@8"],
+    "page hit@8": lambda s: s["hit@8"],
+}
+
+
+def load_repeats(results_dir: Path, tag: str) -> list[dict]:
+    """Results of `<tag>_r1`, `<tag>_r2`, ... in repeat order."""
+    paths = [
+        p
+        for p in results_dir.glob(f"{tag}_r*.json")
+        if re.fullmatch(r"r\d+", p.stem[len(tag) + 1 :])
+    ]
+    paths.sort(key=lambda p: int(p.stem.rsplit("_r", 1)[1]))
+    return [json.loads(p.read_text()) for p in paths]
+
+
+def summarise_repeats(runs: list[dict]) -> dict[str, tuple[float, float, float] | None]:
+    """Mean, min and max of each headline metric over the repeats (None if a metric is undefined)."""
+    sums = [summarise(r) for r in runs]
+    out: dict[str, tuple[float, float, float] | None] = {}
+    for name, getter in REPEAT_METRICS.items():
+        vals = [v for s in sums if (v := getter(s)) is not None]
+        out[name] = (sum(vals) / len(vals), min(vals), max(vals)) if vals else None
+    return out
+
+
+def question_judges(runs: list[dict]) -> dict[str, list[str]]:
+    """Judge verdict of every question in every repeat, in repeat order."""
+    out: dict[str, list[str]] = {}
+    for r in runs:
+        for rec in r["records"]:
+            out.setdefault(rec["id"], []).append(rec["answer"]["judge"])
+    return out
+
+
+def render_repeats(tag: str, runs: list[dict]) -> str:
+    n = len(runs)
+    lines = [
+        f"{tag}: {n} repeats, corpus {runs[0]['n_chunks']} chunks, retriever {runs[0]['retriever']}, k={runs[0]['k']}"
+    ]
+    lines += ["", "| metric | mean | min | max |", "|---|---|---|---|"]
+    for name, v in summarise_repeats(runs).items():
+        lines.append(
+            f"| {name} | n/a | | |"
+            if v is None
+            else f"| {name} | {_pct(v[0])} | {_pct(v[1])} | {_pct(v[2])} |"
+        )
+    unstable = {q: j for q, j in question_judges(runs).items() if len(set(j)) > 1}
+    if unstable:
+        lines += ["", "Questions whose verdict differs between repeats:"]
+        lines += [f"- {q}: {', '.join(j)}" for q, j in sorted(unstable.items())]
+    return "\n".join(lines)
