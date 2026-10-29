@@ -56,7 +56,13 @@ def main() -> None:
     ap.add_argument("--normalise", default="full")
     ap.add_argument("--rule", action="store_true")
     ap.add_argument("--detail", action="store_true")
+    ap.add_argument(
+        "--holdout2-questions",
+        default=SETS["holdout2"][0],
+        help="holdout v2 file under eval/ (use questions_holdout2_v2chunks.yaml after iteration 4)",
+    )
     args = ap.parse_args()
+    SETS["holdout2"] = (args.holdout2_questions, "halbrook")
     docs = {
         name: next(d for d in list_doc_ids() if d.startswith(name))
         for name in ("kirana", "northmere", "halbrook")
