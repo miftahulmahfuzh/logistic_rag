@@ -1,5 +1,7 @@
 ## Failure analysis (hand-written after reading every failure in `baseline`, `baseline_k3`, `baseline_k8`)
 
+See also `failure_analysis_hard.md` / `RESULTS_HARD.md` for the harder 18-question set, where the baseline is clearly weaker.
+
 Honest headline first: the baseline scores high (k=5: 95% status, 100% facts, 95% judge, 100% hit@5, 100% citations
 verified). With 20 questions on a 13-page document, **this test set is probably too easy** to separate good from bad
 retrieval: 100% of questions reach hit@3. One question fails outright, and the more informative signal is in the
@@ -16,6 +18,17 @@ weaker numbers below the headline. The eval set is still marked DRAFT pending au
 - Proposed fix: verify diagram transcripts (second VLM pass that checks each edge against the crop, or ask for edges
   in a structured form and compare two runs, flagging disagreement). Longer term: a dedicated diagram prompt that lists
   node positions first, then edges.
+
+### Systemic limitation: vision output is non-deterministic and unverified
+
+q14 is one instance of a general property. Every fact that exists only in an image (charts, KPI cards, the diagram, the
+scanned tariff: 9 of the 20 questions) reaches the answer through a `glm-4.6v` transcript that (a) can differ between
+runs at temperature 0 (seen on the Figure 3 diagram, and on whether a chart title is transcribed at all) and (b) is never
+checked. On this report the transcripts matched the page images on every number I compared (all six KPI cards, all chart
+values, all seven tariff rates), so only the diagram's edge topology was wrong. The score is therefore a measurement of
+**one ingest run**: re-ingesting with a cleared cache can move image-question results in either direction. The response
+cache pins the committed run, which is why `kirana eval` is repeatable, but repeatable is not the same as reliable.
+I state this as a system limitation rather than hiding it behind the cache.
 
 ### Weaker signals that are not outright failures
 

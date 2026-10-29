@@ -19,8 +19,13 @@ VISION_DPI = 200
 VISION_MIN_AREA_FRAC = 0.03
 VISION_MIN_TEXT_CHARS = 150
 
-# USD per million tokens (input, output). Unknown models are reported as "unknown".
-PRICE_PER_MTOK: dict[str, tuple[float, float]] = {}
+# USD per million tokens (input, output), z.ai pay-as-you-go list prices (docs.z.ai/guides/overview/pricing,
+# read 2026-10-29). The author actually pays a flat subscription, so this is a "what would it cost at list
+# price" figure. Cached-input discounts are ignored. Unknown models are reported as "unknown".
+PRICE_PER_MTOK: dict[str, tuple[float, float]] = {
+    "glm-5.3": (1.4, 4.4),
+    "glm-4.6v": (0.3, 0.9),
+}
 
 
 @dataclass(frozen=True)

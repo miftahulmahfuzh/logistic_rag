@@ -1,0 +1,167 @@
+# DRAFT: needs author review. HARD set, written BEFORE any improvement work, to test what the core set cannot:
+# paraphrase and synonyms (no shared keywords with the text), US/UK spelling, conceptual wording, near-duplicate
+# rows, evidence spread over several chunks, calculations, and near-miss unanswerable questions.
+# Same schema as questions.yaml (see its header). Answers were checked against the PDF text layer and page images.
+# Run with: kirana eval --suite hard --tag hard_baseline
+- id: h01
+  type: synonym
+  question: "Which warehouses are underused, below the level that triggers a closure review?"
+  expected_answer: "Hat Yai (64%) and Da Nang (62%) are below 65%. Note the watch list needs two consecutive quarters below 65%; the report only gives an annual figure."
+  must_contain: ["hat yai", "da nang"]
+  gold_pages: [7, 8]
+  gold_chunks: ["p7-t1", "p7-x1"]
+  expected_status: answered
+  notes: "Question avoids the words 'consolidation', 'watch list', 'utilisation', '65%'. Needs table plus threshold."
+- id: h02
+  type: synonym
+  question: "How much did the company invest in capital projects in 2024?"
+  expected_answer: "THB 742 million"
+  must_contain: ["742"]
+  gold_pages: [4]
+  gold_chunks: ["p4-t1"]
+  expected_status: answered
+  notes: "'invest in capital projects' vs 'Capital expenditure'."
+- id: h03
+  type: synonym
+  question: "By how many did the headcount grow between 2024 and 2025?"
+  expected_answer: "510 (6,340 to 6,850)"
+  must_contain: ["510"]
+  gold_pages: [10]
+  gold_chunks: ["p10-t1"]
+  expected_status: answered
+  notes: "'headcount' vs 'Employees'; needs subtraction of table totals."
+- id: h04
+  type: table
+  question: "Which single warehouse has the largest floor area, and how big is it?"
+  expected_answer: "Lat Krabang, Bangkok (TH-LKB), 62,000 sqm"
+  must_contain: ["lat krabang", "62000"]
+  gold_pages: [7]
+  gold_chunks: ["p7-t1"]
+  expected_status: answered
+  notes: "Maximum over a 23-row table; 'floor area' vs 'Area (sqm)'."
+- id: h05
+  type: table_crossref
+  question: "What is the utilization of the Cikarang site?"
+  expected_answer: "94%"
+  must_contain: ["94"]
+  gold_pages: [7]
+  gold_chunks: ["p7-t1"]
+  expected_status: answered
+  notes: "US spelling 'utilization' vs the report's 'Utilisation'; BM25 has no stemming or normalisation."
+- id: h06
+  type: table_crossref
+  question: "How does the floor area of the Johor Bahru cold store compare with the Denpasar one?"
+  expected_answer: "Johor Bahru 9,200 sqm vs Denpasar 8,100 sqm; Johor Bahru is 1,100 sqm larger"
+  must_contain: ["9200", "8100"]
+  gold_pages: [8]
+  gold_chunks: ["p7-t1"]
+  expected_status: answered
+  notes: "Two rows of the same merged table, both on the continuation page; near-duplicate cold-chain rows."
+- id: h07
+  type: multihop
+  question: "Does the 18% electric share of the fleet agree with the fleet table?"
+  expected_answer: "Yes: 218 electric of 1,240 vehicles is about 17.6%, which rounds to 18%"
+  must_contain: ["218", "1240"]
+  gold_pages: [9]
+  gold_chunks: ["p9-t1", "p9-x1"]
+  expected_status: answered
+  notes: "Claim in prose, evidence in a table, needs a division."
+- id: h08
+  type: multihop
+  question: "Which quarter was strongest for revenue, and what fraction of the full-year revenue did it account for?"
+  expected_answer: "Q4, THB 2,305m of 8,420m = about 27.4%"
+  must_contain: [["q4", "fourth"], "27"]
+  gold_pages: [4, 5]
+  gold_chunks: ["p5-f1", "p4-t1"]
+  expected_status: answered
+  notes: "Chart value (image only) divided by a table value."
+- id: h09
+  type: chart
+  question: "Was on-time delivery in the last month of the year back above the annual average?"
+  expected_answer: "No. December was 92.9% against a full-year average of 94.0%"
+  must_contain: ["92.9", "94"]
+  gold_pages: [6]
+  gold_chunks: ["p6-f1", "p6-x1"]
+  expected_status: answered
+  notes: "Chart value (image only) compared with a prose value; no keyword 'December' in the question."
+- id: h10
+  type: scan
+  question: "What would storing 200 pallets of frozen goods cost for one month before tax?"
+  expected_answer: "200 x THB 1,150.00 = THB 230,000, excluding 7% VAT"
+  must_contain: ["230000"]
+  gold_pages: [13]
+  gold_chunks: ["p13-s1"]
+  expected_status: answered
+  notes: "Scan plus multiplication; 'frozen' and 'before tax' paraphrase the tariff."
+- id: h11
+  type: conceptual
+  question: "Why did service quality slip toward the end of the year?"
+  expected_answer: "Flooding in southern Thailand closed sections of the main southern highway; line-haul to Hat Yai was rerouted over slower roads"
+  must_contain: [["flood"]]
+  gold_pages: [2, 6]
+  gold_chunks: ["p6-x1", "p2-x1"]
+  expected_status: answered
+  notes: "'slip' and 'end of the year' do not match 'fourth quarter', 'dipped', 'flooding'."
+- id: h12
+  type: conceptual
+  question: "Did any hackers get hold of customer information last year?"
+  expected_answer: "No. A ransomware attempt in June 2025 was detected and contained with no customer data lost"
+  must_contain: [["no customer data", "ransomware", "contained"]]
+  gold_pages: [11]
+  gold_chunks: ["p11-x1"]
+  expected_status: answered
+  notes: "Conceptual wording; none of 'cybersecurity', 'ransomware' appear in the question."
+- id: h13
+  type: synonym
+  question: "How many battery-powered vehicles did the company run at the close of 2024?"
+  expected_answer: "136"
+  must_contain: ["136"]
+  gold_pages: [9]
+  gold_chunks: ["p9-x1"]
+  expected_status: answered
+  notes: "'battery-powered' vs 'electric'; the value is in prose, not the fleet table (which is 2025)."
+- id: h14
+  type: diagram
+  question: "How often does the ship service between Laem Chabang and Cikarang run?"
+  expected_answer: "3 sailings per week (sea freight via Tanjung Priok)"
+  must_contain: [["3 sailings", "three sailings", "3 per week", "three per week", "3 a week"]]
+  gold_pages: [7]
+  gold_chunks: ["p7-f1"]
+  expected_status: answered
+  notes: "Dashed edge label in the diagram; 'ship service' vs 'Sea freight'."
+- id: h15
+  type: table_crossref
+  question: "How many facilities in Indonesia are above the level that triggers an expansion study?"
+  expected_answer: "2: Cikarang (94%) and Cibitung (96%); the threshold is above 92%"
+  must_contain: [["cikarang", "id-ckr"], ["cibitung", "id-cbt"]]
+  gold_pages: [7, 8]
+  gold_chunks: ["p7-t1", "p7-x1"]
+  expected_status: answered
+  notes: "Threshold in prose, rows split over two pages, filter by country. must_contain corrected after the first run: it accepted only the city names, but the table also names sites by code (ID-CKR); the answer was right."
+- id: h16
+  type: unanswerable
+  question: "What was the customer NPS in 2023?"
+  expected_answer: "Not given: the report only shows 2025 (52) and 2024 (47)"
+  must_contain: []
+  gold_pages: []
+  gold_chunks: []
+  expected_status: refused
+  notes: "Near-miss: strongly matching chunk (NPS 2025 / 2024) that does not answer. Must not stretch."
+- id: h17
+  type: unanswerable
+  question: "What is the average annual salary per employee?"
+  expected_answer: "Not in the report: headcount is given but no payroll cost"
+  must_contain: []
+  gold_pages: []
+  gold_chunks: []
+  expected_status: refused
+  notes: "Near-miss: the employee table matches but there is no salary data."
+- id: h18
+  type: unanswerable
+  question: "How much did the ransomware incident cost the company?"
+  expected_answer: "Not given: the report only says the attempt was detected and contained"
+  must_contain: []
+  gold_pages: []
+  gold_chunks: []
+  expected_status: refused
+  notes: "Near-miss: the incident is described but no cost is stated."

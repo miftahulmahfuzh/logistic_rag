@@ -1,6 +1,7 @@
 {
   "tag": "baseline_k3",
-  "finished_at": "2026-10-29T08:06:25+00:00",
+  "suite": "core",
+  "finished_at": "2026-10-29T08:27:02+00:00",
   "k": 3,
   "oracle": true,
   "doc_ids": [
@@ -12,8 +13,8 @@
     "vision": "glm-4.6v"
   },
   "tokens": {
-    "in": 20468,
-    "out": 3465,
+    "in": 0,
+    "out": 0,
     "note": "tokens of calls not served from the response cache in this process"
   },
   "records": [
@@ -32,7 +33,25 @@
         "8420",
         "10.0"
       ],
+      "gold_chunks": [
+        "p2-x1",
+        "p4-t1",
+        "p3-s1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 4,
+        "chunk_hit": {
+          "1": false,
+          "3": false,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.0,
+          "5": 0.3333333333333333,
+          "8": 0.6666666666666666
+        },
         "retrieved": [
           {
             "chunk_id": "p5-f1",
@@ -129,7 +148,7 @@
         ],
         "tokens_in": 619,
         "tokens_out": 190,
-        "llm_ms": 3936.6895490093157,
+        "llm_ms": 0.8153870003297925,
         "status_correct": false,
         "facts_correct": false,
         "citation_page_ok": false,
@@ -160,7 +179,7 @@
         ],
         "tokens_in": 1131,
         "tokens_out": 146,
-        "llm_ms": 0.18393201753497124,
+        "llm_ms": 0.08556401007808745,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -190,7 +209,23 @@
       "must_contain": [
         "468"
       ],
+      "gold_chunks": [
+        "p4-t1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p4-t1",
@@ -287,7 +322,7 @@
         ],
         "tokens_in": 850,
         "tokens_out": 67,
-        "llm_ms": 2563.527074002195,
+        "llm_ms": 0.12161702034063637,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -311,7 +346,7 @@
         ],
         "tokens_in": 639,
         "tokens_out": 67,
-        "llm_ms": 0.12255398905836046,
+        "llm_ms": 0.06147401290945709,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -337,7 +372,24 @@
       "must_contain": [
         "1.71"
       ],
+      "gold_chunks": [
+        "p4-t1",
+        "p4-x1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p4-x1",
@@ -448,7 +500,7 @@
         ],
         "tokens_in": 745,
         "tokens_out": 250,
-        "llm_ms": 3307.5748419796582,
+        "llm_ms": 0.10369301890023053,
         "status_correct": true,
         "facts_correct": false,
         "citation_page_ok": true,
@@ -486,7 +538,7 @@
         ],
         "tokens_in": 646,
         "tokens_out": 239,
-        "llm_ms": 0.10908200056292117,
+        "llm_ms": 0.40617500781081617,
         "status_correct": true,
         "facts_correct": false,
         "citation_page_ok": true,
@@ -512,7 +564,23 @@
       "must_contain": [
         "96"
       ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 3,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p7-x1",
@@ -617,7 +685,7 @@
         ],
         "tokens_in": 1374,
         "tokens_out": 128,
-        "llm_ms": 2442.27884200518,
+        "llm_ms": 27.597797015914693,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -641,7 +709,7 @@
         ],
         "tokens_in": 1419,
         "tokens_out": 62,
-        "llm_ms": 0.1338849833700806,
+        "llm_ms": 0.050146016292274,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": false,
@@ -673,7 +741,23 @@
         "thu duc",
         "johor bahru"
       ],
+      "gold_chunks": [
+        "p7-t1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p7-x1",
@@ -806,7 +890,7 @@
         ],
         "tokens_in": 1625,
         "tokens_out": 426,
-        "llm_ms": 4948.399173998041,
+        "llm_ms": 0.09797600796446204,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -865,7 +949,7 @@
         ],
         "tokens_in": 1797,
         "tokens_out": 324,
-        "llm_ms": 0.31363300513476133,
+        "llm_ms": 0.08253700798377395,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -896,7 +980,24 @@
         "cikarang",
         "cibitung"
       ],
+      "gold_chunks": [
+        "p7-t1",
+        "p7-x1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 0.5,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p7-x1",
@@ -994,7 +1095,7 @@
         ],
         "tokens_in": 800,
         "tokens_out": 117,
-        "llm_ms": 4789.331534993835,
+        "llm_ms": 0.11310898116789758,
         "status_correct": false,
         "facts_correct": false,
         "citation_page_ok": true,
@@ -1046,7 +1147,7 @@
         ],
         "tokens_in": 1803,
         "tokens_out": 374,
-        "llm_ms": 0.6347830058075488,
+        "llm_ms": 0.09681098163127899,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1074,7 +1175,23 @@
       "must_contain": [
         "44"
       ],
+      "gold_chunks": [
+        "p9-t1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 3,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p11-x2",
@@ -1171,7 +1288,7 @@
         ],
         "tokens_in": 753,
         "tokens_out": 74,
-        "llm_ms": 1502.6272279792465,
+        "llm_ms": 9.406277007656172,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1195,7 +1312,7 @@
         ],
         "tokens_in": 883,
         "tokens_out": 66,
-        "llm_ms": 0.1596500223968178,
+        "llm_ms": 0.10265700984746218,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1226,7 +1343,25 @@
         "82",
         "96"
       ],
+      "gold_chunks": [
+        "p2-x1",
+        "p9-x1",
+        "p12-x2"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 2,
+        "chunk_hit": {
+          "1": false,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.0,
+          "3": 0.6666666666666666,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p11-x2",
@@ -1330,7 +1465,7 @@
         ],
         "tokens_in": 298,
         "tokens_out": 161,
-        "llm_ms": 2444.2336249921937,
+        "llm_ms": 0.15999400056898594,
         "status_correct": false,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1361,7 +1496,7 @@
         ],
         "tokens_in": 1389,
         "tokens_out": 180,
-        "llm_ms": 0.13471799320541322,
+        "llm_ms": 0.1538929936941713,
         "status_correct": false,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1393,7 +1528,23 @@
       "must_contain": [
         "2105"
       ],
+      "gold_chunks": [
+        "p5-f1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p5-f1",
@@ -1490,7 +1641,7 @@
         ],
         "tokens_in": 644,
         "tokens_out": 71,
-        "llm_ms": 2936.15067700739,
+        "llm_ms": 0.11178999557159841,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1514,7 +1665,7 @@
         ],
         "tokens_in": 609,
         "tokens_out": 77,
-        "llm_ms": 0.10729598579928279,
+        "llm_ms": 0.08511901251040399,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1541,7 +1692,23 @@
       "must_contain": [
         "31"
       ],
+      "gold_chunks": [
+        "p5-f2"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p5-f2",
@@ -1638,7 +1805,7 @@
         ],
         "tokens_in": 403,
         "tokens_out": 56,
-        "llm_ms": 2003.9020010153763,
+        "llm_ms": 0.11214701225981116,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1662,7 +1829,7 @@
         ],
         "tokens_in": 608,
         "tokens_out": 47,
-        "llm_ms": 0.10654798825271428,
+        "llm_ms": 0.08170897490344942,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1690,7 +1857,23 @@
         "november",
         "89.7"
       ],
+      "gold_chunks": [
+        "p6-f1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p6-f1",
@@ -1787,7 +1970,7 @@
         ],
         "tokens_in": 876,
         "tokens_out": 65,
-        "llm_ms": 3286.1662679933943,
+        "llm_ms": 0.12900200090371072,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1811,7 +1994,7 @@
         ],
         "tokens_in": 671,
         "tokens_out": 66,
-        "llm_ms": 0.0972239940892905,
+        "llm_ms": 0.08318800246343017,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1842,7 +2025,24 @@
           "1.897"
         ]
       ],
+      "gold_chunks": [
+        "p9-f1",
+        "p9-x1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 0.5,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p9-x1",
@@ -1953,7 +2153,7 @@
         ],
         "tokens_in": 744,
         "tokens_out": 254,
-        "llm_ms": 4426.213344995631,
+        "llm_ms": 4.037908016471192,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -1991,7 +2191,7 @@
         ],
         "tokens_in": 902,
         "tokens_out": 218,
-        "llm_ms": 0.6102600018493831,
+        "llm_ms": 0.09015298564918339,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2020,7 +2220,23 @@
         "52",
         "47"
       ],
+      "gold_chunks": [
+        "p3-s1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p3-s1",
@@ -2117,7 +2333,7 @@
         ],
         "tokens_in": 729,
         "tokens_out": 70,
-        "llm_ms": 6614.0575380122755,
+        "llm_ms": 0.10053900768980384,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2141,7 +2357,7 @@
         ],
         "tokens_in": 503,
         "tokens_out": 69,
-        "llm_ms": 0.14937800006009638,
+        "llm_ms": 0.049488007789477706,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2167,7 +2383,23 @@
       "must_contain": [
         "18"
       ],
+      "gold_chunks": [
+        "p7-f1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p7-f1",
@@ -2272,7 +2504,7 @@
         ],
         "tokens_in": 1476,
         "tokens_out": 238,
-        "llm_ms": 4741.458166012308,
+        "llm_ms": 0.08473300840705633,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2288,7 +2520,7 @@
         "citations": [],
         "tokens_in": 1476,
         "tokens_out": 66,
-        "llm_ms": 0.19334402168169618,
+        "llm_ms": 0.0499660091008991,
         "status_correct": false,
         "facts_correct": true,
         "citation_page_ok": false,
@@ -2315,7 +2547,23 @@
       "must_contain": [
         "780"
       ],
+      "gold_chunks": [
+        "p13-s1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p13-s1",
@@ -2420,7 +2668,7 @@
         ],
         "tokens_in": 878,
         "tokens_out": 168,
-        "llm_ms": 2745.767612999771,
+        "llm_ms": 0.06824597949162126,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2444,7 +2692,7 @@
         ],
         "tokens_in": 586,
         "tokens_out": 94,
-        "llm_ms": 0.1508750137872994,
+        "llm_ms": 0.04665000597015023,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2469,7 +2717,23 @@
       "must_contain": [
         "40.66"
       ],
+      "gold_chunks": [
+        "p13-s1"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p13-s1",
@@ -2573,7 +2837,7 @@
         ],
         "tokens_in": 774,
         "tokens_out": 135,
-        "llm_ms": 185051.7907839967,
+        "llm_ms": 0.07298999116756022,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2604,7 +2868,7 @@
         ],
         "tokens_in": 594,
         "tokens_out": 141,
-        "llm_ms": 0.1854949805419892,
+        "llm_ms": 0.05086901364848018,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -2627,7 +2891,11 @@
       ],
       "expected_status": "refused",
       "must_contain": [],
+      "gold_chunks": [],
       "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
         "retrieved": [
           {
             "chunk_id": "p5-x1",
@@ -2716,7 +2984,7 @@
         "citations": [],
         "tokens_in": 698,
         "tokens_out": 41,
-        "llm_ms": 7113.505235000048,
+        "llm_ms": 0.0680049997754395,
         "status_correct": true,
         "facts_correct": null,
         "citation_page_ok": false,
@@ -2740,7 +3008,7 @@
         ],
         "tokens_in": 586,
         "tokens_out": 92,
-        "llm_ms": 0.10068001574836671,
+        "llm_ms": 0.04885197267867625,
         "status_correct": true,
         "facts_correct": null,
         "citation_page_ok": true,
@@ -2763,7 +3031,11 @@
       ],
       "expected_status": "refused",
       "must_contain": [],
+      "gold_chunks": [],
       "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
         "retrieved": [
           {
             "chunk_id": "p4-t1",
@@ -2852,7 +3124,7 @@
         "citations": [],
         "tokens_in": 880,
         "tokens_out": 68,
-        "llm_ms": 2747.486005013343,
+        "llm_ms": 0.06388398469425738,
         "status_correct": true,
         "facts_correct": null,
         "citation_page_ok": false,
@@ -2868,7 +3140,7 @@
         "citations": [],
         "tokens_in": 630,
         "tokens_out": 60,
-        "llm_ms": 0.2212089893873781,
+        "llm_ms": 0.04512601299211383,
         "status_correct": true,
         "facts_correct": null,
         "citation_page_ok": false,
@@ -2890,7 +3162,11 @@
       "gold_pages": [],
       "expected_status": "refused",
       "must_contain": [],
+      "gold_chunks": [],
       "retrieval": {
+        "first_gold_chunk_rank": null,
+        "chunk_hit": null,
+        "chunk_recall": null,
         "retrieved": [
           {
             "chunk_id": "p12-x2",
@@ -2987,7 +3263,7 @@
         ],
         "tokens_in": 722,
         "tokens_out": 81,
-        "llm_ms": 1903.5999859916046,
+        "llm_ms": 0.09131897240877151,
         "status_correct": true,
         "facts_correct": null,
         "citation_page_ok": null,
@@ -3015,7 +3291,23 @@
           "no plans"
         ]
       ],
+      "gold_chunks": [
+        "p11-x2"
+      ],
       "retrieval": {
+        "first_gold_chunk_rank": 1,
+        "chunk_hit": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "8": true
+        },
+        "chunk_recall": {
+          "1": 1.0,
+          "3": 1.0,
+          "5": 1.0,
+          "8": 1.0
+        },
         "retrieved": [
           {
             "chunk_id": "p11-x2",
@@ -3112,7 +3404,7 @@
         ],
         "tokens_in": 777,
         "tokens_out": 72,
-        "llm_ms": 2321.089505974669,
+        "llm_ms": 0.07047000690363348,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,
@@ -3136,7 +3428,7 @@
         ],
         "tokens_in": 631,
         "tokens_out": 74,
-        "llm_ms": 0.3565399965737015,
+        "llm_ms": 0.048326008254662156,
         "status_correct": true,
         "facts_correct": true,
         "citation_page_ok": true,

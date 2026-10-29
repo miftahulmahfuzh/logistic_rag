@@ -60,7 +60,19 @@ def _retrieval_record(index: Index, q: dict) -> tuple[dict, list]:
     gold = q.get("gold_pages", [])
     rank = metrics.rank_of_first_hit(pages, gold) if gold else None
     typed = [(h.chunk.pages, h.chunk.type) for h in hits]
+    gold_chunks = q.get("gold_chunks", [])
+    ids = [h.chunk.chunk_id for h in hits]
+    crank = metrics.chunk_rank(ids, gold_chunks) if gold_chunks else None
     rec = {
+        "first_gold_chunk_rank": crank,
+        "chunk_hit": {str(k): metrics.hit_at(crank, k) for k in metrics.KS}
+        if gold_chunks
+        else None,
+        "chunk_recall": (
+            {str(k): metrics.chunk_recall_at(ids, gold_chunks, k) for k in metrics.KS}
+            if gold_chunks
+            else None
+        ),
         "retrieved": [
             {
                 "chunk_id": h.chunk.chunk_id,
@@ -86,6 +98,7 @@ def run_question(q: dict, index: Index, chunks: list[Chunk], k: int, oracle: boo
         for k_ in ("id", "type", "question", "expected_answer", "gold_pages", "expected_status")
     }
     rec["must_contain"] = q.get("must_contain", [])
+    rec["gold_chunks"] = q.get("gold_chunks", [])
     rec["retrieval"], hits = _retrieval_record(index, q)
     ans = answer_question(q["question"], [h.chunk for h in hits[:k]])
     rec["answer"] = _answer_record(ans, q)
@@ -98,10 +111,19 @@ def run_question(q: dict, index: Index, chunks: list[Chunk], k: int, oracle: boo
 
 
 def run_eval(
-    questions: list[dict], doc_id: str | None, tag: str, k: int, oracle: bool = True
+    questions: list[dict],
+    doc_id: str | None,
+    tag: str,
+    k: int,
+    oracle: bool = True,
+    suite: str = "core",
 ) -> dict:
     """Run every question (2 in flight) and return the full results dict."""
     ids = [doc_id] if doc_id else list_doc_ids()
+    if len(ids) > 1:
+        raise ValueError(
+            f"{len(ids)} documents are ingested; pass --doc <doc_id> so the eval is not polluted"
+        )
     chunks = [c for d in ids for c in load_chunks(d)]
     index = Index(chunks)
     before = llm.Usage(**llm.USAGE.__dict__)
@@ -110,6 +132,7 @@ def run_eval(
     s = config.settings()
     return {
         "tag": tag,
+        "suite": suite,
         "finished_at": datetime.now(UTC).isoformat(timespec="seconds"),
         "k": k,
         "oracle": oracle,

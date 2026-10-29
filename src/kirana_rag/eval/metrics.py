@@ -113,3 +113,21 @@ def latency_summary(values: Sequence[float]) -> dict[str, float | None]:
 def mean_or_none(values: Sequence[float | bool | None]) -> float | None:
     vals = [float(v) for v in values if v is not None]
     return sum(vals) / len(vals) if vals else None
+
+
+def chunk_rank(retrieved_ids: Sequence[str], gold_chunks: Sequence[str]) -> int | None:
+    """1-based rank of the first retrieved chunk that is a gold chunk (chunk-level, stricter than pages)."""
+    gold = set(gold_chunks)
+    for rank, cid in enumerate(retrieved_ids, 1):
+        if cid in gold:
+            return rank
+    return None
+
+
+def chunk_recall_at(
+    retrieved_ids: Sequence[str], gold_chunks: Sequence[str], k: int
+) -> float | None:
+    """Share of the gold chunks present in the top k (matters for multi-chunk questions)."""
+    if not gold_chunks:
+        return None
+    return len(set(retrieved_ids[:k]) & set(gold_chunks)) / len(set(gold_chunks))

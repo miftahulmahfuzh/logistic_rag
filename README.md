@@ -62,26 +62,38 @@ Details and the by-eye check of every transcript are in `docs/ingestion_notes.md
   failure can be assigned to ingestion, retrieval or generation.
 - All LLM calls go through one client with retry and backoff, concurrency of 2, and a response cache keyed on the full request.
 
-## Baseline results (k=5, 20 questions, `eval/RESULTS.md` has everything)
+## Baseline results (k=5; full tables in `eval/RESULTS.md` and `eval/RESULTS_HARD.md`)
 
-| metric | value |
-|---|---|
-| hit@1 / hit@3 / hit@5 / hit@8 (page-level, answerable) | 76% / 100% / 100% / 100% |
-| status correct / facts correct / LLM judge correct | 95% / 100% / 95% |
-| citations verified by code | 100% |
-| refusal recall (3 unanswerable) / false-refusal rate | 100% / 6% |
+Two question sets, same code, same ingest. The 20-question **core** set is the brief's eval set. The 18-question
+**hard** set (paraphrase, US/UK spelling, conceptual wording, near-duplicate rows, near-miss unanswerables) was written
+before any improvement work so the "baseline, measure, fix, measure again" loop has something to move.
 
-One question fails (q14, a diagram edge the vision model attached to the wrong node). This set is small and probably
-too easy: see `eval/failure_analysis.md` for the failures, the weaker signals the headline hides and the next steps.
-The eval set is marked DRAFT pending author review.
+| metric | core (20) | hard (18) |
+|---|---|---|
+| retrieval hit@1 / hit@5 (page-level) | 76% / 100% | 53% / 93% |
+| chunk-level hit@1 / recall@5 | 71% / 96% | 33% / 83% |
+| status correct | 95% | 94% |
+| facts correct (must_contain) | 100% | 87% |
+| LLM judge correct | 95% | 89% |
+| judge correct with oracle (gold-page) context | 95% | 100% |
+| citations verified by code | 100% | 100% |
+| refusal recall / false-refusal rate | 100% / 6% | 100% / 7% |
+| est. cost of the answer calls, whole set (z.ai list price) | $0.040 | $0.048 |
+
+The hard set is retrieval-limited, not generation-limited: with the gold pages handed to the generator it scores 100%,
+with retrieved context 89%. The core set's one failure (q14) is an image-transcription error. See
+`eval/failure_analysis.md` and `eval/failure_analysis_hard.md` for every failure, its stage and the evidence.
+Both eval sets are marked DRAFT pending author review. Cost uses z.ai pay-as-you-go list prices; the real account is a
+flat subscription.
 
 ## Known limitations
 
 - Page-level gold labels overstate retrieval for tables (a prose chunk on the same page counts as a hit).
-- Vision transcripts are not deterministic and can misplace labels on diagrams (seen once). There is no verification pass.
+- **Vision output is non-deterministic and unverified.** The same image can be transcribed differently across runs at temperature 0 (seen on a diagram edge and a chart title). Facts that live only in images (9 of 20 core questions) inherit that risk, so the eval numbers describe one ingest run. The response cache makes reruns repeatable, not reliable.
+- Known ingestion defect, left in the baseline on purpose: the continuation page of a merged table also emits a flattened prose chunk (`eval/failure_analysis_hard.md`).
 - Reading order is top-to-bottom, left-to-right; multi-column layouts would interleave.
 - BM25 has no stemming or synonyms; conceptual questions with different wording will degrade.
-- Arithmetic is done by the model (one rounding slip observed). No cost figures: no price is configured, tokens only.
+- Arithmetic is done by the model (one rounding slip observed).
 - Only text-layer tables are parsed as tables; a table inside an image is a vision transcript.
 - A small corpus: conclusions about k and ranking may not transfer to a 200-page report.
 

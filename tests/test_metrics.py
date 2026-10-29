@@ -97,11 +97,12 @@ def _record(qid: str, status: str, expected: str, rank: int | None, judge: str) 
 
 def test_summarise_hand_made_results():
     results = {
+        "models": {"text": "glm-5.3", "vision": "glm-4.6v"},
         "records": [
             _record("a", "answered", "answered", 1, "correct"),
             _record("b", "answered", "answered", 4, "wrong"),
             _record("c", "refused", "refused", None, "correct"),
-        ]
+        ],
     }
     s = report.summarise(results)
     assert s["n"] == 3 and s["n_answerable"] == 2

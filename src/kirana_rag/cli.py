@@ -147,6 +147,9 @@ def ask(
 @app.command("eval")
 def eval_cmd(
     tag: str = typer.Option("baseline", help="Run tag; writes eval/results/<tag>.json."),
+    suite: str = typer.Option(
+        "core", help="Question set: core (questions.yaml) or hard (questions_hard.yaml)."
+    ),
     questions: Path = typer.Option(None, help="Questions file (default eval/questions.yaml)."),
     doc: str = typer.Option(
         None, "--doc", help="doc_id to evaluate against (default: all ingested)."
@@ -161,10 +164,11 @@ def eval_cmd(
     from . import config
     from .eval import report, runner
 
+    default_file = "questions.yaml" if suite == "core" else f"questions_{suite}.yaml"
     qs = runner.load_questions(
-        questions or config.EVAL_DIR / "questions.yaml", set(filter(None, only.split(","))) or None
+        questions or config.EVAL_DIR / default_file, set(filter(None, only.split(","))) or None
     )
-    results = runner.run_eval(qs, doc, tag, k, oracle)
+    results = runner.run_eval(qs, doc, tag, k, oracle, suite)
     if only:
         for r in results["records"]:
             a = r["answer"]
@@ -174,10 +178,13 @@ def eval_cmd(
             )
         return
     path = runner.save(results)
-    md = report.render(runner.RESULTS_DIR, config.EVAL_DIR / report.ANALYSIS_FILE)
-    (config.EVAL_DIR / "RESULTS.md").write_text(md + "\n")
+    analysis, out_name = report.ANALYSIS_FILE, "RESULTS.md"
+    if suite != "core":
+        analysis, out_name = f"failure_analysis_{suite}.md", f"RESULTS_{suite.upper()}.md"
+    md = report.render(runner.RESULTS_DIR, config.EVAL_DIR / analysis, suite)
+    (config.EVAL_DIR / out_name).write_text(md + "\n")
     s = report.summarise(results)
-    console.print(f"wrote {path.name} and eval/RESULTS.md")
+    console.print(f"wrote {path.name} and eval/{out_name}")
     console.print(
         f"hit@5 {s['hit@5']:.2f} | status {s['answer']['status_correct']:.2f} | "
         f"facts {s['answer']['facts_correct']:.2f} | judge correct {s['answer']['judge_correct']:.2f}"

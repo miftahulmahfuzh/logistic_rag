@@ -4,6 +4,7 @@
 # Fields:
 #   must_contain: deterministic check on the answer text, after normalisation (lowercase, commas removed).
 #                 Every entry must appear; an entry that is a list means any one of its strings.
+#   gold_chunks:  (optional) chunk ids that hold the evidence; stricter than gold_pages. Unanswerable: none.
 #   gold_pages:   pages that support the answer; a retrieval hit is any retrieved chunk covering one of them.
 #   expected_status: answered | refused | conflict
 - id: q01
@@ -12,6 +13,7 @@
   expected_answer: "THB 8,420 million, up 10.0%"
   must_contain: ["8420", "10.0"]
   gold_pages: [2, 3, 4]
+  gold_chunks: ["p2-x1", "p4-t1", "p3-s1"]
   expected_status: answered
   notes: "Stated in the CEO letter (p2), the KPI cards (p3) and Table 1 (p4)."
 - id: q02
@@ -20,6 +22,7 @@
   expected_answer: "THB 468 million"
   must_contain: ["468"]
   gold_pages: [4]
+  gold_chunks: ["p4-t1"]
   expected_status: answered
   notes: "Single table cell; the year column must be read correctly."
 - id: q03
@@ -28,6 +31,7 @@
   expected_answer: "Net debt THB 2,310m vs EBITDA 1,347m = 1.71x, within the internal limit of 2.0x EBITDA"
   must_contain: ["1.71"]
   gold_pages: [4]
+  gold_chunks: ["p4-t1", "p4-x1"]
   expected_status: answered
   notes: "Needs table values plus the limit stated in prose, then a division."
 - id: q04
@@ -36,6 +40,7 @@
   expected_answer: "96% (Table 2, on the continuation page)"
   must_contain: ["96"]
   gold_pages: [8]
+  gold_chunks: ["p7-t1"]
   expected_status: answered
   notes: "Row sits on the continuation page of the facilities table."
 - id: q05
@@ -44,6 +49,7 @@
   expected_answer: "6: Bang Na, Rayong, Cibitung, Denpasar, Thu Duc, Johor Bahru"
   must_contain: ["bang na", "rayong", "cibitung", "denpasar", "thu duc", "johor bahru"]
   gold_pages: [7, 8]
+  gold_chunks: ["p7-t1"]
   expected_status: answered
   notes: "Answerable only by reading the whole merged table (rows on both pages)."
 - id: q06
@@ -52,6 +58,7 @@
   expected_answer: "Laem Chabang 93%, Cikarang 94%, Cibitung 96%. Thu Duc is exactly 92%, not above."
   must_contain: ["laem chabang", "cikarang", "cibitung"]
   gold_pages: [7, 8]
+  gold_chunks: ["p7-t1", "p7-x1"]
   expected_status: answered
   notes: "Whole merged table plus the trigger in prose; boundary case at exactly 92%."
 - id: q07
@@ -60,6 +67,7 @@
   expected_answer: "44"
   must_contain: ["44"]
   gold_pages: [9]
+  gold_chunks: ["p9-t1"]
   expected_status: answered
   notes: "Row/column intersection in the fleet table."
 - id: q08
@@ -68,6 +76,7 @@
   expected_answer: "82 per the fleet section and the errata; the CEO letter says 96 and the errata corrects it"
   must_contain: ["82", "96"]
   gold_pages: [2, 9, 12]
+  gold_chunks: ["p2-x1", "p9-x1", "p12-x2"]
   expected_status: conflict
   notes: "Conflicting sources; the errata is authoritative."
 - id: q09
@@ -76,6 +85,7 @@
   expected_answer: "THB 2,105 million"
   must_contain: ["2105"]
   gold_pages: [5]
+  gold_chunks: ["p5-f1"]
   expected_status: answered
   notes: "Value exists only in the revenue-by-quarter chart image."
 - id: q10
@@ -84,6 +94,7 @@
   expected_answer: "31%"
   must_contain: ["31"]
   gold_pages: [5]
+  gold_chunks: ["p5-f2"]
   expected_status: answered
   notes: "Value exists only in the revenue-by-country chart image."
 - id: q11
@@ -92,6 +103,7 @@
   expected_answer: "November, 89.7%"
   must_contain: ["november", "89.7"]
   gold_pages: [6]
+  gold_chunks: ["p6-f1"]
   expected_status: answered
   notes: "Minimum over a monthly line chart that only exists as an image."
 - id: q12
@@ -100,6 +112,7 @@
   expected_answer: "2.40 g CO2e per parcel in 2025; 2023 was 2.71 so the target is about 1.90"
   must_contain: ["2.40", ["1.90", "1.9", "1.897"]]
   gold_pages: [9]
+  gold_chunks: ["p9-f1", "p9-x1"]
   expected_status: answered
   notes: "Chart value plus prose target plus a calculation."
 - id: q13
@@ -108,6 +121,7 @@
   expected_answer: "52 in 2025, 47 in 2024"
   must_contain: ["52", "47"]
   gold_pages: [3]
+  gold_chunks: ["p3-s1"]
   expected_status: answered
   notes: "KPI card on the at-a-glance page, image only."
 - id: q14
@@ -116,6 +130,7 @@
   expected_answer: "18 trucks/day"
   must_contain: ["18"]
   gold_pages: [7]
+  gold_chunks: ["p7-f1"]
   expected_status: answered
   notes: "Edge label of the line-haul network diagram."
 - id: q15
@@ -124,6 +139,7 @@
   expected_answer: "THB 780.00 per pallet per month, excluding 7% VAT"
   must_contain: ["780"]
   gold_pages: [13]
+  gold_chunks: ["p13-s1"]
   expected_status: answered
   notes: "Scanned page with no text layer."
 - id: q16
@@ -132,6 +148,7 @@
   expected_answer: "THB 38.00 + 7% VAT = THB 40.66"
   must_contain: ["40.66"]
   gold_pages: [13]
+  gold_chunks: ["p13-s1"]
   expected_status: answered
   notes: "Scan transcription plus a VAT calculation."
 - id: q17
@@ -164,5 +181,6 @@
   expected_answer: "None: the report says it does not plan to enter any new country in 2026"
   must_contain: [["no new country", "not plan to enter", "does not plan", "none", "no plans"]]
   gold_pages: [11]
+  gold_chunks: ["p11-x2"]
   expected_status: answered
   notes: "Must answer 'none' from the outlook, not refuse and not invent a country."
