@@ -504,3 +504,21 @@ Questions whose outcome changed in a majority of runs:
 - Retrieval level is where the fixes show: mean first-gold rank 2.70 to 2.26 on holdout v2, hit@8 21/23 to 22/23, no change on the other two sets.
 - Not fixed or not enough: v15 (footnote retrievable but ranked 11th, a ranking issue: the chunk is a short sentence about a different topic than the question's words), the ward table's third page (threshold, see the decisions file), and everything in Section 6 of the plan.
 - Limits: still synthetic documents by the same author, 28 questions, 3 runs per set; "within noise" means the ranges overlap, not that the true difference is zero. The vision transcripts were held fixed by the cache, so these runs do not measure vision noise. Gold chunk labels of holdout v2 were re-resolved by script after the re-ingest from the frozen `gold_text`; nothing was tuned on any holdout.
+
+---
+
+# Iteration 4b: two follow-up ingestion changes (author decision after the iteration 4 report)
+
+Written and committed **before** the code change, the re-ingest or any eval. Both changes were motivated by looking at holdout v2, so they are post-hoc with respect to that document; this is stated, not hidden.
+The baseline is the iteration 4 result (`after_*` runs, `ablation_v4.md`, `chunks_after/`).
+
+Changes (the author's answers to the open questions of the iteration 4 report):
+1. **Footnote-shaped blocks are left out of the column grouping** (same footnote test as before: bottom 25%, at most 85% of body size, opens with a marker). They are placed after the columns of their band. Aim: a footnote wider than a column no longer merges the column groups (holdout v2 `p8`, `p9`).
+2. **Table continuation no longer requires the previous part to end in the lower 60% of its page.** Kept: same header row, same column count, the next part starts in the upper 40% of the next page. Added as a fail-safe (generality rule 4, and the reason the bottom bar existed: two different tables that share a header): the previous part is only continued if no other text block sits below it on its page, i.e. the table is the last thing on the page.
+
+Predictions (to be marked right or wrong afterwards):
+1. Kirana and Northmere re-ingest byte-identical again (no 2 to 3 column page, no continued table on them that the old bottom bar excluded).
+2. Halbrook: `p8` and `p9` read column by column ("Staff turnover fell ..." leaves the "Pay and reward" chunk and joins "Our people"); the ward table becomes one chunk over pages 13 to 15; chunk count 72 to 76.
+3. Retrieval only, holdout v2 hybrid + `spelling`: mean first-gold rank within +-0.3 of 2.26 (no direction predicted; v09 and v07 to v09 gold chunks move with the merge); Kirana pooled 1.41 and holdout v1 1.45 unchanged.
+4. Answers (3 runs, holdout v2 only, since the other chunk files stay identical): judge-correct within noise of 93%; v15 still partial in 3 of 3 runs; v12 stays correct.
+5. On the author's question whether change 2 improves generalisation: it cannot be shown with three documents. The expected evidence is only "no regression elsewhere"; the false-merge risk it adds (two unrelated tables with the same header, one ending high on a page) is reduced, not removed, by the no-text-below guard. Reported as such.
