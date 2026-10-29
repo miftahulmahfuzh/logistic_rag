@@ -181,6 +181,15 @@ def test_two_columns_without_enough_blocks_keep_the_old_order(tmp_path):
     assert got == ["Ld1", "Rd1", "Ld2", "Rd2", "Ld3"]
 
 
+def test_footnote_wider_than_a_column_does_not_defeat_column_detection(tmp_path):
+    pdf = tmp_path / "c.pdf"
+    items = _column_items([((57, 280), "Fa"), ((310, 538), "Fb")], top=100, step=90, reps=1)
+    note = (57, 700, 400, "\u00b9 Ombra note that spans past the gutter.", 7.5)
+    build_layout_pdf(pdf, [[*items, note]])
+    got = _ordered_prefixes(pdf)
+    assert got == ["Fa1", "Fa2", "Fa3", "Fb1", "Fb2", "Fb3", "\u00b9"]
+
+
 def test_single_column_page_order_is_unchanged(tmp_path):
     pdf = tmp_path / "c.pdf"
     build_layout_pdf(pdf, [[(57, 100 + i * 70, 538, t, 10) for i, t in enumerate(_paras("Zs", 5))]])
@@ -244,19 +253,44 @@ def test_table_over_four_pages_is_one_chunk(tmp_path):
     assert t.pages == [1, 2, 3, 4] and len(t.rows) == 1 + 10 + 35 + 35 + 5
 
 
-def test_table_run_stops_when_a_middle_page_ends_high(tmp_path):
-    pdf = tmp_path / "t.pdf"
+def _ends_high_pdf(path):
     build_pdf(
-        pdf,
+        path,
         [
             {"table": (570, [HEADER] + _rows(10))},
-            {"table": (70, [HEADER] + _rows(4, 10))},  # ends in the upper half: the table is over
+            {"table": (70, [HEADER] + _rows(4, 10))},  # ends in the upper half of its page
             {"table": (70, [HEADER] + _rows(5, 14))},
         ],
     )
+
+
+def test_table_that_ends_high_continues_when_it_is_the_last_thing_on_its_page(tmp_path):
+    pdf = tmp_path / "t.pdf"
+    _ends_high_pdf(pdf)
     by_page = _extract(pdf)
-    tables.merge_continued(by_page)
+    tables.merge_continued(by_page, lambda page, y: False)
+    (t,) = [t for ts in by_page.values() for t in ts]
+    assert t.pages == [1, 2, 3]
+
+
+def test_table_that_ends_high_with_text_below_it_has_ended(tmp_path):
+    pdf = tmp_path / "t.pdf"
+    _ends_high_pdf(pdf)
+    by_page = _extract(pdf)
+    tables.merge_continued(by_page, lambda page, y: page == 2)  # prose follows the page-2 part
     assert [len(by_page[n]) for n in (1, 2, 3)] == [1, 0, 1]
+    assert by_page[1][0].pages == [1, 2]
+
+
+def test_text_below_ignores_table_cells(tmp_path):
+    pdf = tmp_path / "t.pdf"
+    _ends_high_pdf(pdf)
+    doc = pymupdf.open(pdf)
+    pages, _ = read_pages(doc)
+    strip_headers_footers(pages)
+    by_page = _extract(pdf)
+    below = pipeline._text_below_fn(pages, by_page)
+    assert not below(2, by_page[2][0].bbox[3])  # only the table's own cells are on the page
 
 
 def test_contents_list_is_one_text_chunk_not_a_table(tmp_path, monkeypatch):

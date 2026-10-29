@@ -148,10 +148,15 @@ def reading_order(page: PageRecord, regions: list[tuple]) -> list[Block]:
     """Blocks in reading order: column by column in bands between full-width blocks, else y then x.
 
     `regions` are table and figure boxes. Blocks inside them are not columns of prose, and a
-    full-width region ends a band like a full-width block does. Unsure means the existing order.
+    full-width region ends a band like a full-width block does. Footnotes are not columns either
+    (one can span the gutter and would merge the column groups); they follow the columns of their
+    band. Unsure means the existing order.
     """
-    inside = [b for b in page.blocks if any(centre_inside(b.bbox, r) for r in regions)]
-    inside_ids = {id(b) for b in inside}
+    inside_ids = {
+        id(b)
+        for b in page.blocks
+        if is_footnote(b, page) or any(centre_inside(b.bbox, r) for r in regions)
+    }
     free = [b for b in page.blocks if id(b) not in inside_ids]
 
     def wide(box: tuple) -> bool:

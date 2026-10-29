@@ -1,6 +1,7 @@
 """Text-layer tables: find_tables -> cell grid -> markdown, with cross-page merging."""
 
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
 
 import pymupdf
@@ -88,21 +89,32 @@ def _norm_header(row: list[str]) -> list[str]:
     return [c.lower() for c in row]
 
 
-def _continues(a: Table, b: Table) -> bool:
-    """True when table b, first on the page after a's last part, carries on a."""
+def _continues(a: Table, b: Table, text_below: Callable[[int, float], bool]) -> bool:
+    """True when table b, first on the page after a's last part, carries on a.
+
+    Same header and columns, b starts high on its page, and a's last part either ends low on its
+    page or is the last thing on it (a table followed by text on its page has ended there).
+    """
     last_page, last_box = a.parts[-1]
+    ends_page = last_box[3] >= a.page_height * MERGE_BOTTOM_FRAC or not text_below(
+        last_page, last_box[3]
+    )
     return (
         last_page + 1 == b.page
         and len(a.rows[0]) == len(b.rows[0])
         and _norm_header(a.rows[0]) == _norm_header(b.rows[0])
-        and last_box[3] >= a.page_height * MERGE_BOTTOM_FRAC
+        and ends_page
         and b.bbox[1] <= b.page_height * MERGE_TOP_FRAC
     )
 
 
-def merge_continued(tables_by_page: dict[int, list[Table]]) -> None:
+def merge_continued(
+    tables_by_page: dict[int, list[Table]],
+    text_below: Callable[[int, float], bool] = lambda page, y: False,
+) -> None:
     """Merge a table ending page N with one starting page N+1 when the header row is the same, over any run of pages.
 
+    `text_below(page, y)` says whether a text block that is not part of a table sits below y on that page.
     Mutates tables_by_page: each continuation is folded into the first table and removed.
     """
     tail: Table | None = (
@@ -111,7 +123,7 @@ def merge_continued(tables_by_page: dict[int, list[Table]]) -> None:
     for n in sorted(tables_by_page):
         cur = tables_by_page[n]
         merged = False
-        if tail and cur and _continues(tail, cur[0]):
+        if tail and cur and _continues(tail, cur[0], text_below):
             b = cur.pop(0)
             tail.rows.extend(b.rows[1:])  # identical header repeated on the next page: drop it
             tail.pages = (tail.pages or []) + (b.pages or [b.page])

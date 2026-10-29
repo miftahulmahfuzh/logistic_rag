@@ -13,6 +13,7 @@ from . import images, tables
 from .chunk import Chunk, group_paragraphs, make_header
 from .pdf import (
     PageRecord,
+    centre_inside,
     doc_title,
     is_footnote,
     is_heading,
@@ -96,7 +97,7 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
         ]
         for p in pages
     }
-    tables.merge_continued(tables_by_page)
+    tables.merge_continued(tables_by_page, _text_below_fn(pages, tables_by_page))
     # a merged table also occupies its continuation pages; its blocks there are not prose
     table_regions: dict[int, list[tuple[float, float, float, float]]] = {}
     for tlist in tables_by_page.values():
@@ -216,6 +217,20 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
         )
     )
     return IngestResult(doc_id, title, chunks, summary)
+
+
+def _text_below_fn(pages: list[PageRecord], tables_by_page: dict[int, list[tables.Table]]):
+    """(page, y) -> True if a text block outside every table of that page starts below y."""
+    by_number = {p.number: p for p in pages}
+
+    def text_below(page: int, y: float) -> bool:
+        boxes = [t.bbox for t in tables_by_page.get(page, [])]
+        return any(
+            b.bbox[1] >= y - 2 and not any(centre_inside(b.bbox, box) for box in boxes)
+            for b in by_number[page].blocks
+        )
+
+    return text_below
 
 
 def _is_navigation(t: tables.Table, rec: PageRecord, groups: list[list]) -> bool:
