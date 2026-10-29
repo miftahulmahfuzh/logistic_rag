@@ -80,6 +80,12 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
     summaries = {p.number: PageSummary(p.number) for p in pages}
     tables_by_page = {p.number: tables.extract_tables(doc[p.number - 1]) for p in pages}
     tables.merge_continued(tables_by_page)
+    # a merged table also occupies its continuation pages; its blocks there are not prose
+    table_regions: dict[int, list[tuple[float, float, float, float]]] = {}
+    for tlist in tables_by_page.values():
+        for t in tlist:
+            for part_page, bbox in t.parts or []:
+                table_regions.setdefault(part_page, []).append(bbox)
 
     chunks: list[Chunk] = []
     section = ""
@@ -95,6 +101,9 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
             above = [h for top, h in headings if top <= y]
             return above[-1] if above else carried
 
+        for bbox in table_regions.get(rec.number, []):
+            consumed |= {id(b) for b in images.blocks_inside(rec, bbox)}
+
         counters = {"t": 0, "f": 0, "x": 0, "s": 0}
 
         def next_id(letter: str, n: int = rec.number, counters=counters) -> str:
@@ -104,9 +113,6 @@ def ingest(pdf_path: Path, force: bool = False) -> IngestResult:
         for t in tables_by_page[rec.number]:
             cap = images.find_caption(rec.blocks, t.bbox, table=True)
             caption = " ".join(cap.text.split()) if cap else ""
-            for part_page, bbox in t.parts or []:
-                if part_page == rec.number:
-                    consumed |= {id(b) for b in images.blocks_inside(rec, bbox)}
             if cap and len(cap.text.split()) <= 40:
                 consumed.add(id(cap))
             pgs = t.pages or [t.page]

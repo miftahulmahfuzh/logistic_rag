@@ -30,3 +30,8 @@ dropping low-entropy images) is a possible improvement.
 - Section assignment is the nearest heading above on the same page, else the previous page's heading (tables only).
 - A figure caption that sits inside the image pixels (Fig 1, 2, 4, 5) is only available through the VLM transcript, not
   as separate caption metadata.
+
+## 2026-10-29: duplicate table chunk removed
+
+`p8-x1` (a flattened second copy of Table 2's continuation rows) is gone. Blocks inside every part of a merged table are now
+consumed on each page it spans. Corpus: 27 chunks; `p7-t1` still has 23 data rows on pages [7, 8]. For h04 the table now ranks 5th.

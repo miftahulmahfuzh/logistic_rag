@@ -1,6 +1,7 @@
 import pymupdf
 
-from kirana_rag.ingest import images, tables
+from kirana_rag import config
+from kirana_rag.ingest import images, tables, pipeline
 from kirana_rag.ingest.chunk import group_paragraphs, tokens
 from kirana_rag.ingest.pdf import Block, read_pages, strip_headers_footers
 
@@ -38,6 +39,19 @@ def test_table_continuation_merges_and_drops_repeated_header(tmp_path):
     assert t.pages == [1, 2]
     assert len(t.rows) == 1 + 15  # one header, 15 data rows
     assert sum(r == HEADER for r in t.rows) == 1
+
+
+def test_continued_table_is_not_repeated_as_prose(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "CACHE_DIR", tmp_path / "cache")
+    pdf = tmp_path / "t.pdf"
+    _two_page_table_pdf(pdf)
+    res = pipeline.ingest(pdf, force=True)
+    (table,) = [c for c in res.chunks if c.type == "table"]
+    assert table.pages == [1, 2]
+    assert "Site 14" in table.text
+    prose = [c for c in res.chunks if c.type == "text" and 2 in c.pages]
+    cells = {cell for r in _rows(5, 10) for cell in r}
+    assert not any(cell in c.text for c in prose for cell in cells)
 
 
 def test_table_with_different_header_is_not_merged(tmp_path):
