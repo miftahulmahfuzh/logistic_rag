@@ -221,3 +221,13 @@ New: q03's `must_contain` check fails because the answer says "1.71-1.72x" (gene
 the oracle pass for q06 came back partial once (one misread value). Chunk recall@5 slipped 96% to 94% and the first-gold-chunk
 rank got slightly worse on average under stemming; k=8 hides it. See `eval/ITERATIONS.md`.
 
+## After iteration 3 (`iter3`, hybrid retrieval, k=8; separation run `iter3_bm25`)
+
+Judge, status and facts are unchanged from iteration 2 (95% / 95% / 94%). Failures that remain:
+
+- **q14 (diagram): still an image-transcription failure, not retrieval.** Gold chunk rank 1. The judge now gives `partial` instead of `wrong` because the answer
+  reports the 18 trucks/day lane but attaches it to the wrong node. The committed transcript is cached and unchanged.
+- **q03 (net debt/EBITDA): unchanged.** 1.71 vs 1.72 arithmetic wording, facts check fails, judge correct.
+- Retrieval ranks changed: q01 first-gold chunk 6 to 3, q07 1 to 4 (3 with BM25 spelling-only: the table lost the rank that Snowball had given it), q13 1 to 2.
+  No answer changed because k=8 contains all of them. Core page hit@1 is 82% (88% in iteration 2).
+

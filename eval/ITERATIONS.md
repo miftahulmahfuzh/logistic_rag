@@ -188,7 +188,7 @@ All values are percentages except cost. Hit@1 and the chunk metrics count answer
 | Hit@8 stays 100% | 100% on all three suites | **right** |
 | Core judge-correct stays at or above 95% | 95% | **right** (but see below: page hit@1 fell) |
 | Cost unchanged or slightly lower | core +3.7%, hard +2.1%, holdout -2.6% vs iteration 2 | **wrong on Kirana** (slightly higher, tokens in +1.6% / +1.1%); holdout lower |
-| Index build adds a one-time download and a few seconds | model download about 25 s once; embedding 27 chunks is below a second | right |
+| Index build adds a one-time download and a few seconds | model download about 25 s once; embedding the 27 Kirana chunks takes about 2.3 s (model load 0.4 s once cached) | right |
 | Holdout: hybrid not worse than BM25-only on retrieval-only metrics | mean rank 1.45 vs 1.55, recall@5 100% vs 95%, hit@1 equal | **right** (not overfit by the plan's test) |
 | Risk: dense promotes vague chunks over exact-number matches | core q07 (an exact-label table lookup) first-gold rank 3 (BM25) to 4 (hybrid), and q13 1 to 2; q01 improved 4 to 3 | **partly seen**, small, no answer failure |
 

@@ -179,3 +179,13 @@ meaning-based retrieval. h04 is fixed (judge correct) but fragile: the table ran
 (refused at k=5). Retrieval got worse for h04, h05 and h12 under stemming (see `eval/ITERATIONS.md`): chunk recall@5 fell from 83% to 73%.
 The duplicate `p8-x1` no longer exists. Unanswerable questions are still all refused.
 
+## After iteration 3 (`hard_iter3`, hybrid retrieval, k=8; separation run `hard_iter3_bm25`)
+
+Retrieval is now the strongest part of the hard set: chunk recall@5 73% to 93%, hit@1 60% to 87%, status 100%, facts 100%, no false refusals.
+
+- **h01 fixed.** The table chunk is retrieved (rank 1) although the question shares no words with it; the BM25-only run (`hard_iter3_bm25`) still refuses. Mechanism: the dense ranking.
+- **Ranks that moved up:** h04 7 to 2, h05 6 to 3, h12 5 to 1, h03 4 to 1, h13 2 to 1. Down: h06 1 to 2.
+- **h09 now `partial` (was correct).** Not a retrieval problem: the gold chunk is rank 1 in both runs. The generator answered "Yes" then "NOT above" (self-contradicting)
+  with the same figures in a different context order; the BM25-only run gave "Yes" with a wrong conclusion (`wrong`). Generator noise on a comparison question; one run each.
+- Judge correct stays at 94% (one fixed, one lost to generator noise).
+

@@ -14,8 +14,9 @@ uv run kirana ask "What was net profit in 2024?"
 uv run kirana eval                # writes eval/results/baseline.json and eval/RESULTS.md
 ```
 
-Useful flags: `ask -k 5` (default 8), `ask --json`, `ask --doc <doc_id>`, `eval --only q03,q09`, `eval --tag mytag -k 3`.
+Useful flags: `ask -k 5` (default 8), `--retriever bm25|hybrid` (default hybrid), `ask --json`, `ask --doc <doc_id>`, `eval --only q03,q09`, `eval --tag mytag -k 3`.
 Ingesting takes about 2 minutes the first time (8 vision calls, two at a time); later runs hit the on-disk cache in `.cache/`.
+The first retrieval downloads the small embedding model (BAAI/bge-small-en-v1.5, about 25 s once); offline, retrieval falls back to BM25 with a warning.
 
 ## Architecture
 
@@ -26,7 +27,7 @@ PDF --> ingest ---------------------------------------------> .cache/<doc_id>/
         2. tables (page.find_tables)      -> table chunks (continued tables merged across pages)
         3. images / scans                 -> vision model transcript -> figure / scan chunks
 
-question --> BM25 top-k --> glm-5.3 (JSON, temperature 0) --> code verifies every citation --> CLI output
+question --> BM25 + dense (bge-small) top-k, RRF fusion --> glm-5.3 (JSON, temperature 0) --> code verifies every citation --> CLI output
                               status: answered | refused | conflict
 eval:  eval/questions.yaml --> retrieval metrics (no LLM) + answer metrics (must_contain + LLM judge)
                               + oracle pass (gold-page chunks fed directly) --> eval/RESULTS.md
@@ -108,26 +109,54 @@ Net: hard set judge-correct 89% to 94%, core unchanged at 95%, h01 and q14 still
 
 **Overfitting guard.** The pipeline must work on a second, unseen document without code changes, so each fix is a
 generic mechanism (a merged table's blocks are consumed on every page it spans; a language-level tokenizer), never a
-rule keyed to this report. `tests/test_generality.py` fails if document-specific literals enter `src/`, the eval
-questions are frozen and were not edited to improve a score, and an unseen-document check is part of the next iteration.
-The 38 questions all come from one report, so gains here are evidence for the mechanism, not proof of transfer.
+rule keyed to this report. `tests/test_generality.py` fails if document-specific literals (from either report) enter `src/`, the eval
+questions are frozen and were not edited to improve a score. Iteration 3 added the holdout: a change that helps the Kirana sets
+and hurts the holdout is reported as overfit and not kept (the Snowball decision used that rule). The 38 Kirana questions come from one
+report and the 13 holdout questions from one synthetic one, so gains are evidence for the mechanism, not proof of transfer.
+
+## Iteration 3: meaning-based retrieval, a stemmer decision and a holdout document
+
+Plan, predictions and every number: `eval/ITERATIONS.md` (predictions committed before any run). Three changes: a **holdout** (a generated
+report of a different fictional company, `scripts/make_holdout_pdf.py`, 13 questions frozen before any retrieval change), a **stemmer
+ablation** with a decision rule fixed in advance (Snowball dropped; UK/US spelling kept), and **hybrid retrieval** (BM25 plus
+`bge-small-en-v1.5` dense vectors, reciprocal rank fusion, constant 60, equal weights, nothing tuned). Same questions throughout.
+
+| metric | core it2 | core it3 | hard it2 | hard it3 | holdout it2 | holdout it3 |
+|---|---|---|---|---|---|---|
+| mean first-gold-chunk rank (retrieval only) | 1.41 | 1.47 | 2.47 | **1.33** | 1.82 | **1.45** |
+| hit@1 / hit@5 (page) | 88 / 100 | 82 / 100 | 60 / 93 | **87 / 100** | 82 / 91 | 82 / 100 |
+| chunk-level hit@1 / recall@5 | 82 / 94 | 71 / 98 | 47 / 73 | **73 / 93** | 73 / 86 | 73 / 100 |
+| status / facts / judge correct | 95 / 94 / 95 | 95 / 94 / 95 | 94 / 93 / 94 | 100 / 100 / 94 | 92 / 91 / 92 | 92 / 91 / 92 |
+| false-refusal rate | 6 | 6 | 7 | 0 | 9 | 9 |
+| est. answer-call cost (USD, list price) | 0.057 | 0.059 | 0.052 | 0.053 | 0.031 | 0.030 |
+
+(Percentages. "it2" is the iteration 2 code; the holdout "it2" run was made before any iteration 3 change.)
+
+What worked: h01 (zero word overlap) is fixed and the hard-set ranks moved up (h04 7 to 2, h05 6 to 3, h12 5 to 1); the holdout did not get worse
+(mean rank 1.82 to 1.45 against 1.55 for BM25-only on the same normalisation), so the gain is not specific to the report it was developed on.
+What did not: answer-level judge scores are flat (94% hard in both: a fixed h01 offset by generator noise on h09), core page hit@1 fell 88% to 82%
+(q07's table lost the rank Snowball gave it, which the stemmer rule accepted), cost rose 2-4% on Kirana instead of staying flat, and the holdout
+(10 chunks) cannot show answer-level gains because k=8 returns most of the document. Single runs, 51 questions, one author: directional only.
 
 ## Known limitations
 
 - Page-level gold labels overstate retrieval for tables (a prose chunk on the same page counts as a hit).
 - **Vision output is non-deterministic and unverified.** The same image can be transcribed differently across runs at temperature 0 (seen on a diagram edge and a chart title). Facts that live only in images (9 of 20 core questions) inherit that risk, so the eval numbers describe one ingest run. The response cache makes reruns repeatable, not reliable.
-- Stemming (iteration 2) lowered the rank of some table chunks; k=8 compensates. Whether to keep the Snowball pass is an open decision (`docs/decisions.md`).
+- Snowball stemming was dropped in iteration 3 (it lowered the first-gold rank on both documents); `KIRANA_NORMALISE=full` brings it back for comparison.
+- The dense model is small and English-only; it can promote vaguely related chunks over exact-number matches (q07 lost a rank or two).
+- The holdout is one synthetic document of 10 chunks written by the same author as the code: a weak test of generality, not proof.
 - Reading order is top-to-bottom, left-to-right; multi-column layouts would interleave.
-- BM25 has light stemming and UK/US spelling normalisation but no synonyms; conceptual questions with different wording will degrade (h01 still fails).
+- BM25 has UK/US spelling normalisation only; meaning-based matches come from the small dense model (h01 now works, but it is not a reranker).
 - Arithmetic is done by the model (one rounding slip observed).
 - Only text-layer tables are parsed as tables; a table inside an image is a vision transcript.
 - A small corpus: conclusions about k and ranking may not transfer to a 200-page report.
 
 ## What I would do with another week
 
-Verify image transcripts with a second pass; add chunk-level gold labels and 30 harder questions (synonyms, near-duplicate
-rows, conceptual wording); decide on the stemmer, then local dense embeddings with hybrid fusion; a calculator tool for arithmetic;
-table-aware retrieval (whole table or none); per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
+Verify image transcripts with a second pass (q14, vision non-determinism); a calculator tool for arithmetic (q03); table-aware retrieval (whole table or
+none) with a short natural-language description per table chunk; a refusal threshold only if retrieval scores separate answerable from unanswerable;
+a larger eval set across several real documents so deltas are not limited by 51 questions on a few reports; cross-encoder reranking;
+per-row page tracking for merged tables; layout-aware reading order; a small review UI for flagged transcripts.
 
 ## How AI tools are used
 
@@ -137,6 +166,6 @@ At runtime the system calls GLM-5.3 (answers, judging) and GLM-4.6V (image trans
 
 ## Layout
 
-`src/kirana_rag/` (`ingest/`, `retrieve.py`, `answer.py`, `prompts.py`, `llm.py`, `cli.py`, `eval/`), `eval/` (questions, results,
+`src/kirana_rag/` (`ingest/`, `retrieve.py`, `embed.py`, `answer.py`, `prompts.py`, `llm.py`, `cli.py`, `eval/`), `eval/` (questions, results,
 analysis), `docs/` (ingestion notes, decisions), `scripts/make_subset_pdf.py` (builds a 4-page subset PDF: ingest it and ask
-questions with no code changes), `tests/` (pytest, LLM mocked).
+questions with no code changes), `scripts/make_holdout_pdf.py` (the holdout report), `scripts/retrieval_ablation.py` (retrieval-only metrics), `tests/` (pytest, LLM mocked).
