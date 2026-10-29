@@ -16,6 +16,20 @@ FORBIDDEN += [
     "Appendix B",
     "GWh",
 ]
+FORBIDDEN += [
+    "Halbrook",
+    "Alderbank",
+    "Quillfield",
+    "Marrowdene",
+    "Brackenmoor",
+    "Wystan",
+    "Wexcombe",
+    "Appendix D",
+    "never event",
+    "MWh",
+    "GmbH",
+    "Ward 6E",
+]
 
 
 def test_src_has_no_document_specific_literals():
