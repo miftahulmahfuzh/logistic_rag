@@ -9,6 +9,7 @@
 #               chunk whose text contains any of these strings is gold. A string that no chunk contains is an ingestion loss
 #               (listed in the failure analysis); gold_chunks is then left out and the question counts only at the answer level.
 #               Chunk ids are never chosen by looking at retrieval or answers.
+# gold_chunks were added in the commit after this file was frozen, by the script, from the first ingest (no run had happened yet).
 # Run with: kirana eval --suite holdout2 --doc <holdout2 doc_id> --tag holdout2_baseline
 - id: v01
   type: prose
@@ -17,6 +18,7 @@
   must_contain: ["1284.6", "6.9"]
   gold_pages: [4, 9]
   gold_text: ["income rose to 1,284.6 million pounds"]
+  gold_chunks: ["p4-x1"]
   expected_status: answered
   notes: "Stated in the Chair's review (two columns) and in Table 1."
 - id: v02
@@ -26,6 +28,7 @@
   must_contain: ["18.9"]
   gold_pages: [4, 9, 29]
   gold_text: ["Operating surplus 18.9 23.4", "against 18.9 million pounds"]
+  gold_chunks: ["p9-t1", "p4-x1"]
   expected_status: answered
   notes: "Table 1 cell; also in the Chair's review and the five-year summary."
 - id: v03
@@ -35,6 +38,7 @@
   must_contain: ["22.4"]
   gold_pages: [9, 28]
   gold_text: ["Cash and cash equivalents 120.3 142.7", "Cash at start of year 120.3"]
+  gold_chunks: ["p9-t1", "p28-t1"]
   expected_status: answered
   notes: "Two table cells; the text of the Financial review also states the increase."
 - id: v04
@@ -44,6 +48,7 @@
   must_contain: [["17.7", "22.4"]]
   gold_pages: [4, 9]
   gold_text: ["fell by 22.4% to 61.2 million pounds", "Agency spend 78.9 61.2"]
+  gold_chunks: ["p4-x1", "p9-t1"]
   expected_status: answered
   notes: "'temporary staff' vs 'agency staff/spend'; no shared keyword."
 - id: v05
@@ -53,6 +58,7 @@
   must_contain: ["91.3"]
   gold_pages: [3, 12]
   gold_text: ["averaged 91.3% in 2025"]
+  gold_chunks: ["p3-x3", "p12-x1"]
   expected_status: answered
   notes: "'how full' vs 'bed occupancy'. Near-identical sentences exist for the other five hospitals."
 - id: v06
@@ -62,6 +68,7 @@
   must_contain: [["44.0", "44 thousand", "44,000"]]
   gold_pages: [12]
   gold_text: ["Quillfield 6.3 9.7 44.0 83.1"]
+  gold_chunks: ["p12-t1"]
   expected_status: answered
   notes: "Table 2 has merged header cells (Inpatient and Outpatient spanning two columns each)."
 - id: v07
@@ -71,6 +78,7 @@
   must_contain: ["23"]
   gold_pages: [14]
   gold_text: ["Ward 4C Alderbank Maternity 23"]
+  gold_chunks: ["p13-t1"]
   expected_status: answered
   notes: "Middle page of the three-page ward register."
 - id: v08
@@ -80,6 +88,7 @@
   must_contain: ["97.2"]
   gold_pages: [15]
   gold_text: ["Ward 7E Alderbank Stroke 35 97.2"]
+  gold_chunks: ["p15-t1"]
   expected_status: answered
   notes: "Last page of the three-page ward register."
 - id: v09
@@ -89,6 +98,7 @@
   must_contain: ["6e", "98.0"]
   gold_pages: [13, 14, 15]
   gold_text: ["Ward 6E Quillfield Maternity 20 98.0"]
+  gold_chunks: ["p15-t1"]
   expected_status: answered
   notes: "A maximum over 48 rows on three pages; the winning row is on the last page. The gold string marks the row that holds the answer, but all three parts are needed to know it is the maximum."
 - id: v10
@@ -98,6 +108,7 @@
   must_contain: [["11.3", "11,300"]]
   gold_pages: [17]
   gold_text: ["Orthopaedics 11.3 14.2 58"]
+  gold_chunks: ["p17-t1"]
   expected_status: answered
   notes: "Table 5 has no ruling lines."
 - id: v11
@@ -107,6 +118,7 @@
   must_contain: [["48.213,5", "48213,5", "48213.5", "48 213,5"]]
   gold_pages: [22]
   gold_text: ["Revenue 45.870,1 48.213,5"]
+  gold_chunks: ["p22-t1"]
   expected_status: answered
   notes: "Continental number format: full stop for thousands, comma for the decimal."
 - id: v12
@@ -116,6 +128,7 @@
   must_contain: [["theatre", "emergency department", "mri"]]
   gold_pages: [4, 18]
   gold_text: ["were the new theatre complex at Pennine Orthopaedic Centre"]
+  gold_chunks: ["p4-x2"]
   expected_status: answered
   notes: "Conceptual; the reasons are named in the Chair's review and listed in Table 6 on the landscape page."
 - id: v13
@@ -125,6 +138,7 @@
   must_contain: ["1042"]
   gold_pages: [3, 12]
   gold_text: ["with 612 beds", "with 430 beds"]
+  gold_chunks: ["p3-x3"]
   expected_status: answered
   notes: "Two sentences in the hospital profiles, then an addition."
 - id: v14
@@ -134,6 +148,7 @@
   must_contain: [["two", "2"]]
   gold_pages: [4, 6]
   gold_text: ["two never events"]
+  gold_chunks: ["p4-x1", "p6-x1"]
   expected_status: answered
   notes: "The report says 'never event' and defines it in the glossary; the question uses neither word."
 - id: v15
@@ -143,6 +158,7 @@
   must_contain: [["excludes", "does not include", "not include", "no"], "612"]
   gold_pages: [8]
   gold_text: ["Headcount excludes Halbrook Rehabilitation GmbH"]
+  gold_chunks: ["p8-x4"]
   expected_status: answered
   notes: "The answer is in a footnote at the bottom of the page."
 - id: v16
@@ -152,6 +168,7 @@
   must_contain: [["unwell after an operation", "become unwell", "after an operation"]]
   gold_pages: [10]
   gold_text: ["become unwell after an operation"]
+  gold_chunks: ["p10-x1"]
   expected_status: answered
   notes: "The sentence runs from the bottom of the left column to the top of the right column."
 - id: v17
@@ -161,6 +178,7 @@
   must_contain: ["5", "10"]
   gold_pages: [19]
   gold_text: ["5 to 10 years"]
+  gold_chunks: ["p19-x1"]
   expected_status: answered
   notes: "A range in the notes to the accounts; leases are 3 to 5 years, buildings 40 years."
 - id: v18
@@ -170,6 +188,7 @@
   must_contain: ["alderbank", "48.2"]
   gold_pages: [10]
   gold_text: ["48.2"]
+  gold_chunks: ["p10-f1"]
   expected_status: answered
   notes: "Per-hospital values exist only in the bar chart (Figure 1); the text gives only the group total."
 - id: v19
@@ -179,6 +198,7 @@
   must_contain: ["13.5"]
   gold_pages: [11]
   gold_text: ["13.5"]
+  gold_chunks: ["p11-f1"]
   expected_status: answered
   notes: "Only in the line chart (Figure 2)."
 - id: v20
@@ -188,6 +208,7 @@
   must_contain: ["9"]
   gold_pages: [25]
   gold_text: ["Okoro Non-executive director 9"]
+  gold_chunks: ["p25-s1"]
   expected_status: answered
   notes: "Only on the scanned page (no text layer)."
 - id: v21
@@ -197,6 +218,7 @@
   must_contain: ["11.2", "11.6"]
   gold_pages: [5, 11, 17]
   gold_text: ["fell to 11.2 weeks", "All specialties 41.5 11.6 46"]
+  gold_chunks: ["p5-x1", "p17-t1"]
   expected_status: conflict
   notes: "Two figures for the same measure at the same date, no errata."
 - id: v22
@@ -246,6 +268,7 @@
   must_contain: [["one clinic", "single", "only one", "no plans", "does not plan", "do not plan", "not plan", "has not", "not opened", "no second"]]
   gold_pages: [22, 26]
   gold_text: ["no plans to open a second clinic in Germany", "do not plan to open a second clinic in Germany"]
+  gold_chunks: ["p22-x1", "p26-x1"]
   expected_status: answered
   notes: "False premise; the report states the opposite."
 - id: v28
@@ -255,5 +278,6 @@
   must_contain: [["remained open", "did not close", "not close", "no plans to close", "still open", "open throughout"]]
   gold_pages: [26]
   gold_text: ["remained open throughout 2025"]
+  gold_chunks: ["p26-x1"]
   expected_status: answered
   notes: "False premise; the report states the opposite."
