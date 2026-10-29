@@ -448,3 +448,59 @@ Halbrook, what changed (every difference):
 - Not changed: the ward table is still `p13-t1` (pages 13 and 14) plus `p15-t1`. The page-14 part ends at 45% of the page height, so it fails the pre-registered "previous part ends in the lower 60%" bar; the threshold was not loosened (see `docs/decisions.md`).
 
 Relabelling: `eval/questions_holdout2_v2chunks.yaml` is a copy of the frozen holdout v2 file with `gold_chunks` re-resolved by `scripts/resolve_gold_chunks.py` from the unchanged `gold_text`. All 23 questions with evidence resolved; every other field is identical to the frozen file. Five labels changed: v05 `p3-x3` to `p3-x2`, v12 `p4-x2` to `p4-x1`, v13 `p3-x3` to `p3-x2`, v14 `p4-x1` to `p4-x2`, v15 `p8-x4` to `p8-x5`. All gold chunk ids of the Kirana core and hard sets and of holdout v1 still exist (the chunk files are identical), so no relabelled copy was needed for them.
+
+## Iteration 4: results
+
+Runs on disk: `before_<suite>_r1..r3` (old ingest, default code) and `after_<suite>_r1..r3` (new ingest), suites `core`, `hard`, `holdout`, `holdout2`; `after_holdout2_bm25x_r1..r3` (BM25 only, new ingest). All hybrid + `spelling`, k=8, answer and judge calls re-asked per repeat (cache salt), no oracle pass (it was not needed for the comparison and doubles the cost; the iteration 2 to 3 oracle results stay as they were). Holdout v2 "after" runs use `eval/questions_holdout2_v2chunks.yaml`, so their chunk-level hit is measured against the new gold labels. Retrieval only: `eval/results/ablation_v4.md`. Summarise any set with `uv run kirana eval --summarise --tag after_holdout2`.
+
+### Retrieval only (no LLM), mean first-gold-chunk rank, hybrid + `spelling` (default)
+
+| set | before (`ablation_v2.md`) | after (`ablation_v4.md`) |
+|---|---|---|
+| Kirana pooled (32) | 1.41 | 1.41 |
+| holdout v1 (11) | 1.45 | 1.45 |
+| holdout v2 (23) | 2.70 | **2.26** |
+| holdout v2, BM25 + `spelling` | 3.57 | 3.74 |
+
+Retrieval is deterministic, so there is no range. Holdout v2 per question, hybrid: v01 8 to 4, v12 9 to 4, v15 13 to 11, v13 1 to 2 (the chunk labels moved with the chunking); hit@8 on chunk labels 21/23 to 22/23 (v15 is the one miss). Under the iteration 3 decision rule the Snowball/spelling verdicts on holdout v2 shift (hybrid + `full` is now 2.52 vs 2.26 for `spelling`, so it would fail the rule that it passed before); the default stays `spelling` and the rule is not re-opened here, because the chunking changed, not the question set.
+
+### Answers, mean (min-max) over 3 runs
+
+| set (n) | metric | before | after | reading |
+|---|---|---|---|---|
+| core (20) | judge correct | 92% (90-95) | 95% (90-100) | within noise (identical chunks) |
+| | facts correct | 90% (88-94) | 90% (82-94) | within noise |
+| | false refusal | 4% (0-6) | 2% (0-6) | within noise |
+| hard (18) | judge correct | 98% (94-100) | 98% (94-100) | same |
+| | status correct | 98% (94-100) | 100% (100-100) | within noise |
+| holdout v1 (13) | judge correct | 100% (100-100) | 100% (100-100) | same (status 92% both: one question the same way every run) |
+| holdout v2 (28) | judge correct | 92% (89-93) | 93% (93-93) | within noise (ranges overlap) |
+| | facts correct | 96% (96-96) | 96% (96-96) | same |
+| | chunk hit@8 (answerable) | 91% (91-91) | 96% (96-96) | ranges do not overlap, but the label sets differ and retrieval is deterministic; this is the retrieval change above |
+| holdout v2, BM25 only (28) | judge correct | n/a | 93% (93-93) | equal to hybrid |
+
+Questions whose outcome changed in a majority of runs:
+- holdout v2 **v12** (why capex rose): partial in 3/3 runs before, correct in 3/3 after. Its evidence (the sentence naming the projects and the reasons) is now in one chunk (`p4-x1`) that no longer opens with a paragraph from the other column; hybrid rank 9 to 4. The one clear answer-level gain, and it is the column fix.
+- holdout v2 **v14** (never events): correct 2/3 before, 0/3 after (partial each time: "two" without "one fewer than 2024"). The sentence is in context in both ingests (`p6-x1` rank 1; `p4-x2` rank 7 after); this is generator/judge strictness, same as the single-run analysis said, and it moved the wrong way by chance or because the chunk it sits in changed. Not a retrieval effect. Counted as "anything worse" below.
+- holdout v2 **v15** (footnote): partial in 3/3 both before and after. The footnote is now its own chunk, `p8-x5`, but at hybrid rank 11 (BM25 37), outside k=8, so the answer still lacks "612". The fix made the evidence retrievable as a chunk of its own, not retrieved by this query.
+- Kirana (chunks byte-identical, so everything here is LLM noise): q06 partial to correct, h01 partial in one run to correct, q14 partial/wrong/partial to wrong/partial/correct, h09 correct to partial in one run. These show what a 3-run range on 20 questions looks like (core judge range 90-100%, up to 2 questions).
+
+### Predictions vs actual
+
+| # | prediction | actual | verdict |
+|---|---|---|---|
+| 1 | Kirana and Northmere unchanged except listed, explained differences | byte-identical chunk files for both; every Halbrook difference listed above | right |
+| 2 | Halbrook: column pages in order, footnote own chunk, ward table one chunk over 13 to 15, contents a text chunk, `p12-t1` one header row, 66 to 80 chunks | all true except the ward table: `p13-t1` still covers pages 13-14 and `p15-t1` stays separate (the page-14 part ends at 45% of the page height, below the pre-registered "lower 60%" bar, which was not loosened); 74 chunks | right except the ward table (**wrong** on that item) |
+| 3 | holdout v2 rank below 2.70; Kirana <= 1.41, holdout v1 <= 1.45 | 2.26; 1.41; 1.45 | right |
+| 4 | holdout v2 mean at least as high, v15 correct in >= 2 of 3; Kirana sets inside baseline noise; v12 may persist | 93% vs 92%; v15 correct in 0 of 3; core 95% (baseline range 90-95), hard 98%, holdout v1 100% all inside; v12 did not persist (3/3 correct) | right on means and Kirana, **wrong** on v15 (footnote chunk at rank 11); v12 better than hedged |
+| 5 | run-to-run range on holdout v2 judge-correct at least 2 questions (7 points) | 89-93% before (1 question), 93-93% after (0). On the Kirana core set the range was 2 questions | **wrong** for holdout v2 (the noise there is smaller than predicted), right for core |
+| 6 | the column detector misclassifies at least one Kirana or Northmere page | none: both chunk files are byte-identical (the detector found no 2-3 column page on those, including the KPI-card page, which is a vision chunk) | **wrong** |
+| 7 | hybrid vs BM25 on holdout v2 after the fixes within noise at answer level | 93% (93-93) vs 93% (93-93) | right |
+
+### Honest reading
+
+- The ingestion fixes did what they were for on the document that had the problems, and changed nothing where they should not: Kirana and Northmere chunk files are byte-identical, so no Kirana number can have moved because of them. All Kirana movement above is LLM noise and is the scale to read everything else against.
+- Answer level on holdout v2: 93% vs 92% is within noise. The single real gain is v12 (3/3 runs, from the column fix) and one loss of the same size is v14 (judge strictness); the net is zero, which fits the earlier reading that the answer layer on this document is limited by retrieval and generator wording, not ingestion damage.
+- Retrieval level is where the fixes show: mean first-gold rank 2.70 to 2.26 on holdout v2, hit@8 21/23 to 22/23, no change on the other two sets.
+- Not fixed or not enough: v15 (footnote retrievable but ranked 11th, a ranking issue: the chunk is a short sentence about a different topic than the question's words), the ward table's third page (threshold, see the decisions file), and everything in Section 6 of the plan.
+- Limits: still synthetic documents by the same author, 28 questions, 3 runs per set; "within noise" means the ranges overlap, not that the true difference is zero. The vision transcripts were held fixed by the cache, so these runs do not measure vision noise. Gold chunk labels of holdout v2 were re-resolved by script after the re-ingest from the frozen `gold_text`; nothing was tuned on any holdout.
