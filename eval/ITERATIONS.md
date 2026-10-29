@@ -84,3 +84,39 @@ Improvements: h04 fixed, hit@1 up (76 to 88% core, 53 to 60% hard), hard judge-c
 false-refusal rate. Worse: chunk recall@5 on the hard set (83 to 73%), q03 facts, core oracle (-1 question, generator noise), and the
 cost rise is lower than predicted. The gain is almost entirely from the deeper context (C) fixing a retrieval order that got **worse**
 under B; that is a depth workaround, not a ranking improvement. With 38 questions and single runs, this is directional only.
+
+---
+
+# Iteration 3: meaning-based retrieval, a stemmer decision, and a generality holdout
+
+Plan: `THIRD_ITERATION_IMPLEMENTATION_PLAN.md`. Everything in this section down to "Predictions" was written **before any
+iteration 3 eval was run**. Questions in `questions.yaml` and `questions_hard.yaml` are unchanged.
+
+## Baseline to beat (iteration 2, k=8)
+
+| metric | core (20) | hard (18) |
+|---|---|---|
+| hit@1 / hit@5 (page) | 88% / 100% | 60% / 93% |
+| chunk-level hit@1 / recall@5 | 82% / 94% | 47% / 73% |
+| status / facts / judge correct | 95% / 94% / 95% | 94% / 93% / 94% |
+| false-refusal rate | 6% | 7% |
+| mean first-gold-chunk rank (retrieval only, 32 questions) | 1.91 (A+B), 1.72 (A only) | |
+| corpus | 27 chunks | 27 chunks |
+
+## Fixed in advance (not tuned on any eval)
+
+- Dense model: `BAAI/bge-small-en-v1.5` via `fastembed`. Chunks are embedded as `header + text`; queries get the model's query prefix.
+- Fusion: reciprocal rank fusion of the BM25 and dense rankings, constant 60, equal weights, over the full ranking.
+- Default `k` stays 8.
+- Stemmer rule: keep Snowball only if it does not lower the mean first-gold-chunk rank on **both** Kirana (core + hard) and holdout
+  retrieval-only metrics; otherwise keep only the UK/US spelling pass.
+- A holdout document (different fictional company) and about 12 questions are written in Step A, before retrieval changes. They are
+  reported, never used to pick a setting. If a change helps Kirana and hurts the holdout it is overfit and is not kept.
+
+## Predictions (to be marked right or wrong afterwards)
+
+- Hybrid raises chunk recall@5 on hard from 73% toward 85% or more, and moves h04, h05, h12 up. h01 may be fixed (zero word overlap); if not, say so.
+- Hit@8 stays 100%. Core judge-correct stays at 95% or above.
+- Cost per question is unchanged or slightly lower; index build adds a one-time model download and a few seconds of embedding.
+- Holdout: hybrid is not worse than BM25-only on holdout retrieval-only metrics. If it is, the iteration is reported as overfit.
+- Risk: dense retrieval may promote vaguely related chunks over exact-number matches (e.g. "1.71x"). Watch number-heavy questions.
