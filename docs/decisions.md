@@ -18,3 +18,4 @@ One line per decision, dated.
 - 2026-10-29: Author reviewed both eval sets (questions.yaml, questions_hard.yaml); status changed from DRAFT to REVIEWED.
 - 2026-10-29: Iteration 2, change A (merged-table duplicate fixed): the known defect above is resolved; corpus 28 -> 27 chunks.
 - 2026-10-29: Iteration 2, change B: BM25 tokenizer applies `isation(s)?` -> `ization`, a short UK->US dict and the English Snowball stemmer (`snowballstemmer`, pure Python) to tokens without digits; same function for index and query. No synonym lists. Reason: baseline hypothesis "no stemming"; h05 only passed via a second keyword. Keep/revert is decided after the measurement (see eval/ITERATIONS.md).
+- 2026-10-29: Iteration 2, change C: DEFAULT_TOP_K 5 -> 8 (CLI `-k` defaults follow config). Reason: k sweep on the core set (false refusals 12/6/0% at k=3/5/8) and h04's table at rank 6.

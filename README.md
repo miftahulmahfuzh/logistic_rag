@@ -14,7 +14,7 @@ uv run kirana ask "What was net profit in 2024?"
 uv run kirana eval                # writes eval/results/baseline.json and eval/RESULTS.md
 ```
 
-Useful flags: `ask -k 8`, `ask --json`, `ask --doc <doc_id>`, `eval --only q03,q09`, `eval --tag mytag -k 3`.
+Useful flags: `ask -k 5` (default 8), `ask --json`, `ask --doc <doc_id>`, `eval --only q03,q09`, `eval --tag mytag -k 3`.
 Ingesting takes about 2 minutes the first time (8 vision calls, two at a time); later runs hit the on-disk cache in `.cache/`.
 
 ## Architecture

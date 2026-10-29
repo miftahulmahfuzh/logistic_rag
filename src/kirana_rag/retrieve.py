@@ -78,7 +78,7 @@ def load_index(doc_id: str | None = None) -> Index:
 
 
 def main(argv: list[str]) -> None:
-    """Debug path: python -m kirana_rag.retrieve "question" [-k 5] [--doc ID]."""
+    """Debug path: python -m kirana_rag.retrieve "question" [-k 8] [--doc ID]."""
     args = list(argv)
     k = int(args.pop(args.index("-k") + 1)) if "-k" in args else config.DEFAULT_TOP_K
     if "-k" in args:

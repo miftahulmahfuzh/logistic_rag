@@ -1,7 +1,7 @@
 import pymupdf
 
 from kirana_rag import config
-from kirana_rag.ingest import images, tables, pipeline
+from kirana_rag.ingest import images, pipeline, tables
 from kirana_rag.ingest.chunk import group_paragraphs, tokens
 from kirana_rag.ingest.pdf import Block, read_pages, strip_headers_footers
 

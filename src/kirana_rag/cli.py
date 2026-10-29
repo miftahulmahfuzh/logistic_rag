@@ -7,6 +7,8 @@ from rich.console import Console
 from rich.markup import escape
 from rich.table import Table
 
+from . import config
+
 console = Console()
 
 app = typer.Typer(add_completion=False, help="Document intelligence over annual-report PDFs.")
@@ -71,13 +73,12 @@ def ingest(
 def ask(
     question: str = typer.Argument(..., help="Question about the ingested document(s)."),
     doc: str = typer.Option(None, "--doc", help="Search one doc_id only (default: all ingested)."),
-    k: int = typer.Option(5, "-k", help="Number of chunks to retrieve."),
+    k: int = typer.Option(config.DEFAULT_TOP_K, "-k", help="Number of chunks to retrieve."),
     as_json: bool = typer.Option(False, "--json", help="Machine-readable output."),
 ) -> None:
     """Ask a question; prints status, answer, verified citations, retrieval and cost info."""
     import json
 
-    from . import config
     from .answer import ask as run_ask
     from .retrieve import load_index
 
@@ -154,7 +155,7 @@ def eval_cmd(
     doc: str = typer.Option(
         None, "--doc", help="doc_id to evaluate against (default: all ingested)."
     ),
-    k: int = typer.Option(5, "-k", help="Chunks given to the generator."),
+    k: int = typer.Option(config.DEFAULT_TOP_K, "-k", help="Chunks given to the generator."),
     only: str = typer.Option(
         "", help="Comma-separated question ids, e.g. q03,q09 (does not write RESULTS.md)."
     ),
